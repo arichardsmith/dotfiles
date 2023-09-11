@@ -168,31 +168,6 @@ export PATH="/Users/richardsmith/.rd/bin:$PATH"
 # Created by `pipx` on 2023-03-20 00:54:12
 export PATH="$PATH:/Users/richardsmith/.local/bin"
 
-# Search for a code project folder and cd into it
-op() {
-  # Shortcut to cd to projects folder
-  if [ "$1" = "." ]; then
-    cd ~/code
-    return 0
-  fi
-
-  TARGET_DIR=$(ls ~/code | fzf)
-
-  # Allow canceling
-  if [ -z "$TARGET_DIR" ]; then
-    return 0
-  fi
-
-  cd ~/code/$TARGET_DIR
-  
-  if [ "$1" = "--vscode" ]; then
-    code .
-	elif [ "$1" = "--vim" ]; then
-		nvim
-  fi
-}
-
-
 # Run clipboard content through the provided command
 pbmap() {
   if [ $# -gt 0 ]; then
