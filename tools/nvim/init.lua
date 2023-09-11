@@ -30,6 +30,8 @@ nmap("<leader>[", ":NvimTreeToggle<cr>")
 nmap("<leader>o", "o<esc>") -- shortcut to create new line from normal mode
 nmap("<leader>O", "O<esc>")
 nmap(",", "g$a,<esc>")
+nmap("<c-s>", ":w<cr>", { desc = "Save files with ctrl-s" })
+vim.keymap.set("i", "<c-s>", "<esc>:w<cr>a", { desc = "Save files with ctrl-s" })
 
 -- commands
 -- reload the theme
