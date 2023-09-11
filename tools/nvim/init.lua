@@ -33,6 +33,7 @@ nmap(",", "g$a,<esc>")
 nmap("<c-s>", ":w<cr>", { desc = "Save files with ctrl-s" })
 nmap("<c-s><c-s>", ":wq<cr>", { desc = "Save files with ctrl-s" })
 vim.keymap.set("i", "<c-s>", "<esc>:w<cr>a", { desc = "Save files with ctrl-s" })
+nmap("<leader>bp", ":bp<cr>", { desc = "Save a shift press to switch to last buffer" })
 
 -- commands
 -- reload the theme
