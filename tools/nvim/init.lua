@@ -35,7 +35,10 @@ nmap("<c-s><c-s>", ":wq<cr>", { desc = "Save files with ctrl-s" })
 vim.keymap.set("i", "<c-s>", "<esc>:w<cr>a", { desc = "Save files with ctrl-s" })
 nmap("<leader>bp", ":bp<cr>", { desc = "Save a shift press to switch to last buffer" })
 nmap("<leader>e", ":e ", { desc = "Save a shift press when selecting a file to edit" })
-nmap("<header>er", ":e %:h/", { desc = "Quickly open relative file" })
+nmap("<leader>r", ":e %:h/", { desc = "Quickly open [r]elative file" })
+nmap("<leader>gs", ":Git<cr>", { desc = "Interactive [g]it [s]tatus" })
+nmap("<leader>gc", ":Git commit<cr>", { desc = "[G]it [c]ommit" })
+nmap("<leader>gr", ":Git rebase --interactive --autosquash ", { desc = "[G]it interactive [r]ebase" })
 
 -- commands
 -- reload the theme
