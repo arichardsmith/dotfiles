@@ -34,6 +34,8 @@ nmap("<c-s>", ":w<cr>", { desc = "Save files with ctrl-s" })
 nmap("<c-s><c-s>", ":wq<cr>", { desc = "Save files with ctrl-s" })
 vim.keymap.set("i", "<c-s>", "<esc>:w<cr>a", { desc = "Save files with ctrl-s" })
 nmap("<leader>bp", ":bp<cr>", { desc = "Save a shift press to switch to last buffer" })
+nmap("<leader>e", ":e ", { desc = "Save a shift press when selecting a file to edit" })
+nmap("<header>er", ":e %:h/", { desc = "Quickly open relative file" })
 
 -- commands
 -- reload the theme
