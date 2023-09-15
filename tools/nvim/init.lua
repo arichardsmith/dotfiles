@@ -31,7 +31,7 @@ nmap("<leader>o", "o<esc>") -- shortcut to create new line from normal mode
 nmap("<leader>O", "O<esc>")
 nmap(",", "g$a,<esc>")
 nmap("<c-s>", ":w<cr>", { desc = "Save files with ctrl-s" })
-nmap("<c-s><c-s>", ":wq<cr>", { desc = "Save files with ctrl-s" })
+nmap("<c-s><c-s>", ":w<cr>:bd<cr>", { desc = "Save files with ctrl-s" })
 vim.keymap.set("i", "<c-s>", "<esc>:w<cr>a", { desc = "Save files with ctrl-s" })
 nmap("<leader>bp", ":bp<cr>", { desc = "Save a shift press to switch to last buffer" })
 nmap("<leader>e", ":e ", { desc = "Save a shift press when selecting a file to edit" })
