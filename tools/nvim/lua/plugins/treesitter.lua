@@ -17,6 +17,7 @@ return {
 				"git_rebase",
 				"gitcommit",
 				"gitignore",
+				"go",
 				"html",
 				"javascript",
 				"jsdoc",
@@ -33,6 +34,7 @@ return {
 				"scss", -- needed for postcss highlighting 🤷
 				"svelte",
 				"typescript",
+				"tsx",
 				"vim",
 				"yaml",
 			},
