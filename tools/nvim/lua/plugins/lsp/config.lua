@@ -44,7 +44,17 @@ function M.setup()
 	})
 
 	mason_lspconfig.setup({
-		ensure_installed = { "tsserver", "lua_ls", "denols", "vimls", "astro", "svelte", "tailwindcss", "prismals" },
+		ensure_installed = {
+			"tsserver",
+			"lua_ls",
+			"denols",
+			"vimls",
+			"astro",
+			"svelte",
+			"tailwindcss",
+			"prismals",
+			"gopls",
+		},
 		automatic_installation = true,
 		ui = { check_outdated_servers_on_open = true },
 	})

@@ -3,7 +3,7 @@ return {
 		"mhartington/formatter.nvim",
 		config = function()
 			require("formatter").setup({
-				filetype = 	{
+				filetype = {
 					lua = {
 						require("formatter.filetypes.lua").stylua,
 					},
@@ -21,6 +21,9 @@ return {
 					},
 					css = {
 						require("formatter.filetypes.css").prettier,
+					},
+					go = {
+						require("formatter.filetypes.go").gofmt,
 					},
 					["*"] = {
 						require("formatter.filetypes.any").remove_trailing_whitespace,
