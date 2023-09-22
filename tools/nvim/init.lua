@@ -18,14 +18,14 @@ nmap("L", "g$", { desc = "Jump to end of line" })
 nmap("<c-j>", "<c-e>", { desc = "Scroll down without moving cursor" })
 nmap("<c-k>", "<c-y>", { desc = "Scroll up without moving cursor" })
 nmap(
-	"<leader>d",
+	"<c-d>",
 	":vsplit<cr>:bp<cr>:winc l<cr>",
 	{ desc = "open current buffer in a split pane, switch current pane to previous buffer then focus the new pan>" }
 ) -- open current buffer in a split pane, switch current pane to previous buffer then focus the new pane
 nmap("<leader>fmt", ":Format<cr>")
 nmap("\\", ":nohl<cr>") -- quickly hide highlighted text after search
 nmap(";", ":lua vim.lsp.buf.hover()<cr>") -- shortcut to show info about token at cursor
-nmap("<leader>e", ':lua vim.diagnostic.open_float(0, {scope="line"})<cr>') -- shortcut to show full error message from current line
+nmap("<leader>;", ':lua vim.diagnostic.open_float(0, {scope="line"})<cr>') -- shortcut to show full error message from current line
 nmap("<leader>[", ":NvimTreeToggle<cr>")
 nmap("<leader>o", "o<esc>") -- shortcut to create new line from normal mode
 nmap("<leader>O", "O<esc>")
@@ -36,9 +36,9 @@ vim.keymap.set("i", "<c-s>", "<esc>:w<cr>a", { desc = "Save files with ctrl-s" }
 nmap("<leader>bp", ":bp<cr>", { desc = "Save a shift press to switch to last buffer" })
 nmap("<leader>e", ":e ", { desc = "Save a shift press when selecting a file to edit" })
 nmap("<leader>r", ":e %:h/", { desc = "Quickly open [r]elative file" })
-nmap("<leader>gs", ":Git<cr>", { desc = "Interactive [g]it [s]tatus" })
+nmap("<leader>gs", ":Git<cr>5j", { desc = "Interactive [g]it [s]tatus" })
 nmap("<leader>gc", ":Git commit<cr>", { desc = "[G]it [c]ommit" })
-nmap("<leader>gr", ":Git rebase --interactive --autosquash ", { desc = "[G]it interactive [r]ebase" })
+nmap("<leader>grb", ":Git rebase --interactive --autosquash ", { desc = "[G]it interactive [r]ebase" })
 
 -- commands
 -- reload the theme
