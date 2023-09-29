@@ -38,3 +38,9 @@ pbmap() {
       pbpaste | pbcopy
   fi
 }
+
+copy-pw() {
+  SITE_NAME=$(bw list items | jq '.[].name' | tr -d '"' | fzf)
+  bw get password ${SITE_NAME} | pbcopy
+  echo "Copied password for ${SITE_NAME}"
+}
