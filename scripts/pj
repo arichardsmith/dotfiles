@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+if [ -p /dev/stdin ]; then
+  cat - | jq -M | bat -l json
+fi

@@ -38,8 +38,13 @@ export PATH="/Users/richardsmith/.rd/bin:$PATH"
 # Created by `pipx` on 2023-03-20 00:54:12
 export PATH="$PATH:/Users/richardsmith/.local/bin"
 
+export DOTFILES="/Users/richardsmith/code/dotfiles"
+
 # Load custom aliases
-source ~/code/dotfiles/tools/zsh/aliases.sh
+source $DOTFILES/tools/zsh/aliases.sh
 
 # Add cli apps dir to path
 export PATH="/Users/richardsmith/code/.bin:$PATH"
+
+# Add cli scripts dir to path
+export PATH="$DOTFILES/scripts:$PATH"
