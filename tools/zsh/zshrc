@@ -42,4 +42,4 @@ export PATH="$PATH:/Users/richardsmith/.local/bin"
 source ~/code/dotfiles/tools/zsh/aliases.sh
 
 # Add cli apps dir to path
-export PATH="/Users/richardsmith/code/apps/bin:$PATH"
+export PATH="/Users/richardsmith/code/.bin:$PATH"
