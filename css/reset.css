@@ -1,0 +1,129 @@
+/*
+  Mostly taken from the following resets, with some personal touches:
+  - https://www.joshwcomeau.com/css/custom-css-reset/
+  - https://andy-bell.co.uk/a-more-modern-css-reset/
+  - https://chriscoyier.net/2023/10/03/being-picky-about-a-css-reset-for-fun-pleasure/
+*/
+
+/*
+  Use a sane box-sizing model.
+*/
+html {
+  box-sizing: border-box;
+
+  /* Deal with iphones in landscape mode: https://kilianvalkhof.com/2022/css-html/your-css-reset-needs-text-size-adjust-probably/ */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/*
+  Inheriting helps when using with existing projects.
+  These selectors can be swapped with html for new projects
+*/
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/*
+  Allow percentage-based heights
+*/
+html,
+body {
+  height: 100%;
+}
+
+/*
+  Add accessible line-height
+  & Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+  Media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+  Avoid image sizing suprises
+*/
+img {
+  object-fit: cover;
+}
+
+/*
+  Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+  Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/*
+  Rebalance line height where needed
+*/
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+  line-height: 1.1;
+}
+
+/*
+  Make headings wrap in a nicer way
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/* 
+  Inherit fonts for inputs and buttons
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+  Give a bit more space when scrolling to an element
+*/
+:target {
+  scroll-margin-block: 5ex;
+}
