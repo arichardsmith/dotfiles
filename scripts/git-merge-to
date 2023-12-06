@@ -1,0 +1,9 @@
+#/bin/zsh
+
+CURRENT=$(git rev-parse --abbrev-ref HEAD)
+if [ -n "$1" ]; then
+  git switch $1
+else
+  git switch $(pick-branch)
+fi
+git merge "$CURRENT"
