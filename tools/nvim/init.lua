@@ -103,6 +103,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
-cmd([[colorscheme tokyonight]])
+cmd([[colorscheme catppuccin-macchiato]])
 cmd([[syntax on]])
 cmd([[filetype plugin indent on]])
