@@ -32,9 +32,6 @@ fi
 export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
 
 export LLAMA_EDITOR=code
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/richardsmith/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 # Created by `pipx` on 2023-03-20 00:54:12
 export PATH="$PATH:/Users/richardsmith/.local/bin"
 
