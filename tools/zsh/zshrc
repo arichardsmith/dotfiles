@@ -65,3 +65,6 @@ _fzf_compgen_dir() {
 }
 
 source "$DOTFILES/tools/fzf/fzf-git.sh/fzf-git.sh"
+
+# Set up command helpers
+eval $(thefuck --alias)
