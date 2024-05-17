@@ -4,7 +4,7 @@
 [init]
 	defaultBranch = main
 [core]
-	editor = code --wait
+	editor = nvim
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
