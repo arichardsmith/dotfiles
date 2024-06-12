@@ -5,3 +5,4 @@ alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time
 alias readit="bat --style=plain,header readme.md"
 alias gp="git push"
 alias gc="git-edit-commit"
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
