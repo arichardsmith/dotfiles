@@ -1,0 +1,32 @@
+[user]
+	name = Richard Smith
+	email = richardmcsmith@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[format]
+	pretty = oneline
+[log]
+	abbrevCommit = true
+[alias]
+	bs = "!git switch $(git branch | fzf); #"
+	rb = "!git rebase --interactive --autosquash $1; #"
+	merge-fzf = "!git merge $(git branch | fzf); #"
+	merge-delete = "!git merge $1 && git branch -d $1; #"
+	merge-to = "!git-merge-to $1; #"
+	mt = "!git-merge-to $1; #"
+	actions = "!gh run watch"
+	append = "!git commit --amend --no-edit; #"
+[credential "https://github.com"]
+	useHttpPath = true
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
