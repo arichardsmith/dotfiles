@@ -30,6 +30,9 @@ export LLAMA_EDITOR=code
 
 eval "$(fzf --zsh)"
 
+# Go binary tools
+export PATH=$PATH:$HOME/go/bin
+
 # --- Environment junk ---
 
 export NVM_DIR="$HOME/.nvm"
