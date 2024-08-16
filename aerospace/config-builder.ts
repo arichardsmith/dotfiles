@@ -216,7 +216,7 @@ export class AerospaceConfigBuilder<WS extends string> {
     );
 
     this.add_binding("edit", "minus", this.cmd.resize_window(-50, "width"));
-    this.add_binding("edit", "equal", this.cmd.resize_window(-50, "width"));
+    this.add_binding("edit", "equal", this.cmd.resize_window(50, "width"));
   }
 
   #set_up_layout_bindings() {
