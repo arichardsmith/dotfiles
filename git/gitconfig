@@ -23,6 +23,10 @@
 	mt = "!git-merge-to $1; #"
 	actions = "!gh run watch"
 	append = "!git commit --amend --no-edit; #"
+	wip = "!git add . && git commit -m WIP; #"
+	hist = log --graph --abbrev-commit --decorate --date=short \
+		--format=format:'%C(bold cyan)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)' \
+		--branches --remotes --tags
 [credential "https://github.com"]
 	useHttpPath = true
 	helper = 
