@@ -6,7 +6,6 @@ return {
 			-- show treesitter nodes
 			"nvim-treesitter/playground",
 			"nvim-treesitter/nvim-treesitter-textobjects", -- enable more advanced treesitter-aware text objects
-			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
 		opts = {
 			ensure_installed = {

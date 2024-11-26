@@ -3,6 +3,9 @@ local o = vim.o
 local api = vim.api
 local cmd = vim.cmd
 
+-- Silence deprecation warnings
+vim.deprecate = function() end
+
 -- keybindings
 vim.g.mapleader = " "
 

@@ -45,15 +45,8 @@ function M.setup()
 
 	mason_lspconfig.setup({
 		ensure_installed = {
-			"tsserver",
 			"lua_ls",
-			"denols",
 			"vimls",
-			"astro",
-			"svelte",
-			"tailwindcss",
-			"prismals",
-			"gopls",
 		},
 		automatic_installation = true,
 		ui = { check_outdated_servers_on_open = true },
@@ -61,36 +54,11 @@ function M.setup()
 
 	mason_lspconfig.setup_handlers({
 		function(server_name)
-			lspconfig[server_name].setup({})
-		end,
+			server_name = server_name == "tsserver" and "ts_ls" or server_name
 
-		tsserver = function()
-			lspconfig.tsserver.setup({
-				handlers = {
-					["textDocument/definition"] = function(err, result, ctx, ...)
-						if #result > 1 then
-							result = { result[1] }
-						end
-						vim.lsp.handlers["textDocument/definition"](err, result, ctx, ...)
-					end,
-				},
-				root_dir = require("lspconfig/util").root_pattern("tsconfig.json"),
-			})
-		end,
-
-		denols = function()
-			lspconfig.denols.setup({
-				handlers = {
-					["textDocument/definition"] = function(err, result, ctx, ...)
-						vim.notify("Using new definition handler")
-						if #result > 1 then
-							result = { result[1] }
-						end
-						vim.lsp.handlers["textDocument/definition"](err, result, ctx, ...)
-					end,
-				},
-				root_dir = require("lspconfig/util").root_pattern("deno.json", "deno.jsonc"),
-				init_options = { lint = true },
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			require("lspconfig")[server_name].setup({
+				capabilities = capabilities,
 			})
 		end,
 
@@ -155,8 +123,6 @@ function M.setup()
 				filetypes = { "json", "jsonc" },
 			})
 		end,
-
-		prismals = lspconfig.prismals.setup({}),
 	})
 end
 
