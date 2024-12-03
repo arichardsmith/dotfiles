@@ -44,53 +44,11 @@ function M.setup()
 	})
 
 	mason_lspconfig.setup({
-		ensure_installed = {
-			"lua_ls",
-			"vimls",
-		},
 		automatic_installation = true,
 		ui = { check_outdated_servers_on_open = true },
 	})
 
 	mason_lspconfig.setup_handlers({
-		function(server_name)
-			server_name = server_name == "tsserver" and "ts_ls" or server_name
-
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			require("lspconfig")[server_name].setup({
-				capabilities = capabilities,
-			})
-		end,
-
-		lua_ls = function()
-			lspconfig.lua_ls.setup({
-				settings = {
-					Lua = {
-						completion = { callSnippet = "Replace" },
-						runtime = {
-							-- LuaJIT in the case of Neovim
-							version = "LuaJIT",
-							path = vim.split(package.path, ";"),
-						},
-						diagnostics = {
-							-- Get the language server to recognize the `vim` global
-							globals = { "vim" },
-						},
-						workspace = {
-							library = vim.api.nvim_get_runtime_file("", true),
-							checkThirdParty = false,
-						},
-					},
-				},
-			})
-		end,
-
-		vimls = function()
-			lspconfig.vimls.setup({
-				init_options = { isNeovim = true },
-			})
-		end,
-
 		diagnosticls = function()
 			lspconfig.diagnosticls.setup({
 				settings = {

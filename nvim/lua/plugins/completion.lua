@@ -7,12 +7,10 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "onsails/lspkind-nvim",
-      { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
     },
     config = function()
       local lspkind = require("lspkind")
       local cmp = require("cmp")
-      local tailwind_formatter = require("tailwindcss-colorizer-cmp").formatter
 
       vim.o.completeopt = "menu,menuone,noselect"
 
@@ -33,7 +31,6 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         },
         sources = cmp.config.sources({
-          { name = "copilot" },
           { name = "vsnip" },
           { name = "nvim_lua" },
           { name = "nvim_lsp" },
@@ -54,7 +51,6 @@ return {
               -- zsh = "",
               -- spell = "暈"
             },
-            before = tailwind_formatter,
           }),
         },
         experimental = { native_menu = false, ghost_text = { enabled = true } },
