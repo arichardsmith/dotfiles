@@ -1,5 +1,5 @@
-# Aliases that use apps only installex on macbook
-alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+# Aliases that use apps only installed on macbook
+alias ls="erd --config ls"
 alias ungron="gron --ungron"
 alias crl="curlie"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
