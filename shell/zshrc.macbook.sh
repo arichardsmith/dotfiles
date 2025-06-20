@@ -57,3 +57,5 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+source /Users/richardsmith/.config/broot/launcher/bash/br
