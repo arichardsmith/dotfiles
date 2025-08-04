@@ -19,8 +19,6 @@
 	rb = "!git rebase --interactive --autosquash $1; #"
 	merge-fzf = "!git merge $(git branch | fzf); #"
 	merge-delete = "!git merge $1 && git branch -d $1; #"
-	merge-to = "!git-merge-to $1; #"
-	mt = "!git-merge-to $1; #"
 	actions = "!gh run watch"
 	append = "!git commit --amend --no-edit; #"
 	wip = "!git add . && git commit -m WIP; #"
