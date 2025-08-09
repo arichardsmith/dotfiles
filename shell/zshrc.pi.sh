@@ -7,7 +7,7 @@ esac
 # --- Config ---
 export USER="/home/richardsmith"
 
-# Local config directory
+# --- Local config directory ---
 export CLI_APPS="$USER/.cliapps"
 export SHELL_CONFIG="$USER/.config/zshh"
 export OMP_THEME="catppuccin-remix"
