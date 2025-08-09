@@ -10,3 +10,6 @@ export PATH="$SHELL_CONFIG/scripts:$PATH"
 
 # --- fzf ---
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# --- enable vi(m) keybindings ---
+bindkey -v
