@@ -10,3 +10,4 @@ font-family = MesloLGS NF
 background = 24273a
 foreground = cad3f5
 theme = catppuccin-mocha
+keybind = shift+enter=text:\n
