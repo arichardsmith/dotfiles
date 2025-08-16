@@ -1,0 +1,46 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+name = "Richard Smith"
+email = "richardmcsmith@gmail.com"
+
+[ui]
+editor = "nvim"
+default-command = ["status", "--no-pager"]
+
+# Many tools expect git style conflict markers
+conflict-marker-style = "git"
+
+[aliases]
+# Move the nearest bookmark to the latest commit
+tug = [
+	"bookmark",
+	"move",
+	"--from",
+	"closest_bookmark(@)",
+	"--to",
+	"closest_nonempty(@)",
+]
+
+# Remove all empty revisions
+cleanup = ["abandon", "-r 'empty() ~ root()"]
+
+# Start a new revision based on the dev branch, falling back to main
+fresh = ["new", "-r 'coalesce(present(dev), main)'"]
+
+[revset-aliases]
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+'closest_nonempty(to)' = 'heads(::to ~ (description(exact:"") | empty()))'
+
+[templates]
+draft_commit_description = '''
+concat(
+  coalesce(description, default_commit_description, "\n"),
+  surround(
+    "\nJJ: This commit contains the following changes:\n", "",
+    indent("JJ:     ", diff.stat(72)),
+  ),
+  "\nJJ: ignore-rest\n",
+  diff.git(),
+)
+'''
