@@ -22,7 +22,7 @@ max_length = 24
 # color = "Green"
 # bg_color = "Yellow"
 # default text if the commit description is not set
-empty_text = "untitled"
+empty_text = ""
 # Surround the commit text with double-quotes
 # surround_with_quotes = true
 
@@ -33,7 +33,7 @@ type = "Bookmarks"
 separator = " "
 # Color the text will be rendered in. One of Black, Red, Green, Yellow, Blue, Magenta, Cyan, White,
 # BrightBlack, BrightRed, BrightGreen, BrightYellow, BrightBlue, BrightMagenta, BrightCyan, BrightWhite
-color = "Magenta"
+color = "BrightBlue"
 # True RGB Color can also be used like this. Do not use both color and color.TrueColor at the same time!
 # color.TrueColor = [255, 255, 255]
 # Text background color. Can also be TrueColor.
@@ -45,7 +45,7 @@ behind_symbol = "⇡"
 # Maximum length the bookmark name will be truncated to.
 # max_length = 10
 # Surround the bookmark names with double-quotes
-# surround_with_quotes = true
+surround_with_quotes = false
 
 [[module]]
 # Prints a warning if the working copy contains any conflicts, is divergent or hidden
@@ -81,7 +81,7 @@ color = "Yellow"
 [[module]]
 # Prints the amount of changes in the working copy
 type = "Metrics"
-color = "Magenta"
+color = "BrightBlue"
 # bg_color = "Yellow"
 # Controls how the changes are rendered, use {added}, {removed} and {changed} to render the number of changes.
 template = "[{changed} {added}{removed}]"

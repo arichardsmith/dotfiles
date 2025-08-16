@@ -35,16 +35,19 @@ in {
         + "$hostname"
         + "[:](bright-black)$directory"
         + "$\{custom.jj\}"
-        + "$git_branch"
         + "$line_break"
         + "$character";
 
       right_format = "$cmd_duration";
 
       directory = {
-        format = "[$path](bold)";
-        truncation_length = 3;
+        format = "[$path]($style)";
+        style = "bold bright-blue";
+        repo_root_style = "bold bright-blue";
+        before_repo_root_style = "white";
+        truncation_length = 2;
         truncation_symbol = "…/";
+        truncate_to_repo = false;
       };
 
       character = {
@@ -53,22 +56,18 @@ in {
       };
 
       username = {
-        format = "[$user]($style)";
-        style_user = "grey";
-        show_always = true;
+        format = "[$user@]($style)";
+        style_user = "white";
+        # show_always = true;
       };
 
       hostname = {
-        format = "[@$hostname]($style)";
-        style = "grey";
+        format = "[$hostname]($style)";
+        style = "white";
         aliases = {
           "Richards-MacBook-Air" = "mac";
         };
-        ssh_only = true;
-      };
-
-      git_branch = {
-        format = " [g:$branch](bright-black)";
+        ssh_only = false;
       };
 
       cmd_duration = {
@@ -76,12 +75,11 @@ in {
       };
 
       custom.jj = {
-        command = "prompt";
-        format = " [jj:](bright-black)$output";
+        command = ''starship-jj --ignore-working-copy starship prompt'';
+        format = " [jj:$output](bright-black)";
         ignore_timeout = true;
-        shell = ["starship-jj" "--ignore-working-copy" "starship"];
-        use_stdin = false;
-        when = true;
+        # Only show if we are in a jj repo
+        when = "jj --ignore-working-copy root";
       };
     };
   };
