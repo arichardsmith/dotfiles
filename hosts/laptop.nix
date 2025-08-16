@@ -25,6 +25,10 @@ in {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
+    initExtra = ''
+      # Enable vim keybindings
+      bindkey -v
+    '';
   };
 
   programs.starship = {
