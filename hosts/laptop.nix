@@ -1,9 +1,7 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   packagePacks = import ../modules/packages.nix {inherit pkgs;};
+  zsh_config = import ../config/zsh/zsh.nix {};
+  lib = pkgs.lib;
 in {
   home.username = "richardsmith";
   home.homeDirectory = "/Users/richardsmith";
@@ -21,15 +19,28 @@ in {
   # Dotfiles
   home.file.".config/starship-jj/starship-jj.toml".source = ../config/starship/starship-jj.toml;
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    initExtra = ''
-      # Enable vim keybindings
-      bindkey -v
-    '';
-  };
+  programs.zsh = lib.mkMerge [
+    zsh_config.base
+    {
+      enable = true;
+      shellAliases = lib.mkMerge [
+        zsh_config.aliases.core
+        zsh_config.aliases.dev
+        {
+          tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
+        }
+      ];
+
+      initContent = lib.concatStringsSep "\n" [
+        zsh_config.init.base
+        zsh_config.functions.dev
+        ''
+          # Ensure docker can find the vm running in .colima
+          export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
+        ''
+      ];
+    }
+  ];
 
   programs.starship = {
     enable = true;
