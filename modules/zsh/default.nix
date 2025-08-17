@@ -6,8 +6,6 @@
   # Core aliases that should be available on all systems
   coreAliases = {
     # Basic file operations
-    ls = "erd --config ls";
-    lsa = "erd --config ls --hidden";
     ".." = "cd ..";
     "..." = "cd ../..";
   };

@@ -10,6 +10,7 @@ in {
     ../modules/zsh
     ../modules/jujutsu
     ../modules/starship
+    ../modules/erdtree
   ];
 
   options.user = {
