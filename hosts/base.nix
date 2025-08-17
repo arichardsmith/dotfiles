@@ -13,6 +13,7 @@ in {
     ../modules/github
     ../modules/starship
     ../modules/erdtree
+    ../modules/ghostty
   ];
 
   options.user = {
