@@ -16,6 +16,10 @@
       EDITOR = "nvim";
     };
 
+    zsh.aliases = {
+      tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
+    };
+
     programs.starship.settings = {
       hostname = {
         aliases = {
