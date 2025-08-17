@@ -39,6 +39,10 @@ in {
   };
 
   options.host = {
+    name = lib.mkOption {
+      type = lib.types.str;
+      description = "The name for this host";
+    };
     role = lib.mkOption {
       type = lib.types.listOf (lib.types.enum [
         "development"

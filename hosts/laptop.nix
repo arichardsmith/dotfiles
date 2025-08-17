@@ -7,6 +7,8 @@
     user.username = "richardsmith";
     user.email = "richardmcsmith@gmail.com";
     user.fullName = "Richard Smith";
+
+    host.name = "laptop";
     host.role = ["development"];
 
     home.sessionVariables = {
