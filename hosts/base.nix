@@ -8,7 +8,9 @@
 in {
   imports = [
     ../modules/zsh
+    ../modules/git
     ../modules/jujutsu
+    ../modules/github
     ../modules/starship
     ../modules/erdtree
   ];
