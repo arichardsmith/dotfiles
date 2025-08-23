@@ -15,7 +15,7 @@ in {
     ../modules/starship
     ../modules/erdtree
     ../modules/ghostty
-    ../modules/docker
+    ../modules/dev_tools
   ];
 
   options.user = {
