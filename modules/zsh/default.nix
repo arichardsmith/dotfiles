@@ -12,6 +12,7 @@
 
   # Combine all functions from other modules
   additionalFunctions = lib.concatStringsSep "\n\n" config.zsh.functions;
+  initContent = lib.concatStringsSep "\n\n" config.zsh.initContent;
 in {
   options.zsh = {
     aliases = lib.mkOption {
@@ -23,6 +24,11 @@ in {
       type = lib.types.listOf lib.types.str;
       default = [];
       description = "Additional shell functions to define";
+    };
+    initContent = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "Additional shell initialization content";
     };
   };
 
@@ -41,6 +47,8 @@ in {
       initContent = ''
         # Enable vim keybindings
         bindkey -v
+
+        ${initContent}
 
         ${additionalFunctions}
       '';
