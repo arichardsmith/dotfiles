@@ -1,12 +1,5 @@
-# modules/ghostty/default.nix
-{
-  lib,
-  config,
-  ...
-}: let
-  isLaptop = config.host.name == "laptop";
-in {
-  config = lib.mkIf isLaptop {
+{...}: {
+  config = {
     # The ghostty package is currently broken, so we'll track the config manually
     # programs.ghostty = {
     #   enable = true;

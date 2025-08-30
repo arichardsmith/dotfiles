@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     # Terminal
+    ../modules/ghostty
     ../modules/shell
     ../modules/erdtree
     ../modules/bat
