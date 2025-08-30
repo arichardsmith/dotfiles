@@ -20,15 +20,21 @@
     home-manager,
     starship-jj,
     ...
-  }: {
-    homeConfigurations = {
-      laptop = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "aarch64-darwin";
-          overlays = [starship-jj.overlays.default];
-        };
-        modules = [./hosts/laptop.nix];
+  }: let
+    # Helper function to create home-manager configurations
+    mkHomeConfig = system: hostFile: home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [starship-jj.overlays.default];
       };
+      modules = [
+        ./home.nix
+        hostFile
+      ];
+    };
+  in {
+    homeConfigurations = {
+      laptop = mkHomeConfig "aarch64-darwin" ./hosts/laptop.nix;
     };
   };
 }

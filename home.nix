@@ -1,24 +1,10 @@
+# home.nix - Main home configuration
 {
   lib,
   config,
   pkgs,
   ...
-}: let
-  user = config.user;
-in {
-  imports = [
-    ../modules/zsh
-    ../modules/git
-    ../modules/bat
-    ../modules/misc_tools
-    ../modules/jujutsu
-    ../modules/github
-    ../modules/starship
-    ../modules/erdtree
-    ../modules/ghostty
-    ../modules/dev_tools
-  ];
-
+}: {
   options.user = {
     username = lib.mkOption {
       type = lib.types.str;
@@ -58,8 +44,8 @@ in {
   };
 
   config = {
-    home.username = user.username;
-    home.homeDirectory = user.homeDirectory;
+    home.username = config.user.username;
+    home.homeDirectory = config.user.homeDirectory;
     home.stateVersion = "24.05";
 
     programs.home-manager.enable = true;

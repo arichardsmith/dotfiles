@@ -1,6 +1,13 @@
 {...}: {
   imports = [
-    ./base.nix
+    ../modules/shell
+    ../modules/bat
+    ../modules/git
+    ../modules/jujutsu
+    ../modules/gh
+    ../modules/docker
+    ../modules/bun
+    ../modules/claude
   ];
 
   config = {
@@ -8,13 +15,13 @@
     user.email = "richardmcsmith@gmail.com";
     user.fullName = "Richard Smith";
 
-    host.name = "laptop";
+    host.name = "macbook-laptop";
     host.role = ["development"];
 
     home.sessionVariables = {
       DOCKER_HOST = "unix://$HOME/.colima/docker.sock";
       EDITOR = "nvim";
-      EDITOR_UI = "zed"; # Prefered IDE / UI based editor
+      EDITOR_UI = "zed"; # Preferred IDE / UI based editor
     };
 
     zsh.aliases = {
