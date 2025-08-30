@@ -1,11 +1,5 @@
-{
-  lib,
-  config,
-  ...
-}: let
-  isDevelopment = lib.elem "development" config.host.role;
-in {
-  config = lib.mkIf isDevelopment {
+{config, ...}: {
+  config = {
     # Install and configure jujutsu
     programs.jujutsu = {
       enable = true;
@@ -60,6 +54,9 @@ in {
         };
       };
     };
+
+    # Enable JJ integration in starship
+    shell.starship.enableJJ = true;
 
     # Add shell aliases and functions
     zsh.aliases = {
