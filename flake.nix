@@ -22,19 +22,27 @@
     ...
   }: let
     # Helper function to create home-manager configurations
-    mkHomeConfig = system: hostFile: home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [starship-jj.overlays.default];
+    mkHomeConfig = system: hostFile:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [starship-jj.overlays.default];
+        };
+        modules = [
+          ./home.nix
+          hostFile
+        ];
       };
-      modules = [
-        ./home.nix
-        hostFile
-      ];
-    };
   in {
     homeConfigurations = {
       laptop = mkHomeConfig "aarch64-darwin" ./hosts/laptop.nix;
+    };
+
+    templates = {
+      bun-cli = {
+        path = ./templates/bun_cli;
+        description = "Simple Bun CLI template with TypeScript support";
+      };
     };
   };
 }

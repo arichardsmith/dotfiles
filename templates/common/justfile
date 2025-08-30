@@ -1,0 +1,8 @@
+default:
+    @just --list
+
+edit:
+	${EDITOR_UI:-${EDITOR:-${VISUAL:-vi}}} .
+
+develop:
+	nix develop
