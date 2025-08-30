@@ -63,6 +63,7 @@
       jjs = "jj split";
       jja = "jj squash"; # Append current revision into previous
       jjl = "jj log -r 'latest(present(@) | ancestors(immutable_heads().., 2) | present(trunk()), 5)' --no-pager";
+      jjc = "jj commit";
     };
 
     zsh.functions = [
