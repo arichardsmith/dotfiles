@@ -12,6 +12,7 @@
     ../modules/gh
 
     # App runtimes
+    ../modules/colima
     ../modules/docker
     ../modules/bun
   ];
@@ -25,7 +26,7 @@
     host.role = ["development"];
 
     home.sessionVariables = {
-      DOCKER_HOST = "unix://$HOME/.colima/docker.sock";
+      # DOCKER_HOST = "unix://$HOME/.colima/docker.sock"; # Colima should manage this with contexts
       EDITOR = "nvim";
       EDITOR_UI = "zed"; # Preferred IDE / UI based editor
     };
