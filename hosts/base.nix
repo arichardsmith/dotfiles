@@ -9,6 +9,7 @@ in {
   imports = [
     ../modules/zsh
     ../modules/git
+    ../modules/bat
     ../modules/misc_tools
     ../modules/jujutsu
     ../modules/github

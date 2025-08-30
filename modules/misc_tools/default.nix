@@ -13,7 +13,6 @@
 
     ripgrep # Better grep
     fd # Better find
-    bat # Better cat
 
     # Compression
     unzip
