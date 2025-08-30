@@ -1,15 +1,18 @@
 {
-  "name": "my-bun-cli",
-  "version": "1.0.0",
-  "description": "A simple Bun CLI application",
-  "main": "src/index.ts",
-  "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "build": "bun build src/index.ts --outdir ./dist --target bun",
-    "start": "bun run src/index.ts"
-  },
-  "devDependencies": {
-    "bun-types": "latest"
-  },
-  "type": "module"
+	"name": "my-bun-cli",
+	"version": "0.0.0",
+	"description": "A simple Bun CLI application",
+	"main": "src/index.ts",
+	"scripts": {
+		"dev": "bun run --watch src/index.ts",
+		"format": "prettier --write src/"
+	},
+	"dependencies": {
+		"@clack/prompts": "^0.11.0"
+	},
+	"devDependencies": {
+		"bun-types": "latest",
+		"prettier": "^3.6.2"
+	},
+	"type": "module"
 }
