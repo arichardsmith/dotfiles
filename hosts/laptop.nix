@@ -1,10 +1,16 @@
 {...}: {
   imports = [
+    # Terminal
     ../modules/shell
+    ../modules/erdtree
     ../modules/bat
+
+    # Version control
     ../modules/git
     ../modules/jujutsu
     ../modules/gh
+
+    # App runtimes
     ../modules/docker
     ../modules/bun
   ];
