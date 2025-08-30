@@ -7,7 +7,6 @@
     ../modules/gh
     ../modules/docker
     ../modules/bun
-    ../modules/claude
   ];
 
   config = {
@@ -45,5 +44,9 @@
         };
       };
     };
+
+    bun.globalPackages = [
+      "@anthropic-ai/claude-code"
+    ];
   };
 }
