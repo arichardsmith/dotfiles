@@ -35,6 +35,20 @@
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
     };
 
+    # A function to init project dev environments in their own shell
+    zsh.functions = [
+      ''
+        function pdev() {
+            if [[ ! -f flake.nix ]]; then
+                echo "No flake.nix found in current directory"
+                return 1
+            fi
+
+            zsh -c "eval \"\$(nix print-dev-env | grep -v LINENO)\"; exec zsh"
+        }
+      ''
+    ];
+
     # Updating macos can clobber the nix additions to /etc/zshrc, so make sure they are added
     # to the user .zshrc
     zsh.initContent = [
