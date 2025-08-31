@@ -6,10 +6,8 @@
   customFormat = config.shell.prompt.format or null;
 
   defaultFormat =
-    "$username"
-    + "$hostname"
-    + "[:](bright-black)$directory"
-    + "$line_break$character";
+    "[╭─](overlay0) $username$hostname[/](overlay0)$directory$line_break"
+    + "[$character ](overlay0)";
 
   # Use custom format if provided, otherwise use default
   format =
