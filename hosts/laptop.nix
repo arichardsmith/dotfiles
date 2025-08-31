@@ -49,8 +49,8 @@
     ];
 
     shell.prompt.format =
-      "[╭─ $\{custom.jj\}](overlay0)$line_break"
-      + "[├╌](overlay0) $username$hostname[/](overlay0)$directory$line_break"
+      "[╭─ ](overlay0)$username$hostname$line_break"
+      + "[├╌ ](overlay0)$directory$\{custom.jj\}$line_break"
       + "[$character ](overlay0)";
 
     bun.globalPackages = [
