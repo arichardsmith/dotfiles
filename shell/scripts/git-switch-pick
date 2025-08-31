@@ -1,7 +1,0 @@
-#/bin/zsh
-
-if [ $# -eq 0 ]; then
-  git switch $(git branch | fzf)
-else
-  git switch "$@"
-fi

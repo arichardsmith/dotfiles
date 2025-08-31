@@ -1,7 +1,0 @@
-if [ "$TERM_PROGRAM" == "vscode" ]; then
-	# Edit message in vscode if running in the vscode terminal
-  GIT_EDITOR="code --wait" git commit
-else
-  # Otherwise use the default editor, usually nvim
-  git commit
-fi

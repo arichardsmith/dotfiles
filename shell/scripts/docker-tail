@@ -1,8 +1,0 @@
-#/bin/zsh
-
-# Pick a docker process and tail the logs
-
-CONTAINER_ID=$(docker ps --format '{{.Names}} => {{.ID}}' | fzf | awk -F ' => ' '{print $2}')
-if [ -n "${CONTAINER_ID}" ]; then
-  docker logs --follow "${CONTAINER_ID}"
-fi
