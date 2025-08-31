@@ -33,14 +33,6 @@
       type = lib.types.str;
       description = "The name for this host";
     };
-    role = lib.mkOption {
-      type = lib.types.listOf (lib.types.enum [
-        "development"
-        "server"
-      ]);
-      default = [];
-      description = "Roles this host performs. This will be used to configure packages and programs.";
-    };
   };
 
   config = {
