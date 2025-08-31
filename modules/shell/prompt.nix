@@ -3,12 +3,13 @@
   config,
   ...
 }: let
-  customFormat = config.shell.starship.format or null;
+  customFormat = config.shell.prompt.format or null;
 
   defaultFormat =
     "$username"
     + "$hostname"
-    + "[:](bright-black)$directory";
+    + "[:](bright-black)$directory"
+    + "$line_break$character";
 
   # Use custom format if provided, otherwise use default
   format =
@@ -16,7 +17,7 @@
     then customFormat
     else defaultFormat;
 in {
-  options.shell.starship = {
+  options.shell.prompt = {
     format = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
@@ -31,7 +32,7 @@ in {
       settings = {
         format = format;
 
-        right_format = "$cmd_duration";
+        right_format = "[$cmd_duration](overlay0)";
 
         palette = "catppuccin_mocha";
 
@@ -66,9 +67,9 @@ in {
 
         directory = {
           format = "[$path]($style)";
-          style = "bold blue";
-          repo_root_style = "bold blue";
-          before_repo_root_style = "text";
+          style = "bold teal";
+          repo_root_style = "bold teal";
+          before_repo_root_style = "teal";
           truncation_length = 2;
           truncation_symbol = "…/";
           truncate_to_repo = false;
@@ -81,22 +82,25 @@ in {
 
         username = {
           format = "[$user@]($style)";
-          style_user = "text";
+          style_user = "subtext0";
         };
 
         hostname = {
           format = "[$hostname]($style)";
-          style = "text";
+          style = "subtext0";
           ssh_only = false;
+          aliases = {
+            "Richards-MacBook-Air" = "mac";
+          };
         };
 
         cmd_duration = {
-          format = "[$duration](overlay0)";
+          format = "$duration";
         };
 
         custom.jj = {
           command = "starship-jj --ignore-working-copy starship prompt";
-          format = " [jj:$output](overlay1)";
+          format = "[$output](overlay1)";
           ignore_timeout = true;
           # Only show if we are in a jj repo
           when = "jj --ignore-working-copy root";

@@ -48,13 +48,10 @@
       ''
     ];
 
-    programs.starship.settings = {
-      hostname = {
-        aliases = {
-          "Richards-MacBook-Air" = "mac";
-        };
-      };
-    };
+    shell.prompt.format =
+      "[╭─ $\{custom.jj\}](overlay0)$line_break"
+      + "[├╌](overlay0) $username$hostname[/](overlay0)$directory$line_break"
+      + "[$character ](overlay0)";
 
     bun.globalPackages = [
       "@anthropic-ai/claude-code"

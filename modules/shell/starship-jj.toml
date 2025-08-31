@@ -15,18 +15,6 @@ exclude = []
 # search_depth = 0
 
 [[module]]
-# Prints the working copies commit text
-type = "Commit"
-# Maximum length the commit text will be truncated to.
-max_length = 24
-# color = "Green"
-# bg_color = "Yellow"
-# default text if the commit description is not set
-empty_text = ""
-# Surround the commit text with double-quotes
-# surround_with_quotes = true
-
-[[module]]
 # Prints information about bookmarks in the working copies ancestors.
 type = "Bookmarks"
 # Text that will be rendered between each bookmark.
@@ -84,7 +72,7 @@ type = "Metrics"
 color = "BrightBlue"
 # bg_color = "Yellow"
 # Controls how the changes are rendered, use {added}, {removed} and {changed} to render the number of changes.
-template = "[{changed} {added}{removed}]"
+template = "[{changed}{added}{removed}]"
 
 [module.changed_files]
 # Controlls how the number of changed files is rendered.
@@ -106,3 +94,15 @@ prefix = "-"
 # suffix = ""
 color = "Red"
 # bg_color = "Yellow"
+
+[[module]]
+# Prints the working copies commit text
+type = "Commit"
+# Maximum length the commit text will be truncated to.
+max_length = 24
+#color = "BrightBlue"
+# bg_color = "Yellow"
+# default text if the commit description is not set
+empty_text = ""
+# Surround the commit text with double-quotes
+surround_with_quotes = false
