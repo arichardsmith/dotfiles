@@ -1,27 +1,25 @@
 {
-  description = "Bun CLI development environment";
+  description = "A Nix-flake-based Bun development environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
 
-  outputs = {nixpkgs}: let
-    system = "aarch64-darwin";
-    pkgs = nixpkgs.legacyPackages.${system};
+  outputs = inputs: let
+    supportedSystems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+    forEachSupportedSystem = f:
+      inputs.nixpkgs.lib.genAttrs supportedSystems (system:
+        f {
+          pkgs = import inputs.nixpkgs {inherit system;};
+        });
   in {
-    devShells.${system}.default = pkgs.mkShell {
-      buildInputs = with pkgs; [
-        just
-        bun
-        typescript
-      ];
-
-      shellHook = ''
-        if [ -f package.json ] && [ ! -d node_modules ]; then
-          echo "Installing dependencies..."
-          bun install
-        fi
-      '';
-    };
+    devShells = forEachSupportedSystem ({pkgs}: {
+      default = pkgs.mkShell {
+        packages = with pkgs; [
+          just
+          bun
+        ];
+      };
+    });
   };
 }
