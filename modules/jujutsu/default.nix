@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   config = {
     # Install and configure jujutsu
     programs.jujutsu = {
@@ -54,6 +58,10 @@
         };
       };
     };
+
+    home.packages = [
+      pkgs.jjui
+    ];
 
     # Enable JJ integration in starship
     shell.starship.enableJJ = true;
