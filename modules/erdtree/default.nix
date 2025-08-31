@@ -14,6 +14,7 @@
     zsh.aliases = {
       ls = "erd --config ls";
       lsa = "erd --config ls --hidden";
+      ols = "/bin/ls"; # Add an alias for normal ls incase we need it
     };
   };
 }
