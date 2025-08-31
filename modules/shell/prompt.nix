@@ -1,26 +1,27 @@
-# modules/shell/prompt.nix
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
-  jjEnabled = config.shell.starship.enableJJ or false;
-  
-  baseFormat = 
+  customFormat = config.shell.starship.format or null;
+
+  defaultFormat =
     "$username"
     + "$hostname"
     + "[:](bright-black)$directory";
-    
-  formatWithJJ = baseFormat + "$\{custom.jj\}";
-  
-  finalFormat = (if jjEnabled then formatWithJJ else baseFormat) + "$line_break" + "$character";
+
+  # Use custom format if provided, otherwise use default
+  format =
+    if customFormat != null
+    then customFormat
+    else defaultFormat;
 in {
   options.shell.starship = {
-    enableJJ = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Enable JJ (Jujutsu) integration in starship prompt";
+    format = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "Custom prompt format for this host. If null, uses the default format.";
+      example = "$username$hostname[:](bright-black)$directory$git_branch";
     };
   };
 
@@ -28,7 +29,7 @@ in {
     programs.starship = {
       enable = true;
       settings = {
-        format = finalFormat;
+        format = format;
 
         right_format = "$cmd_duration";
 
@@ -92,7 +93,7 @@ in {
         cmd_duration = {
           format = "[$duration](overlay0)";
         };
-      } // lib.optionalAttrs jjEnabled {
+
         custom.jj = {
           command = "starship-jj --ignore-working-copy starship prompt";
           format = " [jj:$output](overlay1)";
@@ -101,15 +102,6 @@ in {
           when = "jj --ignore-working-copy root";
         };
       };
-    };
-
-    # Install starship-jj package when JJ integration is enabled
-    home.packages = lib.optionals jjEnabled [
-      pkgs.starship-jj
-    ];
-
-    home.file = lib.optionalAttrs jjEnabled {
-      ".config/starship-jj/starship-jj.toml".source = ./starship-jj.toml;
     };
   };
 }

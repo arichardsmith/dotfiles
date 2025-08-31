@@ -60,11 +60,14 @@
     };
 
     home.packages = [
+      pkgs.starship-jj
       pkgs.jjui
     ];
 
-    # Enable JJ integration in starship
-    shell.starship.enableJJ = true;
+    # Ensure starship-jj config is copied across
+    home.file = {
+      ".config/starship-jj/starship-jj.toml".source = ../shell/starship-jj.toml;
+    };
 
     # Add shell aliases and functions
     zsh.aliases = {
