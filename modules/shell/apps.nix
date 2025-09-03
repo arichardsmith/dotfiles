@@ -7,9 +7,10 @@
       nmap
       rsync
 
-      # File utilities
+      # Utility Apps
       ripgrep # Better grep
       fd # Better find
+      sd # Better sed
 
       # Compression
       unzip
