@@ -32,7 +32,6 @@
     };
 
     zsh.aliases = {
-      tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
     };
 
     # Updating macos can clobber the nix additions to /etc/zshrc, so make sure they are added
