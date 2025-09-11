@@ -13,6 +13,7 @@
 
     # Development tools
     ../modules/direnv
+    ../modules/neovim
 
     # App runtimes
     ../modules/colima
