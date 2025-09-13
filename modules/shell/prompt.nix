@@ -64,10 +64,8 @@ in {
         };
 
         directory = {
-          format = "[$path]($style)";
+          format = "[$path ]($style)";
           style = "bold teal";
-          repo_root_style = "bold teal";
-          before_repo_root_style = "teal";
           truncation_length = 2;
           truncation_symbol = "…/";
           truncate_to_repo = false;
