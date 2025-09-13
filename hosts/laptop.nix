@@ -26,6 +26,10 @@
     user.email = "richardmcsmith@gmail.com";
     user.fullName = "Richard Smith";
 
+    home.sessionPath = [
+      "$HOME/.local/bin"
+    ];
+
     home.sessionVariables = {
       # DOCKER_HOST = "unix://$HOME/.colima/docker.sock"; # Colima should manage this with contexts
       EDITOR = "nvim";
