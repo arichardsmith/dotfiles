@@ -21,7 +21,7 @@
 
     # App runtimes
     ../modules/colima
-    ../modules/docker
+    (import ../modules/docker {includeLazyDocker = true;})
     ../modules/bun
   ];
 

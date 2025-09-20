@@ -1,4 +1,7 @@
-{pkgs, ...}: {
+{includeLazyDocker ? false}: {
+  pkgs,
+  ...
+}: {
   config = {
     home.packages = with pkgs; [
       docker
@@ -7,6 +10,10 @@
 
     zsh.aliases = {
       dc = "docker compose";
+    };
+
+    programs.lazydocker = {
+      enable = includeLazyDocker;
     };
   };
 }
