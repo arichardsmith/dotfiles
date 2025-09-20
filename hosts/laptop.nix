@@ -15,6 +15,9 @@
     ../modules/direnv
     ../modules/neovim
 
+    # System management
+    ../modules/btop
+
     # App runtimes
     ../modules/colima
     ../modules/docker
