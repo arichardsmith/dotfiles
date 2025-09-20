@@ -5,6 +5,7 @@
     ../modules/shell
     ../modules/erdtree
     ../modules/bat
+    ../modules/zoxide
 
     # Version control
     ../modules/git
