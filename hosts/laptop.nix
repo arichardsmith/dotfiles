@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     # Terminal
     ../modules/ghostty
@@ -25,6 +25,10 @@
     user.username = "richardsmith";
     user.email = "richardmcsmith@gmail.com";
     user.fullName = "Richard Smith";
+
+    home.packages = with pkgs; [
+      cyme
+    ];
 
     home.sessionPath = [
       "$HOME/.local/bin"
