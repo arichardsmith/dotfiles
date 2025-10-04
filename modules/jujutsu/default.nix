@@ -39,6 +39,7 @@
         };
 
         revset-aliases = {
+          "wip()" = "description(glob:\"wip:*\")";
           "closest_bookmark(to)" = "heads(::to & bookmarks())";
           "closest_nonempty(to)" = "heads(::to ~ (description(exact:\"\") | empty()))";
         };
