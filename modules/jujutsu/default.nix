@@ -28,7 +28,7 @@
             "--from"
             "closest_bookmark(@)"
             "--to"
-            "closest_nonempty(@)"
+            "closest_pushable(@)"
           ];
 
           # Remove all empty revisions
@@ -39,9 +39,9 @@
         };
 
         revset-aliases = {
-          "wip()" = "description(glob:\"wip:*\")";
+          "wip()" = "description(glob-i:\"wip:*\")";
           "closest_bookmark(to)" = "heads(::to & bookmarks())";
-          "closest_nonempty(to)" = "heads(::to ~ (description(exact:\"\") | empty()))";
+          "closest_pushable(to)" = "heads(::to ~ (description(exact:\"\") | empty() | descendants(wip())))";
         };
 
         templates = {
@@ -74,7 +74,7 @@
     zsh.aliases = {
       jjs = "jj split";
       jja = "jj squash"; # Append current revision into previous
-      jjl = "jj log -r 'main:: | bookmarks() ~ ::trunk()' --no-pager";
+      jjl = "jj log -r 'main@origin:: | bookmarks() ~ ::trunk()' --no-pager";
       jjc = "jj commit";
     };
 
