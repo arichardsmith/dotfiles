@@ -15,6 +15,7 @@
     # Development tools
     ../modules/direnv
     ../modules/neovim
+    ../modules/nix
 
     # System management
     ../modules/btop
