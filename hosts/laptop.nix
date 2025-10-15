@@ -58,6 +58,11 @@
       ''
     ];
 
+    # Install custom scripts to PATH
+    zsh.scripts = {
+      unlock-drive = true;
+    };
+
     shell.prompt.format =
       "[╭─ ](overlay0)$username$hostname$line_break"
       + "[├╌ ](overlay0)$directory$\{custom.jj\}$line_break"
