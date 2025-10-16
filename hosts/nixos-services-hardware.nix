@@ -2,7 +2,7 @@
 # This file should be replaced with the actual hardware configuration from your NixOS installation
 #
 # On the NixOS VM, generate the real hardware config with:
-#   sudo nixos-generate-config --show-hardware-config > ~/dotfiles/hosts/hardware-configuration.nix
+#   sudo nixos-generate-config --show-hardware-config > ~/dotfiles/hosts/nixos-services-hardware.nix
 #
 # Then commit it to the repo
 {...}: {

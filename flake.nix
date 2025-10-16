@@ -41,7 +41,7 @@
 
     # NixOS system configurations
     nixosConfigurations = {
-      nixos-vm = nixpkgs.lib.nixosSystem {
+      nixos-services = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           # Include Home Manager as a NixOS module
@@ -52,7 +52,7 @@
             # Add overlays for home-manager
             nixpkgs.overlays = [starship-jj.overlays.default];
           }
-          ./hosts/nas-services.nix
+          ./hosts/nixos-services.nix
         ];
       };
     };
