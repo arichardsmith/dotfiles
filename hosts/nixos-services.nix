@@ -10,11 +10,16 @@
   system.stateVersion = "24.05";
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot.enable = false;
+    grub = {
+      enable = true;
+      device = "/dev/sda";
+    };
+  };
 
   # Networking
-  networking.hostName = "nas-services";
+  networking.hostName = "nixos-services";
   networking.networkmanager.enable = true;
 
   # Enable nix flakes
