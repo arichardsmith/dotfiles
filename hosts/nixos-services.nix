@@ -3,7 +3,7 @@
     # Import the hardware configuration generated during NixOS installation
     # This file defines filesystems, boot settings, etc.
     # Generate it with: nixos-generate-config --show-hardware-config > hardware-configuration.nix
-    ./hardware-configuration.nix
+    ./nixos-services-hardware.nix
   ];
 
   # NixOS system configuration
