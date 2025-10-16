@@ -24,6 +24,15 @@
   # QEMU Guest Agent (for Proxmox VM integration)
   services.qemu-guest-agent.enable = true;
 
+  # SSH configuration
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = true; # Allow password initially, disable after SSH key setup
+    };
+  };
+
   # Define your user
   users.users.richardsmith = {
     isNormalUser = true;
