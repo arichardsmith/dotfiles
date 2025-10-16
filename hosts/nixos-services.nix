@@ -1,4 +1,4 @@
-{...}: {
+{ pkgs, ...}: {
   imports = [
     # Import the hardware configuration generated during NixOS installation
     # This file defines filesystems, boot settings, etc.
@@ -47,6 +47,7 @@
 
   # Define your user
   users.users.richardsmith = {
+    shell = pkgs.zsh;
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager" "docker"];
     initialPassword = "changeme"; # Change this after first login
