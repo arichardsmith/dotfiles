@@ -55,7 +55,7 @@
   users.users.richardsmith = {
     shell = pkgs.zsh;
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "docker"];
+    extraGroups = ["wheel" "networkmanager" "docker" "admin"];
     initialPassword = "changeme"; # Change this after first login
   };
 
