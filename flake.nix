@@ -56,12 +56,5 @@
         ];
       };
     };
-
-    templates = {
-      bun_cli = {
-        path = ./templates/bun_cli;
-        description = "Simple Bun CLI template with TypeScript support";
-      };
-    };
   };
 }
