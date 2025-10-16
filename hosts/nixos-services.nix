@@ -4,6 +4,9 @@
     # This file defines filesystems, boot settings, etc.
     # Generate it with: nixos-generate-config --show-hardware-config > hardware-configuration.nix
     ./nixos-services-hardware.nix
+
+    # Ensure terminfo is available at the OS level
+    ../modules/ghostty/terminfo.nix
   ];
 
   # NixOS system configuration
@@ -65,7 +68,6 @@
       ../modules/erdtree
       ../modules/bat
       ../modules/zoxide
-      ../modules/ghostty/terminfo.nix
 
       # Version control
       ../modules/git
