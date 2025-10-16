@@ -7,6 +7,8 @@
 
     # Ensure terminfo is available at the OS level
     ../../modules/ghostty/terminfo.nix
+
+    ../../modules/avahi
   ];
 
   # NixOS system configuration
