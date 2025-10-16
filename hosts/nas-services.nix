@@ -21,6 +21,9 @@
     "d /etc/services 0755 root root -"
   ];
 
+  # QEMU Guest Agent (for Proxmox VM integration)
+  services.qemu-guest-agent.enable = true;
+
   # Define your user
   users.users.richardsmith = {
     isNormalUser = true;
