@@ -34,8 +34,27 @@
         ];
       };
   in {
+    # Standalone Home Manager configurations (macOS)
     homeConfigurations = {
       laptop = mkHomeConfig "aarch64-darwin" ./hosts/laptop.nix;
+    };
+
+    # NixOS system configurations
+    nixosConfigurations = {
+      nixos-vm = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          # Include Home Manager as a NixOS module
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            # Add overlays for home-manager
+            nixpkgs.overlays = [starship-jj.overlays.default];
+          }
+          ./hosts/nas-services.nix
+        ];
+      };
     };
 
     templates = {
