@@ -1,4 +1,4 @@
-{ pkgs, ...}: {
+{pkgs, ...}: {
   imports = [
     # Import the hardware configuration generated during NixOS installation
     # This file defines filesystems, boot settings, etc.
@@ -44,6 +44,9 @@
       PasswordAuthentication = true; # Allow password initially, disable after SSH key setup
     };
   };
+
+  # Enable zsh at the OS level
+  programs.zsh.enable = true;
 
   # Define your user
   users.users.richardsmith = {
