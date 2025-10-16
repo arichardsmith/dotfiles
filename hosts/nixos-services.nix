@@ -65,6 +65,7 @@
       ../modules/erdtree
       ../modules/bat
       ../modules/zoxide
+      ../modules/ghostty/terminfo.nix
 
       # Version control
       ../modules/git
