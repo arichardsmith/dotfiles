@@ -3,10 +3,10 @@
     # Import the hardware configuration generated during NixOS installation
     # This file defines filesystems, boot settings, etc.
     # Generate it with: nixos-generate-config --show-hardware-config > hardware-configuration.nix
-    ./nixos-services-hardware.nix
+    ./hardware-configuration.nix
 
     # Ensure terminfo is available at the OS level
-    ../modules/ghostty/terminfo.nix
+    ../../modules/ghostty/terminfo.nix
   ];
 
   # NixOS system configuration
@@ -22,7 +22,7 @@
   };
 
   # Networking
-  networking.hostName = "nixos-services";
+  networking.hostName = "nas-services";
   networking.networkmanager.enable = true;
 
   # Enable nix flakes
@@ -62,25 +62,25 @@
   # Home Manager configuration
   home-manager.users.richardsmith = {
     imports = [
-      ../home.nix
+      ../../home.nix
       # Terminal
-      ../modules/shell
-      ../modules/erdtree
-      ../modules/bat
-      ../modules/zoxide
+      ../../modules/shell
+      ../../modules/erdtree
+      ../../modules/bat
+      ../../modules/zoxide
 
       # Version control
-      ../modules/git
-      ../modules/gh
+      ../../modules/git
+      ../../modules/gh
 
       # Development tools
-      ../modules/neovim
-      ../modules/nix
+      ../../modules/neovim
+      ../../modules/nix
 
       # System management
-      ../modules/btop
+      ../../modules/btop
 
-      (import ../modules/docker {includeLazyDocker = true;})
+      (import ../../modules/docker {includeLazyDocker = true;})
     ];
 
     config = {
