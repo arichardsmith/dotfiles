@@ -13,6 +13,14 @@
   # Enable nix flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  # Docker setup
+  virtualisation.docker.enable = true;
+
+  # Create /etc/services directory for docker-compose stacks
+  systemd.tmpfiles.rules = [
+    "d /etc/services 0755 root root -"
+  ];
+
   # Define your user
   users.users.richardsmith = {
     isNormalUser = true;
