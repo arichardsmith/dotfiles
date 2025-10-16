@@ -22,7 +22,8 @@
   ];
 
   # QEMU Guest Agent (for Proxmox VM integration)
-  services.qemu-guest-agent.enable = true;
+  # TODO: Find correct option name for qemu-guest-agent
+  # services.qemuGuest.enable = true;
 
   # SSH configuration
   services.openssh = {
