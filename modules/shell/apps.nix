@@ -11,6 +11,7 @@
       ripgrep # Better grep
       fd # Better find
       sd # Better sed
+      just # Better make
 
       # Compression
       unzip
