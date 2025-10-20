@@ -17,6 +17,9 @@
       unzip
       gzip
 
+      # Encryption
+      age
+
       # System monitoring
       htop
       ncdu # Disk usage analyzer
