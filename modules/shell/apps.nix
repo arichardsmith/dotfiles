@@ -12,6 +12,7 @@
       fd # Better find
       sd # Better sed
       just # Better make
+      duf # Better df
 
       # Compression
       unzip
