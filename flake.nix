@@ -36,7 +36,7 @@
   in {
     # Standalone Home Manager configurations (macOS)
     homeConfigurations = {
-      laptop = mkHomeConfig "aarch64-darwin" ./hosts/laptop.nix;
+      laptop = mkHomeConfig "aarch64-darwin" ./hosts/laptop;
     };
 
     # NixOS system configurations

@@ -1,29 +1,29 @@
 {pkgs, ...}: {
   imports = [
     # Terminal
-    ../modules/ghostty
-    ../modules/shell
-    ../modules/erdtree
-    ../modules/bat
-    ../modules/zoxide
+    ../../modules/ghostty
+    ../../modules/shell
+    ../../modules/erdtree
+    ../../modules/bat
+    ../../modules/zoxide
 
     # Version control
-    ../modules/git
-    ../modules/jujutsu
-    ../modules/gh
+    ../../modules/git
+    ../../modules/jujutsu
+    ../../modules/gh
 
     # Development tools
-    ../modules/direnv
-    ../modules/neovim
-    ../modules/nix
+    ../../modules/direnv
+    ../../modules/neovim
+    ../../modules/nix
 
     # System management
-    ../modules/btop
+    ../../modules/btop
 
     # App runtimes
-    ../modules/colima
-    ../modules/docker
-    ../modules/bun
+    ../../modules/colima
+    ../../modules/docker
+    ../../modules/bun
   ];
 
   config = {
