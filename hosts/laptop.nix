@@ -60,6 +60,7 @@
 
     # Install custom scripts to PATH
     zsh.scripts = {
+      ijs = true; # Add a javascript repl
       unlock-drive = true;
     };
 
