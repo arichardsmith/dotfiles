@@ -82,7 +82,7 @@
       # System management
       ../../modules/btop
 
-      (import ../../modules/docker {includeLazyDocker = true;})
+      ../../modules/docker
     ];
 
     config = {
@@ -94,6 +94,8 @@
       home.sessionVariables = {
         EDITOR = "nvim";
       };
+
+      docker.lazyDocker.enable = true;
 
       zsh.initContent = [];
     };

@@ -22,7 +22,7 @@
 
     # App runtimes
     ../modules/colima
-    (import ../modules/docker {includeLazyDocker = true;})
+    ../modules/docker
     ../modules/bun
   ];
 
@@ -44,6 +44,8 @@
       EDITOR = "nvim";
       EDITOR_UI = "zed"; # Preferred IDE / UI based editor
     };
+
+    docker.lazyDocker.enable = true;
 
     zsh.aliases = {
     };

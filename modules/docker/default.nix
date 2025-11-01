@@ -1,7 +1,11 @@
-{includeLazyDocker ? false}: {
+{
+  config,
+  lib,
   pkgs,
   ...
 }: {
+  options.docker.lazyDocker.enable = lib.mkEnableOption "lazy docker";
+
   config = {
     home.packages = with pkgs; [
       docker
@@ -13,7 +17,7 @@
     };
 
     programs.lazydocker = {
-      enable = includeLazyDocker;
+      enable = config.docker.lazyDocker.enable;
     };
   };
 }
