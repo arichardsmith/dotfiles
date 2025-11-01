@@ -9,10 +9,32 @@
     # Basic file operations
     ".." = "cd ..";
     "..." = "cd ../..";
+    "...." = "cd ../../..";
   };
 
+  # zsh functions available on all systems
+  # These __must__ be portable between Darwin and Linux
+  coreFunctions = [
+    ''
+      mkcd () {
+      	\mkdir -p "$1"
+       	cd "$1"
+      }
+    ''
+    ''
+      tmpdir () {
+      	cd "$(mktemp -d)"
+      	chmod 0700 .
+      	if [[ $# -eq 1 ]]; then
+      		\mkdir -p "$1"
+      		cd "$1"
+      	fi
+      }
+    ''
+  ];
+
   # Combine all functions from other modules
-  additionalFunctions = lib.concatStringsSep "\n\n" config.zsh.functions;
+  additionalFunctions = lib.concatStringsSep "\n\n" (coreFunctions ++ config.zsh.functions);
   initContent = lib.concatStringsSep "\n\n" config.zsh.initContent;
 
   # Filter enabled scripts and create derivations
