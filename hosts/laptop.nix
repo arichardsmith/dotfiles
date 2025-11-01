@@ -32,7 +32,7 @@
     user.fullName = "Richard Smith";
 
     home.packages = with pkgs; [
-      cyme
+      cyme # List system USB buses and devices. A modern cross-platform lsusb
     ];
 
     home.sessionPath = [
