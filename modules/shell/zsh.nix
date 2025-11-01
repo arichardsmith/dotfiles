@@ -36,12 +36,6 @@
   # Combine all functions from other modules
   additionalFunctions = lib.concatStringsSep "\n\n" (coreFunctions ++ config.zsh.functions);
   initContent = lib.concatStringsSep "\n\n" config.zsh.initContent;
-
-  # Filter enabled scripts and create derivations
-  scriptDerivations = lib.mapAttrsToList (
-    name: _:
-      pkgs.writeScriptBin name (builtins.readFile (./scripts + "/${name}.sh"))
-  ) (lib.filterAttrs (_name: enabled: enabled) config.zsh.scripts);
 in {
   options.zsh = {
     aliases = lib.mkOption {
@@ -78,6 +72,15 @@ in {
   };
 
   config = {
+    # Set default scripts - can be overridden by user config
+    zsh.scripts.copy = lib.mkDefault true;
+    zsh.scripts.ijs = lib.mkDefault true;
+    zsh.scripts.now = lib.mkDefault true;
+    zsh.scripts.pasta = lib.mkDefault true;
+    zsh.scripts.plist = lib.mkDefault true;
+    zsh.scripts.today = lib.mkDefault true;
+    zsh.scripts.unlock-drive = lib.mkDefault false;
+
     programs.zsh = {
       enable = true;
 
@@ -100,6 +103,9 @@ in {
     };
 
     # Add selected scripts to the user's PATH
-    home.packages = scriptDerivations;
+    home.packages = lib.mapAttrsToList (
+      name: _:
+        pkgs.writeScriptBin name (builtins.readFile (./scripts + "/${name}.sh"))
+    ) (lib.filterAttrs (_name: enabled: enabled) config.zsh.scripts);
   };
 }
