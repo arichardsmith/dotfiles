@@ -4,7 +4,7 @@ set -u
 
 show_help() {
   cat << EOF
-Usage: jsrepl [--bun|--deno|--node]
+Usage: ijs [--bun|--deno|--node]
 
 Open an interactive JavaScript REPL.
 

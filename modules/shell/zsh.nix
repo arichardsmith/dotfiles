@@ -74,7 +74,6 @@ in {
   config = {
     # Set default scripts - can be overridden by user config
     zsh.scripts.copy = lib.mkDefault true;
-    zsh.scripts.ijs = lib.mkDefault false;
     zsh.scripts.now = lib.mkDefault true;
     zsh.scripts.pasta = lib.mkDefault true;
     zsh.scripts.plist = lib.mkDefault true;

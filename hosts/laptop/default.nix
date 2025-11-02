@@ -15,7 +15,6 @@
     # Development tools
     ../../modules/direnv
     ../../modules/neovim
-    ../../modules/nix
 
     # System management
     ../../modules/btop
@@ -23,7 +22,6 @@
     # App runtimes
     ../../modules/colima
     ../../modules/docker
-    ../../modules/bun
   ];
 
   config = {
@@ -62,7 +60,6 @@
 
     # Install custom scripts to PATH
     zsh.scripts = {
-      ijs = true; # Add a javascript repl
       unlock-drive = true;
     };
 
@@ -70,9 +67,5 @@
       "[╭─ ](overlay0)$username$hostname$line_break"
       + "[├╌ ](overlay0)$directory$\{custom.jj\}$line_break"
       + "[$character ](overlay0)";
-
-    bun.globalPackages = [
-      "@anthropic-ai/claude-code"
-    ];
   };
 }
