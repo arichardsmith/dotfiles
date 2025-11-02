@@ -46,7 +46,7 @@
     enable = true;
     settings = {
       PermitRootLogin = "no";
-      PasswordAuthentication = true; # Allow password initially, disable after SSH key setup
+      PasswordAuthentication = false;
     };
   };
 
