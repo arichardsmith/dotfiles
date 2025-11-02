@@ -94,6 +94,12 @@ in {
           format = "$duration";
         };
 
+        env_var.DEV_ENV = {
+          variable = "DEV_ENV_ACTIVE";
+          format = "[dev]($style) ";
+          style = "bold yellow";
+        };
+
         custom.jj = {
           command = "starship-jj --ignore-working-copy starship prompt";
           format = "[$output](overlay1)";

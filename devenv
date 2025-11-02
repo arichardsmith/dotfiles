@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Activate the dev environment in the current shell, avoid swapping to a new shell without our home config
+
+FLAKE_PATH="$HOME/dev/env"
+
+eval "$(nix develop "$FLAKE_PATH" --command bash -c 'export -p')"
+
+# Start colima if available and not running
+if command -v colima &>/dev/null; then
+	if ! colima status &>/dev/null; then
+		echo "Starting Colima..."
+		colima start
+	fi
+fi
+
+export DEV_ENV_ACTIVE=1
