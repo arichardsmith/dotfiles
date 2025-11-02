@@ -79,6 +79,7 @@ in {
     zsh.scripts.plist = lib.mkDefault true;
     zsh.scripts.today = lib.mkDefault true;
     zsh.scripts.unlock-drive = lib.mkDefault false;
+    zsh.scripts.unlock-ssh = lib.mkDefault false;
 
     programs.zsh = {
       enable = true;
