@@ -8,6 +8,7 @@
 
   scripts = {
     ijs = ./scripts/ijs.sh;
+    pkq = ./scripts/pkq.sh;
   };
 
   # Add globally installed bun packages to the PATH
