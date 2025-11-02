@@ -59,6 +59,10 @@
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager" "docker" "admin"];
     initialPassword = "changeme"; # Change this after first login
+
+    openssh.authorizedKeys.keys = [
+      (builtins.readFile ../../ssh_keys/daily_key.pub)
+    ];
   };
 
   # Home Manager configuration
