@@ -19,7 +19,8 @@
     # System management
     ../../modules/btop
 
-    # Apss
+    # Apps
+    ../../modules/rclone
     ../../modules/bitwarden
 
     # App runtimes
