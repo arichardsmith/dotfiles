@@ -41,6 +41,7 @@
       # DOCKER_HOST = "unix://$HOME/.colima/docker.sock"; # Colima should manage this with contexts
       EDITOR = "nvim";
       EDITOR_UI = "zed"; # Preferred IDE / UI based editor
+      COLIMA_INIT = "1"; # Starts colima when activating dev shells
     };
 
     docker.lazyDocker.enable = true;
@@ -60,6 +61,7 @@
 
     # Install custom scripts to PATH
     zsh.scripts = {
+      dev-env = true;
       unlock-drive = true;
     };
 
