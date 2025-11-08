@@ -19,6 +19,9 @@
     # System management
     ../../modules/btop
 
+    # Apss
+    ../../modules/bitwarden
+
     # App runtimes
     ../../modules/colima
     ../../modules/docker
