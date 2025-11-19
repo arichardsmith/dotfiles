@@ -22,6 +22,7 @@
     # Apps
     ../../modules/rclone
     ../../modules/bitwarden
+    ../../modules/qqqa
 
     # App runtimes
     ../../modules/colima
