@@ -7,6 +7,7 @@
       dig
       nmap
       rsync
+      mtr # Trace route
 
       # Utility Apps
       ripgrep # Better grep
