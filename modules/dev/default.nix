@@ -4,6 +4,7 @@
     (import ./js.nix {inherit pkgs;})
     (import ./rust.nix {inherit pkgs;})
     (import ./go.nix {inherit pkgs;})
+    (import ./gis.nix {inherit pkgs;})
     (import ./nix.nix {inherit pkgs;})
     (import ./tools.nix {inherit pkgs;})
   ];

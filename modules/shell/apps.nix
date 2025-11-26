@@ -3,6 +3,7 @@
     home.packages = with pkgs; [
       # Network utilities
       curl
+      curlie
       dig
       nmap
       rsync
@@ -13,6 +14,7 @@
       sd # Better sed
       just # Better make
       duf # Better df
+      fzf
 
       # Compression
       unzip

@@ -5,5 +5,6 @@
     (writeShellScriptBin "sg" ''
       exec ${ast-grep}/bin/ast-grep "$@"
     '')
+    # ngrok - unfree and unneeded?
   ];
 }
