@@ -55,8 +55,8 @@
     # NixOS system configurations
     nixosConfigurations = {
       nas-services = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
+          {nixpkgs.hostPlatform = "x86_64-linux";}
           # Include Home Manager as a NixOS module
           home-manager.nixosModules.home-manager
           {

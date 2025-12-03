@@ -3,10 +3,12 @@
     programs.git = {
       enable = true;
 
-      userName = config.user.fullName;
-      userEmail = config.user.email;
+      settings = {
+        user = {
+          name = config.user.fullName;
+          email = config.user.email;
+        };
 
-      extraConfig = {
         init = {
           defaultBranch = "main";
         };
