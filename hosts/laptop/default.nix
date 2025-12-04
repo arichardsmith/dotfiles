@@ -39,6 +39,7 @@
       caddy # Used to handle .localhost domains
       ffmpeg
       monitorcontrol # Allows managing external monitor brightness
+      devenv
     ];
 
     home.sessionPath = [
