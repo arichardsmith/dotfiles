@@ -24,11 +24,16 @@
     # Helper function to create home-manager configurations
     mkHomeConfig = system: hostFile:
       home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [starship-jj.overlays.default];
-        };
+        pkgs = nixpkgs.legacyPackages.${system};
         modules = [
+          {
+            # Create a corrected overlay that doesn't use deprecated prev.system
+            nixpkgs.overlays = [
+              (final: prev: {
+                starship-jj = starship-jj.packages.${system}.default;
+              })
+            ];
+          }
           ./home.nix
           hostFile
         ];
@@ -36,9 +41,7 @@
 
     # Helper to create devShells for each system
     mkDevShells = system: let
-      pkgs = import nixpkgs {
-        inherit system;
-      };
+      pkgs = nixpkgs.legacyPackages.${system};
       devEnv = import ./modules/dev {inherit pkgs;};
     in {
       default = pkgs.mkShell {
