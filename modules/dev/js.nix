@@ -2,7 +2,7 @@
   packages = with pkgs; [
     bun
     deno
-    nodejs
+    nodejs_22 # Pinning to v22 as that's what work requires and I haven't got time to set up a custom flake
     nodePackages.pnpm
   ];
 
