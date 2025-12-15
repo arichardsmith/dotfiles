@@ -38,17 +38,6 @@
           hostFile
         ];
       };
-
-    # Helper to create devShells for each system
-    mkDevShells = system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      devEnv = import ./modules/dev {inherit pkgs;};
-    in {
-      default = pkgs.mkShell {
-        packages = devEnv.default.packages;
-        shellHook = devEnv.default.shellHook;
-      };
-    };
   in {
     # Standalone Home Manager configurations (macOS)
     homeConfigurations = {
@@ -71,12 +60,6 @@
           ./hosts/nas-services
         ];
       };
-    };
-
-    # Dev environments
-    devShells = {
-      x86_64-linux = mkDevShells "x86_64-linux";
-      aarch64-darwin = mkDevShells "aarch64-darwin";
     };
   };
 }

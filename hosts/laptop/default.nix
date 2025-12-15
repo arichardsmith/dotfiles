@@ -71,7 +71,6 @@
 
     # Install custom scripts to PATH
     zsh.scripts = {
-      dev-env = true;
       unlock-drive = true;
     };
 
