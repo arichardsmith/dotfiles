@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  scriptToPackage = import ../../lib/script_to_package.nix {inherit pkgs;};
+in {
   imports = [
     # Terminal
     ../../modules/ghostty
@@ -41,6 +43,9 @@
       ffmpeg
       monitorcontrol # Allows managing external monitor brightness
       devenv
+
+      (scriptToPackage "unlock-drive" ./scripts/unlock-drive.sh)
+      (scriptToPackage "unlock-ssh" ./scripts/unlock-ssh.sh)
     ];
 
     home.sessionPath = [
@@ -48,10 +53,8 @@
     ];
 
     home.sessionVariables = {
-      # DOCKER_HOST = "unix://$HOME/.colima/docker.sock"; # Colima should manage this with contexts
       EDITOR = "nvim";
       EDITOR_UI = "zed"; # Preferred IDE / UI based editor
-      COLIMA_INIT = "1"; # Starts colima when activating dev shells
     };
 
     docker.lazyDocker.enable = true;
@@ -68,11 +71,6 @@
         fi
       ''
     ];
-
-    # Install custom scripts to PATH
-    zsh.scripts = {
-      unlock-drive = true;
-    };
 
     shell.prompt.format =
       "[╭─ ](overlay0)$username$hostname $env_var$line_break"

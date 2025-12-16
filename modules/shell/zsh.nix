@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: let
+  scriptToPackage = import ../../lib/script_to_package.nix {inherit pkgs;};
+
   # Core aliases that should be available on all systems
   coreAliases = {
     # Basic file operations
@@ -53,34 +55,9 @@ in {
       default = [];
       description = "Additional shell initialization content";
     };
-    scripts = lib.mkOption {
-      type = lib.types.attrsOf lib.types.bool;
-      default = {};
-      description = ''
-        Scripts to install as executable commands from modules/shell/scripts/.
-        Attribute names become the command names and should match the script filename (without .sh).
-        Set to `true` to enable a script, `false` to disable it.
-      '';
-      example = lib.literalExpression ''
-        {
-          unlock-drive = true;  # Installs unlock-drive command from scripts/unlock-drive.sh
-          backup-system = true; # Installs backup-system command from scripts/backup-system.sh
-          old-script = false;   # Disabled
-        }
-      '';
-    };
   };
 
   config = {
-    # Set default scripts - can be overridden by user config
-    zsh.scripts.copy = lib.mkDefault true;
-    zsh.scripts.now = lib.mkDefault true;
-    zsh.scripts.pasta = lib.mkDefault true;
-    zsh.scripts.plist = lib.mkDefault true;
-    zsh.scripts.today = lib.mkDefault true;
-    zsh.scripts.unlock-drive = lib.mkDefault false;
-    zsh.scripts.unlock-ssh = lib.mkDefault false;
-
     programs.zsh = {
       enable = true;
 
@@ -103,9 +80,12 @@ in {
     };
 
     # Add selected scripts to the user's PATH
-    home.packages = lib.mapAttrsToList (
-      name: _:
-        pkgs.writeScriptBin name (builtins.readFile (./scripts + "/${name}.sh"))
-    ) (lib.filterAttrs (_name: enabled: enabled) config.zsh.scripts);
+    home.packages = [
+      (scriptToPackage "copy" ./scripts/copy.sh)
+      (scriptToPackage "now" ./scripts/now.sh)
+      (scriptToPackage "pasta" ./scripts/pasta.sh)
+      (scriptToPackage "plist" ./scripts/plist.sh)
+      (scriptToPackage "today" ./scripts/today.sh)
+    ];
   };
 }
