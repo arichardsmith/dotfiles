@@ -3,6 +3,7 @@
     ./ast-grep
     ./bat
     ./bitwarden
+    ./btop
     ./colima
     ./direnv
     ./docker
