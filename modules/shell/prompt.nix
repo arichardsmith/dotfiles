@@ -100,8 +100,8 @@ in {
           style = "bold yellow";
         };
 
-        env_var.DEVENV_ROOT = {
-          variable = "DEVENV_ROOT";
+        env_var.DIRENV_DIR = {
+          variable = "DIRENV_DIR";
           format = "[dev]($style) ";
           style = "bold yellow";
         };
