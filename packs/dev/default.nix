@@ -9,6 +9,7 @@ in {
   imports = [
     ./js.nix
     ./nix.nix
+    ./python.nix
   ];
 
   config = lib.mkIf cfg.enable {
