@@ -1,5 +1,5 @@
 {
-  description = "Home Manager flake for testing";
+  description = "Home manager flake for my machines";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -25,7 +25,10 @@
     mkHomeConfig = system: hostFile: let
       pkgs = nixpkgs.legacyPackages.${system};
       lib = pkgs.lib.extend (final: prev: {
-        helpers = import ./lib {lib = final; inherit pkgs;};
+        helpers = import ./lib {
+          lib = final;
+          inherit pkgs;
+        };
       });
     in
       home-manager.lib.homeManagerConfiguration {
@@ -46,25 +49,7 @@
   in {
     # Standalone Home Manager configurations (macOS)
     homeConfigurations = {
-      laptop = mkHomeConfig "aarch64-darwin" ./hosts/laptop;
-    };
-
-    # NixOS system configurations
-    nixosConfigurations = {
-      nas-services = nixpkgs.lib.nixosSystem {
-        modules = [
-          {nixpkgs.hostPlatform = "x86_64-linux";}
-          # Include Home Manager as a NixOS module
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            # Add overlays for home-manager
-            nixpkgs.overlays = [starship-jj.overlays.default];
-          }
-          ./hosts/nas-services
-        ];
-      };
+      laptop = mkHomeConfig "aarch64-darwin" ./machines/laptop;
     };
   };
 }
