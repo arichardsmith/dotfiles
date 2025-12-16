@@ -1,34 +1,19 @@
 {
-  lib,
   config,
+  pkgs,
+  lib,
   ...
 }: let
-  customFormat = config.shell.prompt.format or null;
+  cfg = config.programs.starship;
 
   defaultFormat =
     "[╭─](overlay0) $username$hostname[/](overlay0)$directory$line_break"
     + "[$character ](overlay0)";
-
-  # Use custom format if provided, otherwise use default
-  format =
-    if customFormat != null
-    then customFormat
-    else defaultFormat;
 in {
-  options.shell.prompt = {
-    format = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
-      default = null;
-      description = "Custom prompt format for this host. If null, uses the default format.";
-      example = "$username$hostname[:](bright-black)$directory$git_branch";
-    };
-  };
-
   config = {
     programs.starship = {
-      enable = true;
-      settings = {
-        format = format;
+      settings = lib.mkIf cfg.enable {
+        format = lib.mkDefault defaultFormat;
 
         right_format = "[$cmd_duration](overlay0)";
 
@@ -106,7 +91,7 @@ in {
           style = "bold yellow";
         };
 
-        custom.jj = {
+        custom.jj = lib.mkIf config.programs.jujutsu.enable {
           command = "starship-jj --ignore-working-copy starship prompt";
           format = "[$output](overlay1)";
           ignore_timeout = true;
@@ -114,6 +99,13 @@ in {
           when = "jj --ignore-working-copy root";
         };
       };
+    };
+
+    home.packages = lib.optional config.programs.jujutsu.enable pkgs.starship-jj;
+
+    # Ensure starship-jj config is copied across
+    home.file.".config/starship-jj/starship-jj.toml" = lib.mkIf config.programs.jujutsu.enable {
+      source = ./starship-jj.toml;
     };
   };
 }

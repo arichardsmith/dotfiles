@@ -1,8 +1,11 @@
-{...}: {
+{
+  lib,
+  config,
+  ...
+}: {
   config = {
     programs.direnv = {
-      enable = true;
-      enableZshIntegration = true;
+      enableZshIntegration = config.programs.zsh.enable;
       nix-direnv.enable = true;
       config = {
         hide_env_diff = true;
@@ -10,7 +13,7 @@
     };
 
     # These are shortcuts for disabling and enabling direnv. There are times where I don't want it active, such as on a flight.
-    zsh.functions = [
+    shell.functions = lib.mkIf config.programs.direnv.enable [
       ''
         direnv-off() {
           eval "$(direnv hook zsh --disable)"

@@ -1,0 +1,52 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.packs.shell;
+in {
+  config = lib.mkIf cfg.enable {
+    programs = {
+      zsh.enable = true;
+      starship.enable = true;
+
+      bat.enable = true;
+      ripgrep.enable = true;
+      fzf.enable = true;
+      zoxide.enable = true;
+    };
+
+    customPrograms = {
+      erdtree = {
+        enable = true;
+        settings = {
+          overrideLs = true;
+        };
+      };
+    };
+
+    home.packages = with pkgs; [
+      # Network utilities
+      curl
+      curlie
+      dig
+      nmap
+      rsync
+      mtr # Trace route
+
+      # Utility Apps
+      fd # Better find
+      sd # Better sed
+      just # Better make
+      duf # Better df
+
+      # Compression
+      unzip
+      gzip
+
+      # Encryption
+      age
+    ];
+  };
+}

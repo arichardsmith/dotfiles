@@ -1,23 +1,22 @@
 {
   config,
-  lib,
   pkgs,
+  lib,
   ...
-}: {
-  options.docker.lazyDocker.enable = lib.mkEnableOption "lazy docker";
-
-  config = {
-    home.packages = with pkgs; [
-      docker
-      docker-compose
-    ];
-
-    zsh.aliases = {
-      dc = "docker compose";
+}:
+lib.helpers.mkProgram {inherit config pkgs;} "docker" {
+  settings = {
+    compose = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
     };
+  };
 
-    programs.lazydocker = {
-      enable = config.docker.lazyDocker.enable;
-    };
+  setup = {
+    pkgs,
+    cfg,
+    ...
+  }: {
+    home.packages = [pkgs.docker] ++ lib.optional cfg.settings.compose pkgs.docker-compose;
   };
 }

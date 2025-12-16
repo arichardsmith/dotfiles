@@ -5,6 +5,11 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ./modules
+    ./packs
+  ];
+
   options.user = {
     username = lib.mkOption {
       type = lib.types.str;

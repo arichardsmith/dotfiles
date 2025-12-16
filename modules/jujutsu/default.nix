@@ -1,12 +1,14 @@
 {
   config,
+  lib,
   pkgs,
   ...
-}: {
-  config = {
+}: let
+  cfg = config.programs.jujutsu;
+in {
+  config = lib.mkIf cfg.enable {
     # Install and configure jujutsu
     programs.jujutsu = {
-      enable = true;
       settings = {
         user = {
           name = config.user.fullName;
@@ -61,24 +63,18 @@
     };
 
     home.packages = [
-      pkgs.starship-jj
       pkgs.jjui
     ];
 
-    # Ensure starship-jj config is copied across
-    home.file = {
-      ".config/starship-jj/starship-jj.toml".source = ../shell/starship-jj.toml;
-    };
-
     # Add shell aliases and functions
-    zsh.aliases = {
+    shell.aliases = {
       jjs = "jj split";
       jja = "jj squash"; # Append current revision into previous
       jjl = "jj log -r 'main@origin:: | bookmarks() ~ ::trunk()' --no-pager";
       jjc = "jj commit";
     };
 
-    zsh.functions = [
+    shell.functions = [
       ''
         # A "smart" jj new that only creates a new revision if the current one isn't empty or already described.
         jjn() {
@@ -116,5 +112,5 @@
         }
       ''
     ];
-  };
+  }; # end mkIf cfg.enable
 }

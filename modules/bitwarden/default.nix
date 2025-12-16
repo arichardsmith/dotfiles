@@ -8,7 +8,6 @@
     # https://github.com/doy/rbw
 
     programs.rbw = {
-      enable = true;
     };
 
     # The file produced by rbw.settings is invalid if we don't set pinentry, and the pinentry package doesn't work on Darwin!

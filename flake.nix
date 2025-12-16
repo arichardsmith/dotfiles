@@ -22,12 +22,17 @@
     ...
   }: let
     # Helper function to create home-manager configurations
-    mkHomeConfig = system: hostFile:
+    mkHomeConfig = system: hostFile: let
+      pkgs = nixpkgs.legacyPackages.${system};
+      lib = pkgs.lib.extend (final: prev: {
+        helpers = import ./lib {lib = final; inherit pkgs;};
+      });
+    in
       home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        inherit pkgs lib;
+
         modules = [
           {
-            # Create a corrected overlay that doesn't use deprecated prev.system
             nixpkgs.overlays = [
               (final: prev: {
                 starship-jj = starship-jj.packages.${system}.default;

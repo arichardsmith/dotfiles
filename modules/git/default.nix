@@ -1,8 +1,6 @@
 {config, ...}: {
   config = {
     programs.git = {
-      enable = true;
-
       settings = {
         user = {
           name = config.user.fullName;
