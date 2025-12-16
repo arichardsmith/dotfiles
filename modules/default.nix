@@ -10,9 +10,9 @@
     ./erdtree
     ./fzf
     ./ghostty
-    ./neovim
-    ./jujutsu
     ./git
+    ./jujutsu
+    ./neovim
     ./shell
     ./starship
     ./zoxide
