@@ -79,10 +79,27 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1766201043,
+        "narHash": "sha256-eplAP+rorKKd0gNjV3rA6+0WMzb1X1i16F5m5pASnjA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b3aad468604d3e488d627c0b43984eb60e75e782",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
+        "snitch": "snitch",
         "starship-jj": "starship-jj"
       }
     },
@@ -100,6 +117,24 @@
         "owner": "rust-lang",
         "ref": "nightly",
         "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "snitch": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1766485312,
+        "narHash": "sha256-qPQG740rpkHzbKEw/+Fh5G9YRoLjgw3pdkjrjBxLKss=",
+        "owner": "karol-broda",
+        "repo": "snitch",
+        "rev": "fd4c5500eaefdedd2772bb3c177be23a572e2f04",
+        "type": "github"
+      },
+      "original": {
+        "owner": "karol-broda",
+        "repo": "snitch",
         "type": "github"
       }
     },

@@ -13,12 +13,15 @@
       url = "gitlab:lanastara_foss/starship-jj";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    snitch.url = "github:karol-broda/snitch";
   };
 
   outputs = {
     nixpkgs,
     home-manager,
     starship-jj,
+    snitch,
     ...
   }: let
     # Helper function to create home-manager configurations
@@ -39,6 +42,7 @@
             nixpkgs.overlays = [
               (final: prev: {
                 starship-jj = starship-jj.packages.${system}.default;
+                snitch = snitch.packages.${system}.default;
               })
             ];
           }

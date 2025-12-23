@@ -40,6 +40,7 @@ in {
       sd # Better sed
       just # Better make
       duf # Better df
+      snitch # Better netstat
 
       # Compression
       unzip
