@@ -26,7 +26,12 @@
   }: let
     # Helper function to create home-manager configurations
     mkHomeConfig = system: hostFile: let
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfreePredicate = pkg:
+          builtins.elem (lib.getName pkg) [
+          ];
+      };
       lib = pkgs.lib.extend (final: prev: {
         helpers = import ./lib {
           lib = final;
