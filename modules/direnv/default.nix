@@ -12,55 +12,55 @@
       };
     };
 
-    # These are shortcuts for disabling and enabling direnv. There are times where I don't want it active, such as on a flight.
-    shell.functions = lib.mkIf config.programs.direnv.enable [
-      ''
-        direnv-off() {
-          eval "$(direnv hook zsh --disable)"
-          echo "direnv disabled globally. Run direnv-on to re-enable it."
+    # Manually add the zsh integration in a way that supports disabling
+    programs.zsh = lib.mkIf config.programs.direnv.enable {
+      initContent = ''
+        _direnv_hook() {
+          trap -- ''' SIGINT
+          eval "$("/opt/homebrew/bin/direnv" export zsh)"
+          trap - SIGINT
         }
-      ''
-      ''
-        direnv-on() {
-          eval "$(direnv hook zsh)"
-          echo "direnv enabled"
+
+        direnv-disable() {
+          typeset -ag precmd_functions
+          if (( ''${precmd_functions[(I)_direnv_hook]} )); then
+            precmd_functions=(''${precmd_functions:#_direnv_hook})
+          fi
+          typeset -ag chpwd_functions
+          if (( ''${chpwd_functions[(I)_direnv_hook]} )); then
+            chpwd_functions=(''${chpwd_functions#_direnv_hook})
+          fi
+
+          echo "Disabled direnv globally"
         }
-      ''
-      ''
-        direnv-flake-off() {
-            local dir="$PWD"
-            while [[ "$dir" != "/" && "$dir" != "$HOME" ]]; do
-            if [[ -f "$dir/.envrc" ]]; then
-                sed -i ''' 's/^use flake/#use flake/' "$dir/.envrc"
-                echo "Flake disabled in $dir/.envrc"
-                return 0
-            fi
-            dir="$(dirname "$dir")"
-            done
-            echo "No .envrc found in current or parent directories"
-            return 1
+
+        direnv-enable() {
+          typeset -ag precmd_functions
+          if (( ! ''${precmd_functions[(I)_direnv_hook]} )); then
+            precmd_functions=(_direnv_hook $precmd_functions)
+          fi
+          typeset -ag chpwd_functions
+          if (( ! ''${chpwd_functions[(I)_direnv_hook]} )); then
+            chpwd_functions=(_direnv_hook $chpwd_functions)
+          fi
         }
-      ''
-      ''
-        direnv-flake-on() {
-            local dir="$PWD"
-            while [[ "$dir" != "/" && "$dir" != "$HOME" ]]; do
-                if [[ -f "$dir/.envrc" ]]; then
-                sed -i ''' 's/^#use flake/use flake/' "$dir/.envrc"
-                echo "Flake enabled in $dir/.envrc"
-                return 0
-                fi
-                dir="$(dirname "$dir")"
-            done
-            echo "No .envrc found in current or parent directories"
-            return 1
+
+        direnv-toggle() {
+          typeset -ag precmd_functions
+          if (( ''${precmd_functions[(I)_direnv_hook]} )); then
+            direnv-disable
+          else
+            direnv-enable
+          fi
         }
-      ''
-      ''
-        direnv-load() {
-            eval "$(direnv export zsh)"
+
+        qcd() {
+            direnv-disable
+            cd "$@"
         }
-      ''
-    ];
+
+        direnv-enable
+      '';
+    };
   };
 }
