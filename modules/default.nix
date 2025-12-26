@@ -14,6 +14,7 @@
     ./jujutsu
     ./neovim
     ./shell
+    ./ssh
     ./starship
     ./zoxide
     ./zsh
