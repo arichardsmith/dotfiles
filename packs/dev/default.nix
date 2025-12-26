@@ -1,3 +1,6 @@
+# Dev Pack
+# Development tools and version control for software engineering.
+# Includes: git, jujutsu, gh, docker, ast-grep, just, and language-specific tools.
 {
   config,
   lib,

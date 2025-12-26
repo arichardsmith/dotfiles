@@ -1,3 +1,6 @@
+# Shell Pack
+# Terminal utilities, shell configuration, and CLI tools for interactive use.
+# Includes: zsh, starship, bat, ripgrep, fzf, zoxide, fd, sd, network utilities.
 {
   config,
   lib,

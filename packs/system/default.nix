@@ -1,3 +1,6 @@
+# System Pack
+# System monitoring and resource management tools.
+# Includes: btop for process monitoring, ncdu for disk usage analysis.
 {
   config,
   lib,
