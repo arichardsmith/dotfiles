@@ -51,9 +51,9 @@ lib.helpers.mkProgram {inherit config pkgs;} "erdtree" {
     shell.aliases =
       lib.optionalAttrs cfg.settings.overrideLs
       {
-        lsa = "erd --config ls --hidden";
+        lsa = "erd --config ls --hidden --no-ignore";
         lt = "erd --config ls --level 2";
-        lta = "erd --config ls --level 2 --hidden";
+        lta = "erd --config ls --level 2 --hidden --no-ignore";
         ls = "erd --config ls";
         ols = "/bin/ls"; # Add an alias for normal ls incase we need it
       };
