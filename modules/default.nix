@@ -4,6 +4,7 @@
     ./bat
     ./bitwarden
     ./btop
+    ./claude
     ./colima
     ./direnv
     ./docker

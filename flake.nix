@@ -30,8 +30,10 @@
         inherit system;
         config.allowUnfreePredicate = pkg:
           builtins.elem (lib.getName pkg) [
+            "claude-code"
           ];
       };
+
       lib = pkgs.lib.extend (final: prev: {
         helpers = import ./lib {
           lib = final;

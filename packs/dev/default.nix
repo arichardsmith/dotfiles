@@ -21,6 +21,9 @@ in {
       git.enable = true;
       jujutsu.enable = true;
       gh.enable = true;
+
+      # AI Help
+      claude-code.enable = true;
     };
 
     customPrograms = {
