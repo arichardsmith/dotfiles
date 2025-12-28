@@ -16,7 +16,6 @@
 in {
   config = lib.mkIf cfg.enable {
     customPrograms = {
-      astGrep.enable = true;
       docker.enable = true;
     };
 
