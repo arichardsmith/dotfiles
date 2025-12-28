@@ -61,6 +61,7 @@
     # Standalone Home Manager configurations (macOS)
     homeConfigurations = {
       laptop = mkHomeConfig "aarch64-darwin" ./machines/laptop;
+      mininas = mkHomeConfig "x86_64-linux" ./machines/mininas;
     };
   };
 }
