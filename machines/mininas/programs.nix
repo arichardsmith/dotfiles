@@ -7,6 +7,10 @@
       server.enable = true;
     };
 
+    programs = {
+      neovim.enable = true;
+    };
+
     # SSH authorized keys
     customPrograms.sshKeys = {
       enable = true;
