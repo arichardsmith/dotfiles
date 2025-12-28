@@ -22,9 +22,15 @@ lib.helpers.mkProgram {inherit config pkgs;} "sshKeys" {
   setup = {cfg, ...}: let
     keysFromPaths = map builtins.readFile cfg.settings.authorizedKeyPaths;
     allKeys = cfg.settings.authorizedKeys ++ keysFromPaths;
+    authorizedKeysFile = pkgs.writeText "authorized_keys" (lib.concatStringsSep "\n" allKeys);
   in {
-    home.file = lib.mkIf (allKeys != []) {
-      ".ssh/authorized_keys".text = lib.concatStringsSep "\n" allKeys;
+    home.activation = lib.mkIf (allKeys != []) {
+      copyAuthorizedKeys = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD mkdir -p $HOME/.ssh
+        $DRY_RUN_CMD chmod 700 $HOME/.ssh
+        $DRY_RUN_CMD cp ${authorizedKeysFile} $HOME/.ssh/authorized_keys
+        $DRY_RUN_CMD chmod 600 $HOME/.ssh/authorized_keys
+      '';
     };
   };
 }
