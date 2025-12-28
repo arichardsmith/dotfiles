@@ -32,6 +32,7 @@ in {
     };
 
     home.packages = with pkgs; [
+      curlie # A prettier curl
       just
       just-lsp
     ];

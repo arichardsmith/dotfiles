@@ -32,7 +32,6 @@ in {
     home.packages = with pkgs; [
       # Network utilities
       curl
-      curlie
       dig
       nmap
       rsync
