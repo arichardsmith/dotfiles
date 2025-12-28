@@ -4,7 +4,7 @@
     packs = {
       shell.enable = true;
       system.enable = true;
-      serveri.enable = true;
+      server.enable = true;
     };
 
     # SSH authorized keys
