@@ -15,6 +15,8 @@
       ];
     };
 
+    customPrograms.ghosttyTermInfo.enable = true;
+
     home.packages = [
     ];
   };

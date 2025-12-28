@@ -1,5 +1,17 @@
-# This ensures NixOS has ghostty's terminfo available.
+# This adds ghostty's term info to remote machines.
 # It doesn't configure or run ghostty on the device.
-{pkgs, ...}: {
-  environment.systemPackages = [pkgs.ghostty];
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+lib.helpers.mkProgram {inherit config pkgs;} "ghosttyTermInfo" {
+  setup = {...}: {
+    home.packages = [pkgs.ghostty];
+
+    home.sessionVariables = {
+      TERMINFO = "${pkgs.ghostty}/share/terminfo";
+    };
+  };
 }

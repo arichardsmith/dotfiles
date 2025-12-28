@@ -11,6 +11,7 @@
     ./erdtree
     ./fzf
     ./ghostty
+    ./ghostty/terminfo.nix
     ./git
     ./jujutsu
     ./neovim
