@@ -16,6 +16,13 @@
       neovim.enable = true;
       rclone.enable = true;
       rbw.enable = true;
+
+      git.settings = {
+        # Allow nas://<repo> paths when working with repos stored on NAS
+        url."ssh://mininas.local/tank/git/" = {
+          insteadOf = "nas://";
+        };
+      };
     };
 
     customPrograms = {
