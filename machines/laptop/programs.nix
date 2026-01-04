@@ -45,6 +45,7 @@
 
       (lib.helpers.scriptToPackage "unlock-drive" ./scripts/unlock-drive.sh)
       (lib.helpers.scriptToPackage "unlock-ssh" ./scripts/unlock-ssh.sh)
+      (lib.helpers.scriptToPackage "edit" ./scripts/edit.sh)
     ];
   };
 }
