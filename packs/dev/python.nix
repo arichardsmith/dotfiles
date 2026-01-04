@@ -8,12 +8,8 @@
 in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      python312
+      # We don't include python as we want uv to manage the python versions itself
       uv
     ];
-
-    home.sessionVariables = {
-      UV_PYTHON = "${pkgs.python312}/bin/python";
-    };
   };
 }
