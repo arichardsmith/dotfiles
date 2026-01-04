@@ -50,6 +50,9 @@ in {
 
       # Encryption
       age
+
+      # Custom scripts
+      (lib.helpers.scriptToPackage "edit" ./scripts/edit.sh)
     ];
   };
 }
