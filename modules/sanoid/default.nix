@@ -57,12 +57,11 @@ lib.helpers.mkProgram {inherit config pkgs;} "sanoid" {
       After=zfs.target
       Wants=sanoid-prune.service
       Before=sanoid-prune.service
-      ConditionFileNotEmpty=/etc/sanoid/sanoid.conf
 
       [Service]
       Environment=TZ=UTC
       Type=oneshot
-      ExecStart=${pkgs.sanoid}/bin/sanoid --take-snapshots --verbose
+      ExecStart=${pkgs.sanoid}/bin/sanoid --take-snapshots --verbose --configdir=%h/.config/sanoid
     '';
 
     xdg.configFile."sanoid/systemd/sanoid-prune.service".text = ''
@@ -70,18 +69,17 @@ lib.helpers.mkProgram {inherit config pkgs;} "sanoid" {
       Description=Cleanup ZFS Pool
       Requires=zfs.target
       After=zfs.target sanoid.service
-      ConditionFileNotEmpty=/etc/sanoid/sanoid.conf
 
       [Service]
       Environment=TZ=UTC
       Type=oneshot
-      ExecStart=${pkgs.sanoid}/bin/sanoid --prune-snapshots --verbose
+      ExecStart=${pkgs.sanoid}/bin/sanoid --prune-snapshots --verbose --configdir=%h/.config/sanoid
 
       [Install]
       WantedBy=sanoid.service
     '';
 
-    xdg.configFile."sanoid/install.sh" = {
+    xdg.configFile."sanoid/systemd/install.sh" = {
       executable = true;
       source = ./install.sh;
     };
