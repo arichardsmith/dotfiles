@@ -21,6 +21,11 @@
 
     customPrograms.ghosttyTermInfo.enable = true;
 
+    customPrograms.sanoid = {
+      enable = true;
+      settings.configFilePath = ./sanoid.conf;
+    };
+
     home.packages = [
     ];
   };
