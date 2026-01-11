@@ -15,6 +15,7 @@
     ./git
     ./jujutsu
     ./neovim
+    ./sanoid
     ./shell
     ./ssh
     ./starship
