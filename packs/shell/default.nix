@@ -54,5 +54,11 @@ in {
       # Custom scripts
       (lib.helpers.scriptToPackage "edit" ./scripts/edit.sh)
     ];
+
+    programs.claude-code.memory.chunks = [
+      ''
+        You have access to `rg` for searching with `ripgrep` and `fd` as an alternative to `find`.
+      ''
+    ];
   };
 }

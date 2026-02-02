@@ -57,5 +57,13 @@ lib.helpers.mkProgram {inherit config pkgs;} "erdtree" {
         ls = "erd --config ls";
         ols = "/bin/ls"; # Add an alias for normal ls incase we need it
       };
+
+    programs.claude-code.memory.chunks = [
+      ''
+        This machine has `erdtree` aliases to `ls`. This means flags like `ls -la` __WONT WORK__.
+        `erd --long --hidden` lists hidden files along with details about them. `erd --hidden --level 2` lets you peak into subdirectories.
+        If you _have_ to use the original `ls` binary, it is aliased to `ols`.
+      ''
+    ];
   };
 }
