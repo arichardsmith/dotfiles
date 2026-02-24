@@ -1,15 +1,12 @@
-{...}: {
-  imports = [
-    ./programs.nix
-  ];
+{mkHomeConfig}: mkHomeConfig "x86_64-linux" ({...}: {
+  imports = [./programs.nix];
 
   config = {
     user.username = "richard";
     user.email = "richardmcsmith@gmail.com";
     user.fullName = "Richard Smith";
 
-    home.sessionPath = [
-    ];
+    home.sessionPath = [];
 
     home.sessionVariables = {
       EDITOR = "nvim";
@@ -20,4 +17,4 @@
       + "[├╌ ](overlay0)$directory$\{custom.jj\}$line_break"
       + "[$character ](overlay0)";
   };
-}
+})

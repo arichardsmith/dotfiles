@@ -1,16 +1,12 @@
-{...}: {
-  imports = [
-    ./programs.nix
-  ];
+{mkHomeConfig}: mkHomeConfig "aarch64-darwin" ({...}: {
+  imports = [./programs.nix];
 
   config = {
     user.username = "richardsmith";
     user.email = "richardmcsmith@gmail.com";
     user.fullName = "Richard Smith";
 
-    home.sessionPath = [
-      "$HOME/.local/bin"
-    ];
+    home.sessionPath = ["$HOME/.local/bin"];
 
     home.sessionVariables = {
       EDITOR = "nvim";
@@ -32,4 +28,4 @@
       + "[├╌ ](overlay0)$directory$\{custom.jj\}$line_break"
       + "[$character ](overlay0)";
   };
-}
+})

@@ -24,7 +24,6 @@
     snitch,
     ...
   }: let
-    # Helper function to create home-manager configurations
     mkHomeConfig = system: hostFile: let
       pkgs = import nixpkgs {
         inherit system;
@@ -58,10 +57,10 @@
         ];
       };
   in {
-    # Standalone Home Manager configurations (macOS)
+    # Standalone Home Manager configurations
     homeConfigurations = {
-      laptop = mkHomeConfig "aarch64-darwin" ./machines/laptop;
-      mininas = mkHomeConfig "x86_64-linux" ./machines/mininas;
+      laptop = import ./machines/laptop {inherit mkHomeConfig;};
+      mininas = import ./machines/mininas {inherit mkHomeConfig;};
     };
   };
 }
