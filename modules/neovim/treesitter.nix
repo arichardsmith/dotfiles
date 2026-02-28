@@ -1,7 +1,7 @@
 {pkgs, ...}: {
-  programs.neovim.plugins = with pkgs.vimPlugins; [
+  programs.neovim.plugins = [
     {
-      plugin = nvim-treesitter.withPlugins (p: [
+      plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
         p.bash
         p.css
         p.diff

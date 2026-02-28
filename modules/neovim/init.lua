@@ -14,10 +14,10 @@ keymap.set("n", "k", 'v:count == 0 ? "gk" : "k"', { noremap = true, expr = true 
 keymap.set("n", "<c-j>", "<c-e>", { desc = "Scroll down without moving cursor" })
 keymap.set("n", "<c-k>", "<c-y>", { desc = "Scroll up without moving cursor" })
 keymap.set(
-	"n",
-	"<c-d>",
-	":vsplit<cr>:bp<cr>:winc l<cr>",
-	{ desc = "open current buffer in a split pane, switch current pane to previous buffer then focus the new pane" }
+    "n",
+    "<c-d>",
+    ":vsplit<cr>:bp<cr>:winc l<cr>",
+    { desc = "open current buffer in a split pane, switch current pane to previous buffer then focus the new pane" }
 )
 keymap.set("n", "\\", ":nohl<cr>", { desc = "Quickly hide highlighted text after search" })
 keymap.set("n", "<leader>o", "o<esc>") -- shortcut to create new line from normal mode
@@ -56,29 +56,22 @@ opt.fcs = "eob: "                            -- hide the ~ character on empty li
 -- DISABLED due to it messing up fuzzy finding - opt.autochdir = true - change the working directory to match active file
 
 -- Treesitter configuration
-require('nvim-treesitter.configs').setup({
-	highlight = { 
-		enable = true, 
-		use_languagetree = true 
-	},
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "gnn",
-			node_incremental = "grn",
-			scope_incremental = "grc",
-			node_decremental = "grm",
-		},
-	},
-	context_commentstring = { 
-		enable = true 
-	},
-	indent = { 
-		enable = true 
-	},
-	rainbow = { 
-		enable = true, 
-		extended_mode = true, 
-		max_file_lines = 1000 
-	},
-})
+-- require('nvim-treesitter.configs').setup({
+--     -- These are the core, stable modules
+--     highlight = {
+--         enable = true,
+--         use_languagetree = true
+--     },
+--     indent = {
+--         enable = true
+--     },
+--     incremental_selection = {
+--         enable = true,
+--         keymaps = {
+--             init_selection = "gnn",
+--             node_incremental = "grn",
+--             scope_incremental = "grc",
+--             node_decremental = "grm",
+--         },
+--     },
+-- })
