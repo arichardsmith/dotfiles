@@ -36,6 +36,19 @@
           arch = "aarch64";
         };
       };
+      ai-agent = {
+        enable = true;
+        settings = {
+          claude-code.enable = true;
+          opencode = {
+            enable = true;
+            model = "anthropic/claude-sonnet-4-5";
+            autoupdate = "notify";
+            theme = "system";
+            diff_style = "auto";
+          };
+        };
+      };
     };
 
     home.packages = with pkgs; [
@@ -46,9 +59,6 @@
       # Fonts
       maple-mono.truetype
       maple-mono.NF-unhinted
-
-      # Testing
-      opencode
 
       (lib.helpers.scriptToPackage "unlock-drive" ./scripts/unlock-drive.sh)
       (lib.helpers.scriptToPackage "unlock-ssh" ./scripts/unlock-ssh.sh)

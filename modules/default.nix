@@ -1,10 +1,10 @@
 {...}: {
   imports = [
+    ./ai
     ./ast-grep
     ./bat
     ./bitwarden
     ./btop
-    ./claude
     ./colima
     ./direnv
     ./docker
