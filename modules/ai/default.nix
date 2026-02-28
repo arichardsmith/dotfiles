@@ -162,7 +162,13 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
 
       # OpenCode configuration
       (lib.mkIf cfg.settings.opencode.enable {
-        home.packages = [pkgs.opencode];
+        # The package is currently broken (needs bun 1.3.10, gets 1.3.9)
+        # home.packages = [pkgs.opencode];
+
+        home.activation.installOpencode = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          echo "Installing OpenCode via Bun escape hatch..."
+          $DRY_RUN_CMD ${pkgs.bun}/bin/bun add -g opencode-ai
+        '';
 
         xdg.configFile."opencode/opencode.json" = lib.mkIf (opencodeMainConfigJson != null) {
           text = opencodeMainConfigJson;
