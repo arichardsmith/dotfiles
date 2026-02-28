@@ -15,6 +15,11 @@
     };
 
     snitch.url = "github:karol-broda/snitch";
+
+    opencode = {
+      url = "github:anomalyco/opencode";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -22,6 +27,7 @@
     home-manager,
     starship-jj,
     snitch,
+    opencode,
     ...
   }: let
     mkHomeConfig = system: hostFile: let
@@ -49,6 +55,7 @@
               (final: prev: {
                 starship-jj = starship-jj.packages.${system}.default;
                 snitch = snitch.packages.${system}.default;
+                opencode = opencode.packages.${system}.default;
               })
             ];
           }

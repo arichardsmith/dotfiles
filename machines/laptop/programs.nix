@@ -47,6 +47,9 @@
       maple-mono.truetype
       maple-mono.NF-unhinted
 
+      # Testing
+      opencode
+
       (lib.helpers.scriptToPackage "unlock-drive" ./scripts/unlock-drive.sh)
       (lib.helpers.scriptToPackage "unlock-ssh" ./scripts/unlock-ssh.sh)
     ];
