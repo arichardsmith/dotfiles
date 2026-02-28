@@ -113,10 +113,9 @@ in {
       ''
     ];
 
-    programs.claude-code.memory.chunks = [
-      ''
-        I use Jujutsu to version control my code and not git, however I am still getting used to it, so often need help with commands. Jujutsu has had changes recently and your knowledge is outdated, so if the command isn't already in the conversation, search for the current docs to know the correct command. You can ask me to give you the result of any commands help page if you need.
-      ''
-    ];
+    # Add jujutsu skill to ai-agent when jujutsu is enabled
+    customPrograms.ai-agent.settings.skills = {
+      jujutsu = ./jujutsu-skill.md;
+    };
   }; # end mkIf cfg.enable
 }
