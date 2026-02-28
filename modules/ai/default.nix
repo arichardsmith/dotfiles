@@ -106,7 +106,6 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
 
     # Default skills that are always included
     defaultSkills = {
-      cli-conventions = ./skills/cli-conventions.md;
       go-conventions = ./skills/go-conventions.md;
       nix-conventions = ./skills/nix-conventions.md;
       process-feedback = ./skills/process-feedback.md;
