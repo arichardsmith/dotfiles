@@ -41,11 +41,10 @@
         settings = {
           claude-code.enable = true;
           opencode = {
-            enable = true;
+            enable = false; # Bun version mismatch makes this unusable
             model = "anthropic/claude-sonnet-4-5";
             autoupdate = "notify";
             theme = "system";
-            diff_style = "auto";
           };
         };
       };

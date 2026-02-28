@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.neovim.plugins = with pkgs.vimPlugins; [
     {
-      plugin = (nvim-treesitter.withPlugins (p: [
+      plugin = nvim-treesitter.withPlugins (p: [
         p.bash
         p.css
         p.diff
@@ -15,7 +15,6 @@
         p.jsdoc
         p.json
         p.json5
-        p.jsonc
         p.lua
         p.markdown
         p.markdown_inline
@@ -31,7 +30,7 @@
         p.nix
         p.gleam
         p.vimdoc
-      ]));
+      ]);
     }
   ];
 }

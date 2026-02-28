@@ -55,7 +55,7 @@ in {
       (lib.helpers.scriptToPackage "edit" ./scripts/edit.sh)
     ];
 
-    programs.claude-code.memory.chunks = [
+    customPrograms.ai-agent.settings.memory.chunks = [
       ''
         You have access to `rg` for searching with `ripgrep` and `fd` as an alternative to `find`.
       ''
