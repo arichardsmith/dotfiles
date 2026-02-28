@@ -30,6 +30,13 @@ in {
     programs.claude-code = {
       memory.text = memoryText;
       skills = {
+        cli-conventions = ./skills/cli-conventions.md;
+        go-conventions = ./skills/go-conventions.md;
+        nix-conventions = ./skills/nix-conventions.md;
+        process-feedback = ./skills/process-feedback.md;
+        python-conventions = ./skills/python-conventions.md;
+        rust-conventions = ./skills/rust-conventions.md;
+        rust-error-handling = ./skills/rust-error-handling.md;
         svelte-conventions = ./skills/svelte-conventions.md;
         typescript-conventions = ./skills/typescript-conventions.md;
       };
