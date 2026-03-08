@@ -1,5 +1,9 @@
-{mkHomeConfig}: mkHomeConfig "aarch64-darwin" ({...}: {
-  imports = [./programs.nix];
+{mkHomeConfig}:
+mkHomeConfig "aarch64-darwin" ({...}: {
+  imports = [
+    ./programs.nix
+    ./backup.nix
+  ];
 
   config = {
     user.username = "richardsmith";
