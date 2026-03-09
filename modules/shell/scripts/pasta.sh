@@ -1,7 +1,3 @@
-#!/usr/bin/env zsh
-set -e
-set -u
-
 if hash pbpaste 2>/dev/null; then
 	# Darwin
   	exec pbpaste

@@ -52,7 +52,7 @@ in {
       age
 
       # Custom scripts
-      (lib.helpers.scriptToPackage "edit" ./scripts/edit.sh)
+      (lib.helpers.scriptToPackage {name = "edit"; file = ./scripts/edit.sh;})
     ];
 
     customPrograms.ai-agent.settings.memory.chunks = [

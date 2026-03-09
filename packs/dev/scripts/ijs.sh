@@ -1,7 +1,3 @@
-#!/usr/bin/env zsh
-set -e
-set -u
-
 show_help() {
   cat << EOF
 Usage: ijs [--bun|--deno|--node]

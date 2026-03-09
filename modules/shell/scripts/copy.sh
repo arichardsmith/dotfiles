@@ -1,7 +1,3 @@
-#!/usr/bin/env zsh
-set -e  # Exit immediately if any command fails
-set -u  # Exit if referencing undefined variables
-
 if hash pbcopy 2>/dev/null; then
 	# Darwin
 	pbcopy

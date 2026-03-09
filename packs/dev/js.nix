@@ -10,8 +10,8 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       bun # Bun is my current global JS runtime of choice
-      (lib.helpers.scriptToPackage "ijs" ./scripts/ijs.sh)
-      (lib.helpers.scriptToPackage "pkq" ./scripts/pkq.sh)
+      (lib.helpers.scriptToPackage {name = "ijs"; file = ./scripts/ijs.sh;})
+      (lib.helpers.scriptToPackage {name = "pkq"; file = ./scripts/pkq.sh;})
     ];
 
     # Add globally installed bun packages to the PATH

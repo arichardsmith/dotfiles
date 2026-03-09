@@ -1,8 +1,4 @@
-#!/usr/bin/env bash
-
 # Query package.json with jq
-
-set -euo pipefail
 
 # Find package.json by walking up directories
 find_package_json() {

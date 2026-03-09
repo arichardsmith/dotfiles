@@ -5,8 +5,18 @@
   ...
 }: let
   home = config.home.homeDirectory;
-  backupDev = lib.helpers.scriptToPackage "backup-dev" ./scripts/backup-dev.sh;
-  backupVault = lib.helpers.scriptToPackage "backup-vault" ./scripts/backup-vault.sh;
+  backupDev = lib.helpers.scriptToPackage {
+    name = "backup-dev";
+    file = ./scripts/backup-dev.sh;
+    runtimeInputs = [pkgs.restic];
+    excludeShellChecks = ["SC2034"];
+  };
+  backupVault = lib.helpers.scriptToPackage {
+    name = "backup-vault";
+    file = ./scripts/backup-vault.sh;
+    runtimeInputs = [pkgs.restic];
+    excludeShellChecks = ["SC2034"];
+  };
 
   # launchd has no interval-based scheduling; hours must be listed explicitly.
   # Unlike systemd's Persistent=true, missed runs are not caught up after sleep.

@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 show_help() {
 	local editor_ui_val="${EDITOR_UI:-$EDITOR:-\$EDITOR_UI}"
 	local editor_val="${EDITOR:-\$EDITOR}"
