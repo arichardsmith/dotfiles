@@ -38,6 +38,9 @@ in {
 
           # Start a new revision based on the dev branch, falling back to main
           fresh = ["new" "-r 'coalesce(present(dev), main)'"];
+
+          # I keep typing `jj init` and expecting it to work. Given I only use the git backend, this is fine.
+          init = ["git" "init"];
         };
 
         revset-aliases = {
