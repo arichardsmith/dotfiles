@@ -11,12 +11,6 @@
     runtimeInputs = [pkgs.restic];
     excludeShellChecks = ["SC2034"];
   };
-  backupVault = lib.helpers.scriptToPackage {
-    name = "backup-vault";
-    file = ./scripts/backup-vault.sh;
-    runtimeInputs = [pkgs.restic];
-    excludeShellChecks = ["SC2034"];
-  };
 
   # launchd has no interval-based scheduling; hours must be listed explicitly.
   # Unlike systemd's Persistent=true, missed runs are not caught up after sleep.
@@ -27,7 +21,7 @@
     })
     hours;
 in {
-  home.packages = [pkgs.restic backupDev backupVault];
+  home.packages = [pkgs.restic backupDev];
 
   launchd.agents = {
     restic-dev = {
@@ -39,16 +33,6 @@ in {
         StartCalendarInterval = onHours [12 16 20];
         StandardOutPath = "${home}/.local/log/restic-dev.log";
         StandardErrorPath = "${home}/.local/log/restic-dev-error.log";
-      };
-    };
-    restic-vault = {
-      enable = true;
-      config = {
-        Label = "org.home.restic-vault";
-        ProgramArguments = ["${backupVault}/bin/backup-vault"];
-        StartCalendarInterval = onHours [8 12 16 20];
-        StandardOutPath = "${home}/.local/log/restic-vault.log";
-        StandardErrorPath = "${home}/.local/log/restic-vault-error.log";
       };
     };
   };
