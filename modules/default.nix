@@ -9,6 +9,7 @@
     ./direnv
     ./docker
     ./erdtree
+    ./fd
     ./fzf
     ./ghostty
     ./ghostty/terminfo.nix

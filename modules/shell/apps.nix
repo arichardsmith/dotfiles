@@ -1,5 +1,7 @@
 {pkgs, ...}: {
   config = {
+    programs.fd.enable = true;
+
     home.packages = with pkgs; [
       # Network utilities
       curl
@@ -11,7 +13,6 @@
 
       # Utility Apps
       ripgrep # Better grep
-      fd # Better find
       sd # Better sed
       just # Better make
       duf # Better df
