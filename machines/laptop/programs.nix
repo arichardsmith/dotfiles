@@ -59,8 +59,14 @@
       maple-mono.truetype
       maple-mono.NF-unhinted
 
-      (lib.helpers.scriptToPackage {name = "unlock-drive"; file = ./scripts/unlock-drive.sh;})
-      (lib.helpers.scriptToPackage {name = "unlock-ssh"; file = ./scripts/unlock-ssh.sh;})
+      (lib.helpers.scriptToPackage {
+        name = "unlock-drive";
+        file = ./scripts/unlock-drive.sh;
+      })
+      (lib.helpers.scriptToPackage {
+        name = "unlock-ssh";
+        file = ./scripts/unlock-ssh.sh;
+      })
     ];
   };
 }
