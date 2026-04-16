@@ -14,6 +14,7 @@
     programs = {
       direnv.enable = true;
       neovim.enable = true;
+      helix.enable = true;
       rclone.enable = true;
       rbw.enable = true;
 

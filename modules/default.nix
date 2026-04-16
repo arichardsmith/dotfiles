@@ -14,6 +14,7 @@
     ./ghostty
     ./ghostty/terminfo.nix
     ./git
+    ./helix
     ./jujutsu
     ./neovim
     ./sanoid
