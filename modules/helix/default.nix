@@ -1,5 +1,7 @@
 {...}: {
   config.programs.helix = {
-    # Add config here
+    settings = {
+      theme = "catppuccin_macchiato";
+    };
   };
 }
