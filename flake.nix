@@ -14,7 +14,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    snitch.url = "github:karol-broda/snitch";
+    snitch = {
+      url = "github:karol-broda/snitch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     opencode = {
       url = "github:anomalyco/opencode";
