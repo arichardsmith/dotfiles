@@ -34,7 +34,11 @@ in {
     home.packages = with pkgs; [
       curlie # A prettier curl
       just
+
+      # Language servers (will be picked up by helix)
       just-lsp
+      marksman
+      markdown-oxide
     ];
   };
 }
