@@ -13,7 +13,7 @@ mkHomeConfig "aarch64-darwin" ({...}: {
     home.sessionPath = ["$HOME/.local/bin"];
 
     home.sessionVariables = {
-      EDITOR = "nvim";
+      EDITOR = "hx";
       EDITOR_UI = "zed"; # Preferred IDE / UI based editor
     };
 
