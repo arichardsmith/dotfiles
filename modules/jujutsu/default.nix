@@ -16,7 +16,7 @@ in {
         };
 
         ui = {
-          editor = "nvim";
+          editor = "hx";
           default-command = ["status" "--no-pager"];
           # Many tools expect git style conflict markers
           conflict-marker-style = "git";
