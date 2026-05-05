@@ -43,6 +43,7 @@ in {
       just # Better make
       duf # Better df
       snitch # Better netstat
+      procs # Better ps
 
       # Compression
       unzip
