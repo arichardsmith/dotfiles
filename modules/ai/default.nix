@@ -7,7 +7,7 @@
 lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
   settings = {
     # Shared configuration
-    memory.chunks = lib.mkOption {
+    context.chunks = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [];
       description = "Text chunks to add to AI agent memory";
@@ -97,7 +97,7 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
     cfg,
     ...
   }: let
-    defaultMemory = [
+    defaultContext = [
       ''
         Primary languages: TypeScript, CSS, Rust, Python, Go. Default to these but can work with others. When explaining other languages, use examples from primary languages.
         I prefer TOML for configuration. Svelte is my preferred UI framework. I prefer to use CSS rather than tailwind.
@@ -119,7 +119,7 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
     # Merge default skills with user-provided skills (user skills can override defaults)
     allSkills = defaultSkills // cfg.settings.skills;
 
-    memoryText = lib.concatStringsSep "\n" (defaultMemory ++ cfg.settings.memory.chunks) + "\n";
+    memoryText = lib.concatStringsSep "\n" (defaultContext ++ cfg.settings.context.chunks) + "\n";
 
     # OpenCode configuration
     opencodeMainConfigAttrs =
@@ -155,7 +155,7 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
       # Claude Code configuration
       (lib.mkIf cfg.settings.claude-code.enable {
         programs.claude-code = {
-          memory.text = memoryText;
+          context = memoryText;
           skills = allSkills;
         };
       })

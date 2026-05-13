@@ -59,7 +59,7 @@ in {
       })
     ];
 
-    customPrograms.ai-agent.settings.memory.chunks = [
+    customPrograms.ai-agent.settings.context.chunks = [
       ''
         You have access to `rg` for searching with `ripgrep` and `fd` as an alternative to `find`.
       ''

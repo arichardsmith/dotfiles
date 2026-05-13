@@ -13,7 +13,7 @@ lib.helpers.mkProgram {inherit config pkgs;} "astGrep" {
       '')
     ];
 
-    customPrograms.ai-agent.settings.memory.chunks = [
+    customPrograms.ai-agent.settings.context.chunks = [
       ''
         You have access to `ast-grep` for AST-based code search and refactoring (more precise than regex for structural code patterns).
       ''
