@@ -13,6 +13,7 @@ mkHomeConfig "aarch64-darwin" ({...}: {
     home.sessionPath = ["$HOME/.local/bin"];
 
     home.sessionVariables = {
+      DOTFILE_MACHINE = "laptop";
       EDITOR = "hx";
       EDITOR_UI = "zed"; # Preferred IDE / UI based editor
     };

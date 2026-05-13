@@ -10,6 +10,7 @@ mkHomeConfig "x86_64-linux" ({pkgs, ...}: {
     home.sessionPath = [];
 
     home.sessionVariables = {
+      DOTFILE_MACHINE = "mininas";
       EDITOR = "nvim";
     };
 
