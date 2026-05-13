@@ -4,7 +4,9 @@ lib.mkMerge (lib.mapAttrsToList (
       if toolchain ? home && toolchain.home ? packages
       then throw "applyDevToolchains: toolchain `${name}` defines `home.packages`. Use `packages = [...]` instead."
       else {
-        programs = toolchain.programs or {};
+        programs = lib.mkMerge [
+          (toolchain.programs or {})
+        ];
         customPrograms = toolchain.customPrograms or {};
         home = lib.mkMerge [
           (toolchain.home or {})
