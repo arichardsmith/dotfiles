@@ -5,7 +5,15 @@ Nix flake for managing dotfiles and packages across machines using home-manager.
 ## Quick Start
 
 ```bash
-home-manager switch --flake .#laptop
+./install.sh
+```
+
+This will switch to the latest version on the config if the machine is configured in the `DOTFILE_MACHINE` environment variable.
+
+Otherwise, a machines home-manager config can be installed with:
+
+```bash
+home-manager switch --flake .#<machine>
 ```
 
 ## Configuration
@@ -15,17 +23,8 @@ home-manager switch --flake .#laptop
 Machine configs are in `machines/<name>/`. Each machine sets:
 
 1. **User details** - username, email, full name
-2. **Enabled packs** - groups of related programs
-3. **Individual programs** - specific program settings
-4. **Machine-specific packages** - additional packages for this machine
-
-### Available Packs
-
-Packs are collections of related programs:
-
-- **`packs.shell`** - Terminal utilities (zsh, starship, bat, ripgrep, fzf, fd, etc)
-- **`packs.system`** - System monitoring tools (btop, etc)
-- **`packs.dev`** - Development tools (git, jujutsu, gh, docker tools)
+2. **Individual programs** - specific program settings
+3. **Machine-specific packages** - additional packages for this machine
 
 ### Program Options
 
@@ -55,11 +54,7 @@ programs.starship.settings.format = "...";
 │   └── laptop/
 │       ├── default.nix    # User info & base settings
 │       └── programs.nix   # Enabled packs & programs
-├── packs/              # Program collections
-│   ├── shell/          # Terminal tools pack
-│   ├── system/         # System monitoring pack
-│   └── dev/            # Development tools pack
-├── modules/            # Individual program modules
+── modules/            # Individual program modules
 └── lib/                # Helper functions
 ```
 
