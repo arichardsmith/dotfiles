@@ -8,14 +8,15 @@
   text ? null,
   runtimeInputs ? [],
   excludeShellChecks ? [],
-}:
-let
+}: let
   scriptText =
-    if file != null && text == null then builtins.readFile file
-    else if text != null && file == null then text
+    if file != null && text == null
+    then builtins.readFile file
+    else if text != null && file == null
+    then text
     else throw "scriptToPackage: exactly one of `file` or `text` must be provided";
 in
-pkgs.writeShellApplication {
-  inherit name runtimeInputs excludeShellChecks;
-  text = scriptText;
-}
+  pkgs.writeShellApplication {
+    inherit name runtimeInputs excludeShellChecks;
+    text = scriptText;
+  }

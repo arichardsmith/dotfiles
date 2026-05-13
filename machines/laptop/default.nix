@@ -2,6 +2,7 @@
 mkHomeConfig "aarch64-darwin" ({...}: {
   imports = [
     ./programs.nix
+    ./dev.nix
     ./backup.nix
   ];
 

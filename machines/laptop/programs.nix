@@ -3,12 +3,15 @@
   lib,
   ...
 }: {
+  imports = [
+    ./dev.nix
+  ];
+
   config = {
     # Enable packs
     packs = {
       shell.enable = true;
       system.enable = true;
-      dev.enable = true;
     };
 
     programs = {

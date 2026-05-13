@@ -34,11 +34,26 @@
 
   # Core scripts as packages
   coreScripts = [
-    (lib.helpers.scriptToPackage {name = "copy"; file = ./scripts/copy.sh;})
-    (lib.helpers.scriptToPackage {name = "now"; file = ./scripts/now.sh;})
-    (lib.helpers.scriptToPackage {name = "pasta"; file = ./scripts/pasta.sh;})
-    (lib.helpers.scriptToPackage {name = "plist"; file = ./scripts/plist.sh;})
-    (lib.helpers.scriptToPackage {name = "today"; file = ./scripts/today.sh;})
+    (lib.helpers.scriptToPackage {
+      name = "copy";
+      file = ./scripts/copy.sh;
+    })
+    (lib.helpers.scriptToPackage {
+      name = "now";
+      file = ./scripts/now.sh;
+    })
+    (lib.helpers.scriptToPackage {
+      name = "pasta";
+      file = ./scripts/pasta.sh;
+    })
+    (lib.helpers.scriptToPackage {
+      name = "plist";
+      file = ./scripts/plist.sh;
+    })
+    (lib.helpers.scriptToPackage {
+      name = "today";
+      file = ./scripts/today.sh;
+    })
   ];
 in {
   imports = [
