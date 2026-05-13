@@ -128,6 +128,64 @@
       };
     };
 
+    rust = {
+      packages = with pkgs; [
+        rustup
+        bacon
+      ];
+
+      programs.helix.languages = {
+        language-server.rust-analyzer = {
+          command = lib.getExe pkgs.rust-analyzer;
+        };
+
+        language = [
+          {
+            name = "rust";
+            auto-format = true;
+            language-servers = ["rust-analyzer"];
+          }
+        ];
+      };
+
+      home.sessionVariables = {
+        RUSTUP_HOME = "$HOME/.rustup";
+        CARGO_HOME = "$HOME/.cargo";
+      };
+
+      home.sessionPath = [
+        "$HOME/.cargo/bin"
+      ];
+    };
+
+    go = {
+      packages = with pkgs; [
+        go
+        gopls
+        golangci-lint
+        air
+      ];
+
+      programs.helix.languages = {
+        language-server.gopls = {
+          command = lib.getExe pkgs.gopls;
+          config = {
+            "ui.diagnostic.staticcheck" = true;
+          };
+        };
+
+        language = [
+          {
+            name = "go";
+            auto-format = true;
+            formatter.command = lib.getExe pkgs.go;
+            formatter.args = ["fmt"];
+            language-servers = ["gopls"];
+          }
+        ];
+      };
+    };
+
     just = {
       packages = with pkgs; [
         just
