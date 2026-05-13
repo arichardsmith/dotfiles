@@ -20,6 +20,7 @@
       helix.enable = true;
       rclone.enable = true;
       rbw.enable = true;
+      broot.enable = true; # A nicer tree view
 
       git.settings = {
         # Allow nas://<repo> paths when working with repos stored on NAS
