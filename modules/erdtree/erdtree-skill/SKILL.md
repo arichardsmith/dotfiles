@@ -9,9 +9,9 @@ This machine has `erdtree` aliased to `ls`. Standard `ls` flags like `-la` will 
 
 ## Available Commands
 
-- `erd --long --hidden` — list files with details, including hidden files
-- `erd --hidden --level 2` — peek into subdirectories
-- `ols` — the original `ls` binary, if you need it
+- `erd --long --hidden` - list files with details, including hidden files
+- `erd --hidden --level 2` - peek into subdirectories
+- `ols` - the original `ls` binary, if you need it
 
 ## Important
 

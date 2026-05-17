@@ -16,11 +16,11 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
     skills = lib.mkOption {
       type = lib.types.attrsOf lib.types.path;
       default = {};
-      description = "Additional skill files to include beyond the defaults";
+      description = "Additional skill directories to include beyond the defaults";
       example = lib.literalExpression ''
         {
-          custom-skill = ./custom-skill.md;
-          project-conventions = ./project-conventions.md;
+          custom-skill = ./custom-skill;
+          project-conventions = ./project-conventions;
         }
       '';
     };
@@ -106,14 +106,14 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
 
     # Default skills that are always included
     defaultSkills = {
-      go-conventions = ./skills/go-conventions.md;
-      nix-conventions = ./skills/nix-conventions.md;
-      process-feedback = ./skills/process-feedback.md;
-      python-conventions = ./skills/python-conventions.md;
-      rust-conventions = ./skills/rust-conventions.md;
-      rust-error-handling = ./skills/rust-error-handling.md;
-      svelte-conventions = ./skills/svelte-conventions.md;
-      typescript-conventions = ./skills/typescript-conventions.md;
+      go-conventions = ../../skills/go-conventions;
+      nix-conventions = ../../skills/nix-conventions;
+      process-feedback = ../../skills/process-feedback;
+      python-conventions = ../../skills/python-conventions;
+      rust-conventions = ../../skills/rust-conventions;
+      rust-error-handling = ../../skills/rust-error-handling;
+      svelte-conventions = ../../skills/svelte-conventions;
+      typescript-conventions = ../../skills/typescript-conventions;
     };
 
     # Merge default skills with user-provided skills (user skills can override defaults)
@@ -144,12 +144,26 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
       then builtins.toJSON opencodeTuiConfigAttrs
       else null;
 
-    # Create OpenCode skill directory structure
-    opencodeSkillConfigs = lib.mapAttrs' (name: path:
-      lib.nameValuePair "opencode/skills/${name}/SKILL.md" {
+    installSharedSkills = cfg.settings.opencode.enable;
+
+    sharedSkillConfigs = lib.mapAttrs' (name: path:
+      lib.nameValuePair ".agents/skills/${name}" {
         source = path;
+        recursive = true;
       })
     allSkills;
+
+    # Codex doesn't support symlinked skills, so we rsync dereferenced copies.
+    codexSkillSyncCommands = lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (name: _path: ''
+        $DRY_RUN_CMD rm -rf "$HOME/.codex/skills/${name}"
+        $DRY_RUN_CMD mkdir -p "$HOME/.codex/skills/${name}"
+        $DRY_RUN_CMD ${pkgs.rsync}/bin/rsync -aL --delete \
+          "$HOME/.agents/skills/${name}/" \
+          "$HOME/.codex/skills/${name}/"
+      '')
+      allSkills
+    );
   in
     lib.mkMerge [
       # Claude Code configuration
@@ -179,9 +193,17 @@ lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
         };
       })
 
-      # OpenCode skills (only if opencode is enabled)
-      (lib.mkIf cfg.settings.opencode.enable {
-        xdg.configFile = opencodeSkillConfigs;
+      # Shared skills at ~/.agents/skills (symlinks, for OpenCode and other agents)
+      (lib.mkIf installSharedSkills {
+        home.file = sharedSkillConfigs;
+      })
+
+      # Codex gets dereferenced copies via rsync (it doesn't support symlinked skills)
+      (lib.mkIf config.programs.codex.enable {
+        home.activation.syncCodexSkills = lib.hm.dag.entryAfter ["writeBoundary"] ''
+          $DRY_RUN_CMD mkdir -p "$HOME/.codex/skills"
+          ${codexSkillSyncCommands}
+        '';
       })
     ];
 }

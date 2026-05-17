@@ -118,7 +118,7 @@ in {
 
     # Add jujutsu skill to ai-agent when jujutsu is enabled
     customPrograms.ai-agent.settings.skills = {
-      jujutsu = ./jujutsu-skill.md;
+      jujutsu = ./jujutsu-skill;
     };
   }; # end mkIf cfg.enable
 }
