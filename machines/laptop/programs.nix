@@ -46,10 +46,15 @@
         settings = {
           claude-code.enable = true;
           opencode = {
-            enable = true; # Bun version mismatch makes this unusable
-            model = "anthropic/claude-sonnet-4-5";
+            enable = true;
+            model = "openai/gpt-5.5";
             autoupdate = "notify";
             theme = "system";
+
+            agents = {
+              plan.model = "openai/gpt-5.5";
+              build.model = "openrouter/deepseek/deepseek-v4-flash";
+            };
           };
         };
       };
