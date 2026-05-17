@@ -210,6 +210,7 @@
         jujutsu.enable = true;
         gh.enable = true;
         claude-code.enable = true;
+        codex.enable = true;
       };
 
       customPrograms = {
