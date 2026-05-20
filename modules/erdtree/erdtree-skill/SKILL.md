@@ -1,11 +1,11 @@
 ---
 name: erdtree
-description: This machine uses the erdtree command for listing files. Use whenever running shell commands, listing files, or interacting with the filesystem via the terminal.
+description: This machine uses the erd command for listing files. Use whenever running shell commands, listing files, or interacting with the filesystem via the terminal.
 ---
 
 # Erdtree CLI Conventions
 
-This machine has `erdtree` aliased to `ls`. Standard `ls` flags like `-la` will NOT work.
+This machine has `erd` aliased to `ls`. Standard `ls` flags like `-la` will NOT work.
 
 ## Available Commands
 
