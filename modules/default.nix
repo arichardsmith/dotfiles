@@ -21,6 +21,7 @@
     ./shell
     ./ssh
     ./starship
+    ./tmux
     ./zoxide
     ./zsh
   ];

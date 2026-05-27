@@ -9,6 +9,7 @@
 
     programs = {
       neovim.enable = true;
+      tmux.enable = true;
     };
 
     # SSH authorized keys

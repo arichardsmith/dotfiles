@@ -18,6 +18,7 @@
       direnv.enable = true;
       neovim.enable = true;
       helix.enable = true;
+      tmux.enable = true;
       rclone.enable = true;
       rbw.enable = true;
       broot.enable = true; # A nicer tree view
