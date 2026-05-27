@@ -25,8 +25,8 @@
       # Use Ctrl+a as prefix
       unbind C-b
 
-         set -g prefix C-a
-         bind C-a send-prefix
+      set -g prefix C-a
+      bind C-a send-prefix
 
       # True colour / modern terminal support.
       set -as terminal-features ",xterm-256color:RGB"
@@ -51,8 +51,18 @@
       bind l select-pane -R
 
       bind [ copy-mode
-         bind -T copy-mode-vi v send -X begin-selection
-         bind -T copy-mode-vi y send -X copy-selection-and-cancel
+      bind -T copy-mode-vi v send -X begin-selection
+      bind -T copy-mode-vi y send -X copy-selection-and-cancel
+
+      # Status bar
+      set -g status-position bottom
+      set -g status-left "#S "
+      set -g window-status-format "#{window_index}:#{window_name} "
+      set -g window-status-current-format "[#{window_index}:#{window_name}] "
+      set -g status-right "#h"
+      set -g status-left-length 32
+      set -g status-right-length 32
+      set -g status-interval 60
     '';
   };
 }
