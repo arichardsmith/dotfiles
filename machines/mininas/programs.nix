@@ -9,6 +9,7 @@
 
     programs = {
       neovim.enable = true;
+      helix.enable = true;
       tmux.enable = true;
     };
 
