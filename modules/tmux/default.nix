@@ -13,6 +13,7 @@
 
     plugins = with pkgs.tmuxPlugins; [
       sensible
+      catppuccin
       yank
       vim-tmux-navigator
     ];
@@ -72,13 +73,17 @@
 
       # Status bar
       set -g status-position bottom
-      set -g status-left "#S "
+      set -g status-left " #S "
       set -g window-status-format "#{window_index}:#{window_name} "
       set -g window-status-current-format "[#{window_index}:#{window_name}] "
-      set -g status-right "#h"
+      set -g status-right "#h "
       set -g status-left-length 32
       set -g status-right-length 32
       set -g status-interval 60
+
+      # Theming
+      set -g @catppuccin_flavour "macchiato"
+      set -g status-style "fg=#494d64,bg=#{?client_prefix,#c6a0f6,#b7bdf8}"
     '';
   };
 }
