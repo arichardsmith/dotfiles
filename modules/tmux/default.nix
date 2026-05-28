@@ -32,6 +32,15 @@
       # True colour / modern terminal support.
       set -as terminal-features ",xterm-256color:RGB"
       set -as terminal-features ",tmux-256color:RGB"
+      set -as terminal-features ",xterm-ghostty:RGB,extkeys"
+      set -as terminal-features ",ghostty:RGB,extkeys"
+
+      # Extended keyboard support for Ghostty / Claude Code / modern TUIs.
+      set -s extended-keys always
+      set -s extended-keys-format csi-u
+
+      # Shift+Enter for Claude Code inside tmux.
+      bind -n S-Enter send-keys Escape "[13;2u"
 
       # OSC 52 clipboard over SSH.
       set -g set-clipboard on
