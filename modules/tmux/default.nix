@@ -9,6 +9,7 @@
     secureSocket = false;
 
     terminal = "tmux-256color";
+    shell = "${pkgs.zsh}/bin/zsh"; # Without this, it uses the wrong zsh
 
     plugins = with pkgs.tmuxPlugins; [
       sensible
