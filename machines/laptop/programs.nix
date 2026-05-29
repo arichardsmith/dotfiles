@@ -16,7 +16,6 @@
 
     programs = {
       direnv.enable = true;
-      neovim.enable = true;
       helix.enable = true;
       tmux.enable = true;
       rclone.enable = true;
