@@ -8,13 +8,14 @@
   ];
 
   config = {
-    # Enable packs
-    packs = {
-      shell.enable = true;
-      system.enable = true;
-    };
-
     programs = {
+      zsh.enable = true;
+      btop.enable = true;
+      starship.enable = true;
+      bat.enable = true;
+      ripgrep.enable = true;
+      fzf.enable = true;
+      zoxide.enable = true;
       direnv.enable = true;
       helix.enable = true;
       tmux.enable = true;
@@ -31,6 +32,13 @@
     };
 
     customPrograms = {
+      erdtree = {
+        enable = true;
+        settings = {
+          overrideLs = true;
+        };
+      };
+
       ghostty.enable = true;
       colima = {
         enable = true;
@@ -41,6 +49,7 @@
           arch = "aarch64";
         };
       };
+
       ai-agent = {
         enable = true;
         settings = {
@@ -56,11 +65,48 @@
               build.model = "openrouter/deepseek/deepseek-v4-flash";
             };
           };
+
+          context.chunks = [
+            ''
+              You have access to `rg` for searching with `ripgrep` and `fd` as an alternative to `find`.
+            ''
+          ];
         };
       };
     };
 
     home.packages = with pkgs; [
+      # Network utilities
+      curl
+      dig
+      nmap
+      rsync
+      mtr # Trace route
+
+      # Utility Apps
+      fd # Better find
+      sd # Better sed
+      just # Better make
+      duf # Better df
+      snitch # Better netstat
+      procs # Better ps
+
+      # Compression
+      unzip
+      gzip
+
+      # Encryption
+      age
+
+      # System monitoring
+      ncdu # Disk usage analyzer
+
+      # Custom scripts
+      (lib.helpers.scriptToPackage {
+        name = "edit";
+        file = ../../scripts/edit.sh;
+      })
+
       cyme # List system USB buses and devices. A modern cross-platform lsusb
       caddy # Used to handle .localhost domains
       ffmpeg

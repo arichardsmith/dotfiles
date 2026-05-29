@@ -7,7 +7,6 @@
 }: {
   imports = [
     ./modules
-    ./packs
   ];
 
   options.user = {

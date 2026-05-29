@@ -8,13 +8,10 @@
 ├── machines/           # Machine-specific configs
 │   └── laptop/
 │       ├── default.nix    # User identity & machine settings
-│       └── programs.nix   # Enabled packs & programs
-├── packs/              # Program collections
-│   ├── shell/          # Terminal tools
-│   ├── system/         # System monitoring
-│   └── dev/            # Development tools
+│       └── programs.nix   # Enabled programs
 ├── modules/            # Individual program modules
 │   └── <program>/default.nix
+├── scripts/            # Shared shell scripts
 └── lib/                # Helpers (mkProgram, scriptToPackage)
 ```
 
@@ -22,7 +19,6 @@
 
 - `user.username`, `user.email`, `user.fullName`, `user.homeDirectory` - User identity
 - `host.name` - Machine name
-- `packs.<name>.enable` - Enable pack (collection of programs)
 - `programs.<name>.*` - Built-in home-manager programs (git, neovim, etc)
 - `customPrograms.<name>.enable` - Custom program modules using mkProgram
 - `customPrograms.<name>.settings.*` - Program-specific settings
@@ -93,30 +89,6 @@ Configure directly without creating a module:
 }
 ```
 
-## Creating Packs
-
-```nix
-# packs/mypack/default.nix
-{config, lib, pkgs, ...}: let
-  cfg = config.packs.mypack;
-in {
-  config = lib.mkIf cfg.enable {
-    programs.git.enable = true;
-    customPrograms.myapp.enable = true;
-    home.packages = [pkgs.sometool];
-  };
-}
-```
-
-Add option to `packs/default.nix`:
-```nix
-options.packs = {
-  mypack.enable = lib.mkEnableOption "my pack description";
-};
-```
-
-Add to imports in `packs/default.nix`.
-
 ## Machine Configuration
 
 In `machines/<name>/programs.nix`:
@@ -124,14 +96,10 @@ In `machines/<name>/programs.nix`:
 ```nix
 {pkgs, lib, ...}: {
   config = {
-    # Enable packs
-    packs = {
-      shell.enable = true;
-      dev.enable = true;
+    programs = {
+      zsh.enable = true;
+      neovim.enable = true;
     };
-
-    # Enable/configure programs
-    programs.neovim.enable = true;
 
     customPrograms = {
       ghostty.enable = true;
@@ -141,7 +109,6 @@ In `machines/<name>/programs.nix`:
       };
     };
 
-    # Extra packages
     home.packages = [pkgs.ffmpeg];
   };
 }
@@ -155,14 +122,14 @@ In `machines/<name>/programs.nix`:
 
 ## Common Tasks
 
-**Add tool to dev pack:**
+**Add a program to a machine:**
 1. Create `modules/mytool/default.nix` (simple or with mkProgram)
 2. Add to `modules/default.nix` imports
-3. Add to `packs/dev/default.nix`: `customPrograms.mytool.enable = true;`
+3. Enable in `machines/<name>/programs.nix`
 
 **Add new machine:**
 1. Create `machines/<name>/default.nix` with user identity
-2. Create `machines/<name>/programs.nix` with enabled packs/programs
+2. Create `machines/<name>/programs.nix` with enabled programs
 3. Add to `flake.nix` homeConfigurations
 
 **Override program settings per machine:**
