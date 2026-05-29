@@ -12,7 +12,7 @@
 ├── modules/            # Individual program modules
 │   └── <program>/default.nix
 ├── scripts/            # Shared shell scripts
-└── lib/                # Helpers (mkProgram, scriptToPackage)
+└── lib/                # Helpers (mkProgram, scriptToPackage, uvScriptToPackage)
 ```
 
 ## Option Paths
@@ -119,6 +119,29 @@ In `machines/<name>/programs.nix`:
 **`lib.helpers.mkProgram`** - Creates a module with enable option and typed settings at `customPrograms.<name>`
 
 **`lib.helpers.scriptToPackage`** - Wraps a shell script as a package for `home.packages`
+
+**`lib.helpers.uvScriptToPackage`** - Wraps a Python script as a package, executed via the nix-managed `uv`. Pass either `file` (path) or `text` (inline string). The script body must not include a shebang — one pointing to the nix store `uv` binary is prepended automatically, making the package hermetic.
+
+```nix
+# In home.packages:
+(lib.helpers.uvScriptToPackage {
+  name = "my-script";
+  file = ../../scripts/my-script.py;
+})
+```
+
+The script file uses [uv inline script metadata](https://docs.astral.sh/uv/guides/scripts/#declaring-script-dependencies) to declare dependencies:
+
+```python
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#   "requests",
+# ]
+# ///
+
+import requests
+```
 
 ## Common Tasks
 
