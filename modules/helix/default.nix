@@ -1,4 +1,17 @@
 {...}: {
+  imports = [
+    ./toolchains/python.nix
+    ./toolchains/markdown.nix
+    ./toolchains/just.nix
+    ./toolchains/toml.nix
+    ./toolchains/yaml.nix
+    ./toolchains/json.nix
+    ./toolchains/js.nix
+    ./toolchains/nix.nix
+    ./toolchains/rust.nix
+    ./toolchains/go.nix
+  ];
+
   config.programs.helix = {
     settings = {
       theme = "catppuccin_macchiato";

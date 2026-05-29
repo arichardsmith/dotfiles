@@ -12,8 +12,19 @@
       ripgrep.enable = true;
       fzf.enable = true;
       zoxide.enable = true;
-      helix.enable = true;
       tmux.enable = true;
+
+      helix = {
+        enable = true;
+        toolchains = {
+          python.enable = true;
+          markdown.enable = true;
+          just.enable = true;
+          toml.enable = true;
+          yaml.enable = true;
+          json.enable = true;
+        };
+      };
     };
 
     customPrograms = {

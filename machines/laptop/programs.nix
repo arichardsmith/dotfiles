@@ -3,10 +3,6 @@
   lib,
   ...
 }: {
-  imports = [
-    ./dev.nix
-  ];
-
   config = {
     programs = {
       zsh.enable = true;
@@ -17,18 +13,41 @@
       fzf.enable = true;
       zoxide.enable = true;
       direnv.enable = true;
-      helix.enable = true;
       tmux.enable = true;
       rclone.enable = true;
       rbw.enable = true;
       broot.enable = true; # A nicer tree view
 
-      git.settings = {
-        # Allow nas://<repo> paths when working with repos stored on NAS
-        url."ssh://mininas.local/tank/git/" = {
-          insteadOf = "nas://";
+      helix = {
+        enable = true;
+        toolchains = {
+          python.enable = true;
+          markdown.enable = true;
+          just.enable = true;
+          toml.enable = true;
+          yaml.enable = true;
+          json.enable = true;
+          js.enable = true;
+          nix.enable = true;
+          rust.enable = true;
+          go.enable = true;
         };
       };
+
+      git = {
+        enable = true;
+        settings = {
+          # Allow nas://<repo> paths when working with repos stored on NAS
+          url."ssh://mininas.local/tank/git/" = {
+            insteadOf = "nas://";
+          };
+        };
+      };
+
+      jujutsu.enable = true;
+      gh.enable = true;
+      claude-code.enable = true;
+      codex.enable = true;
     };
 
     customPrograms = {
@@ -49,6 +68,9 @@
           arch = "aarch64";
         };
       };
+
+      astGrep.enable = true;
+      docker.enable = true;
 
       ai-agent = {
         enable = true;
@@ -100,6 +122,8 @@
 
       # System monitoring
       ncdu # Disk usage analyzer
+
+      curlie
 
       # Custom scripts
       (lib.helpers.scriptToPackage {
