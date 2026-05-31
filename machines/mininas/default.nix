@@ -7,6 +7,8 @@ mkHomeConfig "x86_64-linux" ({pkgs, ...}: {
     user.email = "richardmcsmith@gmail.com";
     user.fullName = "Richard Smith";
 
+    host.tailscale.ipv4 = "100.111.24.65";
+
     home.sessionPath = [];
 
     home.sessionVariables = {

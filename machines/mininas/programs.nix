@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -55,6 +56,13 @@
       sanoid = {
         enable = true;
         settings.configFilePath = ./sanoid.conf;
+      };
+    };
+
+    services = {
+      syncthing = {
+        enable = true;
+        guiAddress = "${config.host.tailscale.ipv4}:8384";
       };
     };
 

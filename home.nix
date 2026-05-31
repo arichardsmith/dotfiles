@@ -37,6 +37,12 @@
       type = lib.types.str;
       description = "The name for this host";
     };
+
+    tailscale.ipv4 = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "The Tailscale IPv4 address for this host.";
+    };
   };
 
   config = {
