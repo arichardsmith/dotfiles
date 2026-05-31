@@ -1,10 +1,11 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "docker" {
+helpers.mkProgram {inherit config pkgs;} "docker" {
   settings = {
     compose = lib.mkOption {
       type = lib.types.bool;

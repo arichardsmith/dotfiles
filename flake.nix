@@ -33,44 +33,17 @@
     opencode,
     ...
   }: let
-    mkHomeConfig = system: hostFile: let
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfreePredicate = pkg:
-          builtins.elem (lib.getName pkg) [
-            "claude-code"
-          ];
-      };
-
-      lib = pkgs.lib.extend (final: prev: {
-        helpers = import ./lib {
-          lib = final;
-          inherit pkgs;
-        };
-      });
-    in
-      home-manager.lib.homeManagerConfiguration {
-        inherit pkgs lib;
-
-        modules = [
-          {
-            nixpkgs.overlays = [
-              (final: prev: {
-                starship-jj = starship-jj.packages.${system}.default;
-                snitch = snitch.packages.${system}.default;
-                opencode = opencode.packages.${system}.default;
-              })
-            ];
-          }
-          ./home.nix
-          hostFile
-        ];
-      };
+    configurations = import ./lib/configurations.nix {
+      inherit nixpkgs home-manager starship-jj snitch opencode;
+    };
   in {
-    # Standalone Home Manager configurations
-    homeConfigurations = {
-      laptop = import ./machines/laptop {inherit mkHomeConfig;};
-      mininas = import ./machines/mininas {inherit mkHomeConfig;};
+    homeConfigurations = configurations.mkHomeConfigs {
+      laptop = ./machines/laptop;
+      mininas = ./machines/mininas;
+    };
+
+    nixosConfigurations = configurations.mkNixosConfigs {
+      example = ./machines/example;
     };
   };
 }

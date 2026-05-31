@@ -1,10 +1,11 @@
 {
+  helpers,
   pkgs,
-  lib,
   ...
 }: {
   config = {
     programs = {
+      home-manager.enable = true;
       zsh.enable = true;
       btop.enable = true;
       starship.enable = true;
@@ -141,7 +142,7 @@
       curlie
 
       # Custom scripts
-      (lib.helpers.scriptToPackage {
+      (helpers.scriptToPackage {
         name = "edit";
         file = ../../scripts/edit.sh;
       })
@@ -153,11 +154,11 @@
       maple-mono.truetype
       maple-mono.NF-unhinted
 
-      (lib.helpers.scriptToPackage {
+      (helpers.scriptToPackage {
         name = "unlock-drive";
         file = ./scripts/unlock-drive.sh;
       })
-      (lib.helpers.scriptToPackage {
+      (helpers.scriptToPackage {
         name = "unlock-ssh";
         file = ./scripts/unlock-ssh.sh;
       })

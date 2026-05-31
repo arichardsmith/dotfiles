@@ -1,10 +1,11 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "colima" {
+helpers.mkProgram {inherit config pkgs;} "colima" {
   settings = {
     cpu = lib.mkOption {
       type = lib.types.ints.positive;

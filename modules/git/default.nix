@@ -1,10 +1,10 @@
-{config, ...}: {
+{machine, ...}: {
   config = {
     programs.git = {
       settings = {
         user = {
-          name = config.user.fullName;
-          email = config.user.email;
+          name = machine.user.fullName;
+          email = machine.user.email;
         };
 
         init = {

@@ -1,5 +1,6 @@
 {
   config,
+  machine,
   lib,
   pkgs,
   ...
@@ -11,8 +12,8 @@ in {
     programs.jujutsu = {
       settings = {
         user = {
-          name = config.user.fullName;
-          email = config.user.email;
+          name = machine.user.fullName;
+          email = machine.user.email;
         };
 
         ui = {

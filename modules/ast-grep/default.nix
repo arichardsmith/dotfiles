@@ -1,10 +1,11 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "astGrep" {
+helpers.mkProgram {inherit config pkgs;} "astGrep" {
   setup = {pkgs, ...}: {
     home.packages = with pkgs; [
       ast-grep

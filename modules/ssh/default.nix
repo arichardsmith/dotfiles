@@ -1,10 +1,11 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "sshKeys" {
+helpers.mkProgram {inherit config pkgs;} "sshKeys" {
   settings = {
     authorizedKeys = lib.mkOption {
       type = lib.types.listOf lib.types.str;

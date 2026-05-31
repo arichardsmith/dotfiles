@@ -1,10 +1,11 @@
 {
+  helpers,
   lib,
   pkgs,
   config,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "ghostty" {
+helpers.mkProgram {inherit config pkgs;} "ghostty" {
   setup = {...}: {
     # The ghostty package is currently broken, so we'll track the config manually
     # programs.ghostty = {

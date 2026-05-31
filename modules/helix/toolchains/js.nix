@@ -1,4 +1,5 @@
 {
+  helpers,
   lib,
   pkgs,
   config,
@@ -10,11 +11,11 @@
     home.packages = with pkgs; [
       bun
       typescript-language-server
-      (lib.helpers.scriptToPackage {
+      (helpers.scriptToPackage {
         name = "ijs";
         file = ../../../scripts/ijs.sh;
       })
-      (lib.helpers.scriptToPackage {
+      (helpers.scriptToPackage {
         name = "pkq";
         file = ../../../scripts/pkq.sh;
       })

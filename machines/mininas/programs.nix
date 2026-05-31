@@ -1,7 +1,7 @@
 {
-  config,
+  helpers,
+  machine,
   pkgs,
-  lib,
   ...
 }: {
   config = {
@@ -62,7 +62,7 @@
     services = {
       syncthing = {
         enable = true;
-        guiAddress = "${config.host.tailscale.ipv4}:8384";
+        guiAddress = "${machine.host.tailscale.ipv4}:8384";
       };
     };
 
@@ -93,7 +93,7 @@
       ncdu # Disk usage analyzer
 
       # Custom scripts
-      (lib.helpers.scriptToPackage {
+      (helpers.scriptToPackage {
         name = "edit";
         file = ../../scripts/edit.sh;
       })

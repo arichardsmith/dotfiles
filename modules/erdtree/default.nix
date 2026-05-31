@@ -1,10 +1,11 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "erdtree" {
+helpers.mkProgram {inherit config pkgs;} "erdtree" {
   settings = {
     overrideLs = lib.mkOption {
       type = lib.types.bool;

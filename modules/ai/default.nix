@@ -1,10 +1,11 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "ai-agent" {
+helpers.mkProgram {inherit config pkgs;} "ai-agent" {
   settings = {
     # Shared configuration
     context.chunks = lib.mkOption {

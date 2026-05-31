@@ -1,12 +1,13 @@
 # This adds ghostty's term info to remote machines.
 # It doesn't configure or run ghostty on the device.
 {
+  helpers,
   lib,
   pkgs,
   config,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "ghosttyTermInfo" {
+helpers.mkProgram {inherit config pkgs;} "ghosttyTermInfo" {
   setup = {...}: {
     home.packages = [pkgs.ghostty];
 

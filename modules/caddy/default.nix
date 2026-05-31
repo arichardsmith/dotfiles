@@ -1,10 +1,11 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }:
-lib.helpers.mkService {inherit config pkgs;} "caddy" {
+helpers.mkService {inherit config pkgs;} "caddy" {
   settings = {
     caddyfile = lib.mkOption {
       type = lib.types.either lib.types.path lib.types.lines;

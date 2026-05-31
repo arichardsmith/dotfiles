@@ -1,10 +1,11 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }:
-lib.helpers.mkProgram {inherit config pkgs;} "sanoid" {
+helpers.mkProgram {inherit config pkgs;} "sanoid" {
   settings = {
     configFile = lib.mkOption {
       type = lib.types.nullOr lib.types.str;

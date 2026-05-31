@@ -1,173 +1,71 @@
-# Home Manager Repository
+# Home Manager And NixOS Repository
+
+This repository manages machine configuration with Nix flakes. It supports standalone Home Manager machines and NixOS machines with integrated Home Manager.
+
+For user-facing setup and general usage, read [`readme.md`](./readme.md).
+
+For machine metadata, machine layout, and remote deployment details, read [`machines/readme.md`](./machines/readme.md).
 
 ## Structure
 
-```
-├── flake.nix           # Flake definition with homeConfigurations
-├── home.nix            # Core options (user.*, host.*)
-├── machines/           # Machine-specific configs
-│   └── laptop/
-│       ├── default.nix    # User identity & machine settings
-│       └── programs.nix   # Enabled programs
-├── modules/            # Individual program modules
-│   └── <program>/default.nix
-├── scripts/            # Shared shell scripts
-└── lib/                # Helpers (mkProgram, scriptToPackage, uvScriptToPackage)
+```text
+├── flake.nix              # Registers machine paths as flake outputs
+├── machines/              # Machine metadata and per-machine config
+├── modules/               # Shared Home Manager modules
+├── scripts/               # Shared shell scripts
+└── lib/                   # Config builders and helper functions
 ```
 
-## Option Paths
-
-- `user.username`, `user.email`, `user.fullName`, `user.homeDirectory` - User identity
-- `host.name` - Machine name
-- `programs.<name>.*` - Built-in home-manager programs (git, neovim, etc)
-- `customPrograms.<name>.enable` - Custom program modules using mkProgram
-- `customPrograms.<name>.settings.*` - Program-specific settings
-
-## Adding Programs
-
-### Simple program (package only)
+`flake.nix` delegates output construction to `lib/configurations.nix`:
 
 ```nix
-# modules/myapp/default.nix
-{pkgs, ...}: {
-  config = {
-    home.packages = [pkgs.myapp];
-  };
-}
+homeConfigurations = configurations.mkHomeConfigs { ... };
+nixosConfigurations = configurations.mkNixosConfigs { ... };
 ```
 
-Then add to `modules/default.nix` imports.
+## Working In This Repo
 
-### Program with settings (using mkProgram)
+Use `jj`, not Git, for version-control mutations. Do not run `git add`, `git commit`, `git checkout`, or other mutating Git commands.
 
-```nix
-# modules/myapp/default.nix
-{config, pkgs, lib, ...}:
-lib.helpers.mkProgram {inherit config pkgs;} "myapp" {
-  settings = {
-    port = lib.mkOption {
-      type = lib.types.port;
-      default = 8080;
-    };
-  };
-
-  setup = {pkgs, cfg, ...}: {
-    home.packages = [pkgs.myapp];
-    xdg.configFile."myapp/config.toml".text = ''
-      port = ${toString cfg.settings.port}
-    '';
-  };
-}
-```
-
-Then add to `modules/default.nix` imports.
-
-**Usage in machine config:**
-```nix
-customPrograms.myapp = {
-  enable = true;
-  settings.port = 9000;
-};
-```
-
-### Built-in home-manager programs
-
-Configure directly without creating a module:
-
-```nix
-# modules/git/default.nix - just sets defaults
-{config, ...}: {
-  config = {
-    programs.git = {
-      settings = {
-        user.name = config.user.fullName;
-        init.defaultBranch = "main";
-        # ... more settings
-      };
-    };
-  };
-}
-```
-
-## Machine Configuration
-
-In `machines/<name>/programs.nix`:
-
-```nix
-{pkgs, lib, ...}: {
-  config = {
-    programs = {
-      zsh.enable = true;
-      neovim.enable = true;
-    };
-
-    customPrograms = {
-      ghostty.enable = true;
-      colima = {
-        enable = true;
-        settings.cpu = 4;
-      };
-    };
-
-    home.packages = [pkgs.ffmpeg];
-  };
-}
-```
-
-## Lib Helpers
-
-**`lib.helpers.mkProgram`** - Creates a module with enable option and typed settings at `customPrograms.<name>`
-
-**`lib.helpers.scriptToPackage`** - Wraps a shell script as a package for `home.packages`
-
-**`lib.helpers.uvScriptToPackage`** - Wraps a Python script as a package, executed via the nix-managed `uv`. Pass either `file` (path) or `text` (inline string). The script body must not include a shebang — one pointing to the nix store `uv` binary is prepended automatically, making the package hermetic.
-
-```nix
-# In home.packages:
-(lib.helpers.uvScriptToPackage {
-  name = "my-script";
-  file = ../../scripts/my-script.py;
-})
-```
-
-The script file uses [uv inline script metadata](https://docs.astral.sh/uv/guides/scripts/#declaring-script-dependencies) to declare dependencies:
-
-```python
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#   "requests",
-# ]
-# ///
-
-import requests
-```
-
-## Common Tasks
-
-**Add a program to a machine:**
-1. Create `modules/mytool/default.nix` (simple or with mkProgram)
-2. Add to `modules/default.nix` imports
-3. Enable in `machines/<name>/programs.nix`
-
-**Add new machine:**
-1. Create `machines/<name>/default.nix` with user identity
-2. Create `machines/<name>/programs.nix` with enabled programs
-3. Add to `flake.nix` homeConfigurations
-
-**Override program settings per machine:**
-```nix
-# In machines/laptop/programs.nix
-customPrograms.colima.settings.cpu = 8;
-programs.git.userName = "Different Name";
-```
-
-## Testing
+Use `path:.` when evaluating flakes from the working tree, especially after adding new files:
 
 ```bash
-# Switch to configuration
-home-manager switch --flake .#laptop
-
-# Check flake
-nix flake check
+nix eval 'path:.#homeConfigurations.laptop.activationPackage.drvPath'
+nix eval 'path:.#homeConfigurations.mininas.activationPackage.drvPath'
+nix eval 'path:.#nixosConfigurations.example.config.system.build.toplevel.drvPath'
 ```
+
+Run `nix flake check` when broader verification is needed.
+
+## Module Conventions
+
+Machine metadata is passed to modules as the `machine` argument.
+
+Use this:
+
+```nix
+{machine, ...}: {
+  programs.git.settings.user.email = machine.user.email;
+}
+```
+
+Do not use custom `config.user.*` or `config.host.*` options.
+
+Shared helper functions are passed as the `helpers` argument.
+
+Use this:
+
+```nix
+{config, helpers, pkgs, ...}:
+helpers.mkProgram {inherit config pkgs;} "myapp" { ... }
+```
+
+Do not use `lib.helpers.*` in modules.
+
+## Adding Things
+
+When adding or changing machines, follow [`machines/readme.md`](./machines/readme.md).
+
+When adding shared Home Manager modules, put them under `modules/<name>/default.nix`, import them from `modules/default.nix`, and enable them from a machine `home.nix`.
+
+For NixOS machines, put system config in `machines/<name>/nixos.nix`. Do not run a separate `home-manager switch` for NixOS machines that use integrated Home Manager.

@@ -1,11 +1,12 @@
 {
   config,
+  helpers,
   pkgs,
   lib,
   ...
 }: let
   home = config.home.homeDirectory;
-  backupDev = lib.helpers.scriptToPackage {
+  backupDev = helpers.scriptToPackage {
     name = "backup-dev";
     file = ./scripts/backup-dev.sh;
     runtimeInputs = [pkgs.restic];

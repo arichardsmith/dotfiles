@@ -1,4 +1,5 @@
 {
+  helpers,
   lib,
   config,
   ...
@@ -34,23 +35,23 @@
 
   # Core scripts as packages
   coreScripts = [
-    (lib.helpers.scriptToPackage {
+    (helpers.scriptToPackage {
       name = "copy";
       file = ./scripts/copy.sh;
     })
-    (lib.helpers.scriptToPackage {
+    (helpers.scriptToPackage {
       name = "now";
       file = ./scripts/now.sh;
     })
-    (lib.helpers.scriptToPackage {
+    (helpers.scriptToPackage {
       name = "pasta";
       file = ./scripts/pasta.sh;
     })
-    (lib.helpers.scriptToPackage {
+    (helpers.scriptToPackage {
       name = "plist";
       file = ./scripts/plist.sh;
     })
-    (lib.helpers.scriptToPackage {
+    (helpers.scriptToPackage {
       name = "today";
       file = ./scripts/today.sh;
     })
