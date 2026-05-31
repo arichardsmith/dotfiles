@@ -3,6 +3,9 @@
 # Project notes
 .notes/
 
+# Local private files
+private/
+
 # AI
 .claude/
 CLAUDE.md
