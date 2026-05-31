@@ -5,6 +5,7 @@
     ./bat
     ./bitwarden
     ./btop
+    ./caddy
     ./colima
     ./direnv
     ./docker
