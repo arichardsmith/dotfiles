@@ -23,9 +23,11 @@
       ];
     };
 
-    hmLib = pkgs.lib // {
-      hm = home-manager.lib.hm;
-    };
+    hmLib =
+      pkgs.lib
+      // {
+        hm = home-manager.lib.hm;
+      };
 
     helpers = import ../lib {
       lib = hmLib;
@@ -37,10 +39,7 @@
     inherit helpers;
   };
 
-  mkBaseHomeModule = machine: {
-    pkgs,
-    ...
-  }: {
+  mkBaseHomeModule = machine: {pkgs, ...}: {
     imports = [
       ../modules
     ];
@@ -55,8 +54,6 @@
           else "/home/${machine.user.username}"
         );
       home.stateVersion = machine.stateVersion or "26.05";
-
-      programs.home-manager.enable = true;
     };
   };
 
@@ -73,9 +70,11 @@
           helpers = nix.helpers;
         };
 
-        modules = [
-          (mkBaseHomeModule machine)
-        ] ++ machine.homeModules;
+        modules =
+          [
+            (mkBaseHomeModule machine)
+          ]
+          ++ machine.homeModules;
       })
     machines;
 
@@ -91,31 +90,35 @@
           helpers = nix.helpers;
         };
 
-        modules = [
-          ({...}: {
-            nixpkgs.pkgs = nix.pkgs;
+        modules =
+          [
+            ({...}: {
+              nixpkgs.pkgs = nix.pkgs;
 
-            networking.hostName = machine.host.name;
+              networking.hostName = machine.host.name;
 
-            nix.settings.experimental-features = [
-              "nix-command"
-              "flakes"
-            ];
+              nix.settings.experimental-features = [
+                "nix-command"
+                "flakes"
+              ];
 
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {
-                inherit machine;
-                helpers = nix.helpers;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = {
+                  inherit machine;
+                  helpers = nix.helpers;
+                };
+                users.${machine.user.username}.imports =
+                  [
+                    (mkBaseHomeModule machine)
+                  ]
+                  ++ machine.homeModules;
               };
-              users.${machine.user.username}.imports = [
-                (mkBaseHomeModule machine)
-              ] ++ machine.homeModules;
-            };
-          })
-          home-manager.nixosModules.home-manager
-        ] ++ (machine.nixosModules or []);
+            })
+            home-manager.nixosModules.home-manager
+          ]
+          ++ (machine.nixosModules or []);
       })
     machines;
 in {
