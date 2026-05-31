@@ -71,10 +71,6 @@
 
       astGrep.enable = true;
       docker.enable = true;
-      caddy = {
-        enable = true;
-        settings.caddyfile = ./Caddyfile;
-      };
 
       ai-agent = {
         enable = true;
@@ -106,6 +102,13 @@
         enable = true;
 
         guiAddress = "127.0.0.1:8384";
+      };
+    };
+
+    customServices = {
+      caddy = {
+        enable = true;
+        settings.caddyfile = ./Caddyfile;
       };
     };
 
