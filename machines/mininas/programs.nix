@@ -97,8 +97,6 @@
         name = "edit";
         file = ../../scripts/edit.sh;
       })
-
-      shpool # Lightweight session persistence
     ];
   };
 }
