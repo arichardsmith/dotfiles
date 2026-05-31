@@ -140,6 +140,7 @@
       ncdu # Disk usage analyzer
 
       curlie
+      mise
 
       # Custom scripts
       (helpers.scriptToPackage {
