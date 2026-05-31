@@ -71,6 +71,10 @@
 
       astGrep.enable = true;
       docker.enable = true;
+      caddy = {
+        enable = true;
+        settings.caddyfile = ./Caddyfile;
+      };
 
       ai-agent = {
         enable = true;
@@ -140,7 +144,6 @@
       })
 
       cyme # List system USB buses and devices. A modern cross-platform lsusb
-      caddy # Used to handle .localhost domains
       ffmpeg
 
       # Fonts

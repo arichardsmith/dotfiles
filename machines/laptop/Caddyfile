@@ -1,3 +1,21 @@
 syncthing.localhost {
 	reverse_proxy localhost:8384
 }
+
+ah.localhost {
+	reverse_proxy localhost:2291 {
+		header_up Origin https://ah.localhost
+	}
+}
+
+admin.ah.localhost {
+	reverse_proxy localhost:2292 {
+		header_up Origin https://admin.ah.localhost
+	}
+}
+
+studio.ah.localhost {
+	reverse_proxy localhost:2294 {
+		header_up Origin https://studio.ah.localhost
+	}
+}
