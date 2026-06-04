@@ -10,3 +10,4 @@ private/
 .claude/
 CLAUDE.md
 .mcp.json
+.agents/skills/*

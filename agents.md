@@ -12,7 +12,7 @@ For machine metadata, machine layout, and remote deployment details, read [`mach
 ├── flake.nix              # Registers machine paths as flake outputs
 ├── machines/              # Machine metadata and per-machine config
 ├── modules/               # Shared Home Manager modules
-├── scripts/               # Shared shell scripts
+├── justfile               # Common project tasks
 └── lib/                   # Config builders and helper functions
 ```
 
