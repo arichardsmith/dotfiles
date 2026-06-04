@@ -22,6 +22,8 @@ link-ai:
     "$repo_root/.agents/skills"
   )
   skill_paths=(
+    "$repo_root"/skills/change-*
+    "$repo_root"/skills/nix-conventions
   )
 
   if [[ -L "$claude_file" ]]; then
