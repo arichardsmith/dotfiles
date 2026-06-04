@@ -18,6 +18,7 @@
     ./helix
     ./jujutsu
     ./neovim
+    ./ops_scripts
     ./sanoid
     ./shell
     ./ssh
