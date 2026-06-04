@@ -4,23 +4,28 @@
   helpers,
   ...
 }: let
-  scripts = {};
+  scripts = {
+    rebuild = {
+      type = "shell";
+      path = ./scripts/rebuild.sh;
+    };
+  };
 
   mkPackage = name: {
     type,
     path,
+    runtimeInputs ? [],
   }:
     if type == "uv"
     then
       helpers.uvScriptToPackage {
-        inherit name;
+        inherit name runtimeInputs;
         file = path;
       }
     else
       helpers.scriptToPackage {
-        inherit name;
+        inherit name runtimeInputs;
         file = path;
-        runtimeInputs = [];
       };
 in {
   options.my.opsScripts = lib.mapAttrs (name: _: lib.mkEnableOption name) scripts;
