@@ -5,10 +5,16 @@ Nix flake for managing dotfiles and packages across machines using home-manager.
 ## Quick Start
 
 ```bash
-./install.sh
+just install
 ```
 
-This will switch to the latest version on the config if the machine is configured in the `DOTFILE_MACHINE` environment variable.
+This will switch to the latest version of the config if the machine is configured in the `DOTFILE_MACHINE` environment variable.
+
+To update the flake lock file before switching:
+
+```bash
+nix flake update && just install
+```
 
 Otherwise, a machines home-manager config can be installed with:
 
