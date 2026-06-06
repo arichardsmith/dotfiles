@@ -13,5 +13,7 @@
 
   homeModules = [
     ./home.nix
+    ./programs.nix
+    ./backup.nix
   ];
 }

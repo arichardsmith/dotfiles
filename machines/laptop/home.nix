@@ -1,9 +1,4 @@
 {...}: {
-  imports = [
-    ./programs.nix
-    ./backup.nix
-  ];
-
   config = {
     home.sessionPath = ["$HOME/.local/bin"];
 
