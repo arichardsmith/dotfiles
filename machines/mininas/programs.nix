@@ -52,6 +52,10 @@
       };
     };
 
+    my.opsScripts = {
+      rebuild = true;
+    };
+
     services = {
       syncthing = {
         enable = true;
