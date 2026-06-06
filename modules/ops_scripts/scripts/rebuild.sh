@@ -1,17 +1,23 @@
 flake="github:arichardsmith/dotfiles"
 machine="${DOTFILE_MACHINE:-}"
 
+show_help() {
+  cat << EOF
+Usage: rebuild.sh [options]
+
+Run home-manager switch for a given flake and machine.
+
+Options:
+  --flake <url>     Flake URL (default: $flake)
+  --machine <name>  Machine name (default: $DOTFILE_MACHINE)
+  --help            Show this help text and exit
+EOF
+}
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --help)
-      printf 'Usage: rebuild.sh [options]\n'
-      printf '\n'
-      printf 'Run home-manager switch for a given flake and machine.\n'
-      printf '\n'
-      printf 'Options:\n'
-      printf '  --flake <url>     Flake URL (default: %s)\n' "$flake"
-      printf '  --machine <name>  Machine name (default: $DOTFILE_MACHINE)\n'
-      printf '  --help            Show this help text and exit\n'
+      show_help
       exit 0
       ;;
     --flake)   flake="$2";   shift 2 ;;
