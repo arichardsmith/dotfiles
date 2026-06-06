@@ -6,6 +6,7 @@
 }: {
   config = {
     programs = {
+      home-manager.enable = true;
       zsh.enable = true;
       btop.enable = true;
       starship.enable = true;
