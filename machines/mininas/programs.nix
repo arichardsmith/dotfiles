@@ -44,14 +44,6 @@
         ''
       ];
 
-      sshKeys = {
-        enable = true;
-        settings.authorizedKeyPaths = [
-          ../laptop/ssh_key.pub
-          ../ipad/ssh_key.pub
-        ];
-      };
-
       ghosttyTermInfo.enable = true;
 
       sanoid = {

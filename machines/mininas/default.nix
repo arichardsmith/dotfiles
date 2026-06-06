@@ -12,6 +12,11 @@
     tailscale.ipv4 = "100.111.24.65";
   };
 
+  allowedSshKeys = [
+    ../laptop/ssh_key.pub
+    ../ipad/ssh_key.pub
+  ];
+
   homeModules = [
     ./home.nix
   ];
