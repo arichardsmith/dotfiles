@@ -1,3 +1,0 @@
-name = "ops-scripts"
-description = "Nix-managed operational scripts framework installed into ~/ops via Home Manager"
-status = "implementing"
