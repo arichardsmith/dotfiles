@@ -9,6 +9,11 @@
       type = "shell";
       path = ./scripts/rebuild.sh;
     };
+
+    rollback = {
+      type = "shell";
+      path = ./scripts/rollback.sh;
+    };
   };
 
   mkPackage = name: {

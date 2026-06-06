@@ -55,6 +55,7 @@
 
     my.opsScripts = {
       rebuild = true;
+      rollback = true;
     };
 
     services = {
