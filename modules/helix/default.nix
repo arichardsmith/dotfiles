@@ -36,6 +36,9 @@
           space = {
             d = ":cd %sh{dirname '%{buffer_name}'}";
             D = '':cd %sh{jj root 2>/dev/null || git rev-parse --show-toplevel}'';
+            n = "jump_forward";
+            N = "jump_backward";
+            m = "jump_backward";
           };
 
           # Treat backslash as an alternative to not being able to define custom commands
