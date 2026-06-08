@@ -16,6 +16,13 @@
     settings = {
       theme = "catppuccin_macchiato";
       editor = {
+        "auto-save" = {
+          "focus-lost" = true;
+          "after-delay" = {
+            enable = true;
+            timeout = 20000;
+          };
+        };
         "soft-wrap" = {
           enable = true;
         };
