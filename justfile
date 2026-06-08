@@ -2,6 +2,11 @@ push_it:
   jj git push --remote origin
   jj git push --remote nas
 
+rebuild machine=env("DOTFILE_MACHINE"):
+  @test -n "{{machine}}" || { echo "Error: machine not set (use --machine or DOTFILE_MACHINE)\n" >&2; exit 1; }
+  home-manager switch --flake .#{{machine}}
+  
+
 # Symlink shared AI config files and skills into Claude and agent paths.
 link_ai:
   #!/usr/bin/env bash
