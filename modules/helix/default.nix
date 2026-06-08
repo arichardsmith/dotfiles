@@ -15,6 +15,11 @@
   config.programs.helix = {
     settings = {
       theme = "catppuccin_macchiato";
+      editor = {
+        "soft-wrap" = {
+          enable = true;
+        };
+      };
       keys = {
         normal = {
           "$" = "goto_line_end";
