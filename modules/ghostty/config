@@ -6,9 +6,18 @@
 cursor-style = block
 window-padding-x = 8
 window-padding-y = 6
+
+font-size = 14
 font-family = Maple Mono NF
+
 background = 24273a
 foreground = cad3f5
 theme = catppuccin-mocha
+
 keybind = shift+enter=csi:13;2u
 macos-option-as-alt = left
+
+# Set up a global hotkey to show the quick terminal
+quick-terminal-position = top
+quick-terminal-animation-duration = 0.15
+keybind = global:ctrl+v=toggle_quick_terminal
