@@ -1,3 +1,6 @@
+push_it:
+  jj git push --remote origin
+  jj git push --remote nas
 
 # Symlink shared AI config files and skills into Claude and agent paths.
 link_ai:
