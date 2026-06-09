@@ -1,77 +1,234 @@
-local opt = vim.opt
-local o = vim.o
-local keymap = vim.keymap
+-- ============================================================
+-- Leader
+-- ============================================================
 
--- Silence deprecation warnings
--- vim.deprecate = function() end
-
--- keybindings
+-- Set before any plugin loads so mappings pick it up correctly.
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
-keymap.set("n", "j", 'v:count == 0 ? "gj" : "j"', { noremap = true, expr = true }) -- make navigating work as expected with wrapped lines
-keymap.set("n", "k", 'v:count == 0 ? "gk" : "k"', { noremap = true, expr = true }) -- make navigating work as expected with wrapped lines
+-- ============================================================
+-- Options
+-- ============================================================
 
-keymap.set("n", "<c-j>", "<c-e>", { desc = "Scroll down without moving cursor" })
-keymap.set("n", "<c-k>", "<c-y>", { desc = "Scroll up without moving cursor" })
-keymap.set(
-    "n",
-    "<c-d>",
-    ":vsplit<cr>:bp<cr>:winc l<cr>",
-    { desc = "open current buffer in a split pane, switch current pane to previous buffer then focus the new pane" }
-)
-keymap.set("n", "\\", ":nohl<cr>", { desc = "Quickly hide highlighted text after search" })
-keymap.set("n", "<leader>o", "o<esc>") -- shortcut to create new line from normal mode
-keymap.set("n", "<leader>O", "O<esc>")
-keymap.set("n", "<c-s>", ":w<cr>", { desc = "Save files with ctrl-s" })
-keymap.set("n", "<leader>bp", ":bp<cr>", { desc = "Save a shift press to switch to last buffer" })
-
--- wrapping
-opt.textwidth = 120 -- after configured number of characters, wrap line
-
--- tabs
-opt.smarttab = true -- tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-opt.tabstop = 2     -- the visible width of tabs
-opt.softtabstop = 2 -- edit as if the tabs are 2 characters wide
-opt.shiftwidth = 2  -- number of spaces to use for indent and unindent
-
--- searching
-opt.ignorecase = true -- case insensitive searching
-opt.smartcase = true  -- case-sensitive if expression contains a capital letter
-opt.hlsearch = true   -- highlight search results
-opt.incsearch = true  -- set incremental search, like modern browsers
-
--- colours
-o.termguicolors = true
-
--- numbers
-opt.number = true -- show line numbers
+local opt = vim.opt
+opt.number = true
 opt.relativenumber = true
-opt.signcolumn = "yes:1"
-
--- other
-opt.backspace = { "indent", "eol", "start" } -- make backspace behave in a sane manner
+opt.signcolumn = "yes:1"  -- Always show; "yes:1" reserves exactly one column so the layout never shifts
+opt.laststatus = 3        -- Single global statusline (Neovim 0.7+); without this each split gets its own
+opt.wrap = true
+opt.linebreak = true      -- Wrap at word boundaries instead of mid-word
+opt.textwidth = 120
+opt.smarttab = true
+opt.tabstop = 2
+opt.softtabstop = 2
+opt.shiftwidth = 2
+opt.ignorecase = true
+opt.smartcase = true      -- Override ignorecase when the pattern contains an uppercase letter
+opt.hlsearch = true
+opt.incsearch = true
+opt.backspace = {"indent", "eol", "start"}
 opt.mouse = "a"
-opt.title = true                             -- set terminal title
-opt.fcs = "eob: "                            -- hide the ~ character on empty lines at the end of the buffer
--- DISABLED due to it messing up fuzzy finding - opt.autochdir = true - change the working directory to match active file
+opt.title = true
+opt.exrc = true           -- Load a .nvim.lua / .exrc file from the working directory for per-project config
+opt.termguicolors = true
 
--- Treesitter configuration
--- require('nvim-treesitter.configs').setup({
---     -- These are the core, stable modules
---     highlight = {
---         enable = true,
---         use_languagetree = true
---     },
---     indent = {
---         enable = true
---     },
---     incremental_selection = {
---         enable = true,
---         keymaps = {
---             init_selection = "gnn",
---             node_incremental = "grn",
---             scope_incremental = "grc",
---             node_decremental = "grm",
---         },
---     },
--- })
+-- ============================================================
+-- Keymaps
+-- ============================================================
+
+local map = vim.keymap.set
+
+map("n", "<leader>f", "<cmd>Telescope find_files<cr>", {desc = "Find files"})
+map("n", "<leader>b", "<cmd>Telescope buffers<cr>", {desc = "Buffers"})
+map("n", "<leader>g", "<cmd>Telescope git_status<cr>", {desc = "Changed files"})
+
+map("n", "<leader>e", function()
+  require("telescope.builtin").find_files({cwd = vim.fn.expand("%:p:h")})
+end, {desc = "Find files in buffer dir"})
+
+map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {desc = "Search project"})
+map({"n", "x"}, "<leader>y", '"+y', {desc = "Yank to system clipboard"})
+map("n", "<leader>k", vim.lsp.buf.hover, {desc = "Hover / symbol info"})
+map("n", "<leader>r", vim.lsp.buf.rename, {desc = "LSP rename symbol"})
+map("n", "<leader>h", vim.lsp.buf.references, {desc = "Symbol references"})
+map("n", "<leader>n", "<C-i>", {desc = "Jump forward"})
+map("n", "<leader>N", "<C-o>", {desc = "Jump backward"})
+map("n", "<leader>m", "<C-o>", {desc = "Jump backward"})
+
+map("n", "\\d", function()
+  local file = vim.api.nvim_buf_get_name(0)
+  if file ~= "" then
+    vim.fn.delete(file)
+  end
+end, {desc = "Delete current file"})
+
+map("n", "\\D", function()
+  local file = vim.api.nvim_buf_get_name(0)
+  if file ~= "" then
+    vim.fn.delete(file)
+    vim.cmd("bdelete!")
+  end
+end, {desc = "Delete file and close buffer"})
+
+map("n", "\\f", function()
+  require("conform").format({lsp_format = "fallback"})
+end, {desc = "Format buffer"})
+
+map("n", "\\w", "<cmd>setlocal wrap!<cr>", {desc = "Toggle line wrap"})
+
+-- ============================================================
+-- Colorscheme
+-- ============================================================
+
+require("catppuccin").setup({flavour = "macchiato"})
+vim.cmd.colorscheme("catppuccin-macchiato")
+-- Link the statusline highlight groups to Normal so the bar blends into the
+-- background rather than rendering with a distinct bar color.
+vim.api.nvim_set_hl(0, "StatusLine", {link = "Normal"})
+vim.api.nvim_set_hl(0, "StatusLineNC", {link = "Normal"})
+
+-- ============================================================
+-- Plugins
+-- ============================================================
+
+-- nvim-surround: add/change/delete surrounding pairs (brackets, quotes, tags…)
+require("nvim-surround").setup({
+})
+
+-- which-key: shows a popup of available keybindings after a short delay
+require("which-key").setup({})
+
+-- nvim-autopairs: automatically inserts the closing bracket/quote/etc.
+require("nvim-autopairs").setup({})
+
+-- blink.cmp: completion engine
+-- prefer_rust_with_warning uses the faster Rust fuzzy matcher when available,
+-- falling back to the Lua implementation with a one-time console warning.
+require("blink.cmp").setup({
+  keymap = {preset = "default"},
+  sources = {default = {"lsp", "path", "snippets", "buffer"}},
+  fuzzy = {implementation = "prefer_rust_with_warning"},
+  signature = {enabled = true},
+})
+
+-- ============================================================
+-- Autocmds
+-- ============================================================
+
+-- Attempt to start Treesitter highlighting for every filetype. pcall swallows
+-- the error silently when no parser is installed for that language.
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
+
+-- Reload files changed outside Neovim. Skipped in command-line mode because
+-- checktime is not safe to call there.
+vim.api.nvim_create_autocmd({"FocusGained", "BufEnter", "CursorHold", "CursorHoldI"}, {
+  callback = function()
+    if vim.fn.mode() ~= "c" then
+      vim.cmd("checktime")
+    end
+  end,
+})
+
+-- Track whether the on-disk version differs from what was last read/written.
+-- When the buffer has unsaved changes we can't safely auto-reload, so instead
+-- we set source_changed = true and suppress the default prompt (fcs_choice = "").
+-- The statusline uses this flag to show the "[-]" staleness indicator.
+vim.api.nvim_create_autocmd("FileChangedShell", {
+  callback = function(args)
+    if vim.bo[args.buf].modified then
+      vim.b[args.buf].source_changed = true
+      vim.v.fcs_choice = ""
+    else
+      vim.v.fcs_choice = "reload"
+    end
+  end,
+})
+
+-- Clear the staleness flag after the buffer is synced with disk.
+vim.api.nvim_create_autocmd({"BufReadPost", "BufWritePost"}, {
+  callback = function(args)
+    vim.b[args.buf].source_changed = false
+  end,
+})
+
+-- ============================================================
+-- Statusline
+-- ============================================================
+
+local mode_names = {
+  n = "NORMAL",
+  i = "INSERT",
+  v = "VISUAL",
+  V = "V-LINE",
+  ["\22"] = "V-BLOCK",  -- Ctrl-V visual block mode; \22 is the ASCII code for ^V
+  c = "COMMAND",
+  R = "REPLACE",
+  s = "SELECT",
+  S = "S-LINE",
+  t = "TERMINAL",
+}
+
+-- Returns a short indicator reflecting unsaved / stale state:
+--   [+]  buffer modified (unsaved changes)
+--   [-]  on-disk version is newer (file changed externally, buffer unmodified)
+--   [!]  both: unsaved changes AND the disk version has since changed
+local function edit_status()
+  local modified = vim.bo.modified
+  local on_disk = vim.b.source_changed == true
+  if modified and on_disk then
+    return "[!]"
+  elseif modified then
+    return "[+]"
+  elseif on_disk then
+    return "[-]"
+  end
+
+  return ""
+end
+
+-- Called on every statusline redraw via the %!v:lua.statusline() expression below.
+function _G.statusline()
+  local mode = mode_names[vim.fn.mode()] or vim.fn.mode()
+  -- %:. produces a path relative to cwd, which is shorter than the full path
+  local name = vim.fn.expand("%:.")
+  if name == "" then
+    name = "[No Name]"
+  end
+
+  return string.format(" %s  %s %s", mode, name, edit_status())
+end
+
+-- %! tells Neovim to evaluate the expression and use the result as the statusline string.
+vim.o.statusline = "%!v:lua.statusline()"
+-- ModeChanged doesn't trigger a statusline redraw by default, so force one.
+vim.api.nvim_create_autocmd("ModeChanged", {command = "redrawstatus"})
+
+-- ============================================================
+-- LSP
+-- ============================================================
+
+-- Attach blink.cmp's extended capabilities to every LSP server so completion
+-- gets richer information (e.g. snippet support, resolve capabilities).
+vim.lsp.config("*", {capabilities = require("blink.cmp").get_lsp_capabilities()})
+
+-- Format on save when the global flag is enabled. Off by default; toggle with
+-- `:lua vim.g.format_on_save = true` or a project-local .nvim.lua.
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function(args)
+    if vim.g.format_on_save then
+      require("conform").format({bufnr = args.buf, lsp_format = "fallback"})
+    end
+  end,
+})
+
+-- ============================================================
+-- User commands
+-- ============================================================
+
+vim.api.nvim_create_user_command("ReloadConfig", function()
+  vim.cmd("source $MYVIMRC")
+end, {desc = "Re-source config"})

@@ -1,36 +1,38 @@
-{pkgs, ...}: {
-  programs.neovim.plugins = [
-    {
-      plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
-        p.bash
-        p.css
-        p.diff
-        p.comment
-        p.git_rebase
-        p.gitcommit
-        p.gitignore
-        p.go
-        p.html
-        p.javascript
-        p.jsdoc
-        p.json
-        p.json5
-        p.lua
-        p.markdown
-        p.markdown_inline
-        p.prisma
-        p.python
-        p.rust
-        p.scss
-        p.svelte
-        p.typescript
-        p.tsx
-        p.vim
-        p.yaml
-        p.nix
-        p.gleam
-        p.vimdoc
-      ]);
-    }
-  ];
+{lib, pkgs, config, ...}: {
+  config = lib.mkIf config.programs.neovim.enable {
+    programs.neovim.plugins = [
+      {
+        plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+          p.bash
+          p.css
+          p.diff
+          p.comment
+          p.git_rebase
+          p.gitcommit
+          p.gitignore
+          p.go
+          p.html
+          p.javascript
+          p.jsdoc
+          p.json
+          p.json5
+          p.lua
+          p.markdown
+          p.markdown_inline
+          p.prisma
+          p.python
+          p.rust
+          p.scss
+          p.svelte
+          p.typescript
+          p.tsx
+          p.vim
+          p.yaml
+          p.nix
+          p.gleam
+          p.vimdoc
+        ]);
+      }
+    ];
+  };
 }

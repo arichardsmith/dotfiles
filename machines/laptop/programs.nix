@@ -19,6 +19,22 @@
       rbw.enable = true;
       broot.enable = true; # A nicer tree view
 
+      neovim = {
+        enable = true;
+        toolchains = {
+          python.enable = true;
+          markdown.enable = true;
+          just.enable = true;
+          toml.enable = true;
+          yaml.enable = true;
+          json.enable = true;
+          js.enable = true;
+          nix.enable = true;
+          rust.enable = true;
+          go.enable = true;
+        };
+      };
+
       helix = {
         enable = true;
         toolchains = {
