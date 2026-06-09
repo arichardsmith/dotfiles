@@ -15,7 +15,7 @@
       fzf.enable = true;
       zoxide.enable = true;
       tmux.enable = true;
-
+			neovim.enable = true;
       helix = {
         enable = true;
       };
