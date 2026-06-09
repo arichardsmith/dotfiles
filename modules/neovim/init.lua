@@ -74,6 +74,8 @@ map("n", "\\f", function()
   require("conform").format({lsp_format = "fallback"})
 end, {desc = "Format buffer"})
 
+map("n", "\\y", 'gg"+yG', {desc = "Yank whole file to clipboard"})
+
 map("n", "\\w", "<cmd>setlocal wrap!<cr>", {desc = "Toggle line wrap"})
 
 -- Don't close the selection after changing indentation in visual mode
@@ -115,9 +117,15 @@ require("blink.cmp").setup({
 		preset = "default",
 		["<Tab>"] = { "accept", "fallback" }
 	},
-  sources = {default = {"lsp", "path", "snippets", "buffer"}},
+  sources = {
+    default = {"lsp", "path", "snippets", "buffer"},
+  },
   fuzzy = {implementation = "prefer_rust_with_warning"},
   signature = {enabled = true},
+  cmdline = {
+    completion = {menu = {auto_show = true}},
+		sources = {}
+  },
 })
 
 -- ============================================================
@@ -241,3 +249,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.api.nvim_create_user_command("ReloadConfig", function()
   vim.cmd("source $MYVIMRC")
 end, {desc = "Re-source config"})
+
+vim.api.nvim_create_user_command("Fmt", function()
+  require("conform").format({lsp_format = "fallback"})
+end, {desc = "Format buffer"})
