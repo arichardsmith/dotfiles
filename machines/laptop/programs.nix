@@ -19,36 +19,10 @@
       rbw.enable = true;
       broot.enable = true; # A nicer tree view
 
-      neovim = {
-        enable = true;
-        toolchains = {
-          python.enable = true;
-          markdown.enable = true;
-          just.enable = true;
-          toml.enable = true;
-          yaml.enable = true;
-          json.enable = true;
-          js.enable = true;
-          nix.enable = true;
-          rust.enable = true;
-          go.enable = true;
-        };
-      };
+      neovim.enable = true;
 
       helix = {
         enable = true;
-        toolchains = {
-          python.enable = true;
-          markdown.enable = true;
-          just.enable = true;
-          toml.enable = true;
-          yaml.enable = true;
-          json.enable = true;
-          js.enable = true;
-          nix.enable = true;
-          rust.enable = true;
-          go.enable = true;
-        };
       };
 
       git = {
@@ -68,6 +42,22 @@
     };
 
     customPrograms = {
+      devTools = {
+        enable = true;
+        settings = {
+          python.enable = true;
+          markdown.enable = true;
+          just.enable = true;
+          toml.enable = true;
+          yaml.enable = true;
+          json.enable = true;
+          js.enable = true;
+          nix.enable = true;
+          rust.enable = true;
+          go.enable = true;
+        };
+      };
+
       erdtree = {
         enable = true;
         settings = {

@@ -18,7 +18,13 @@
 
       helix = {
         enable = true;
-        toolchains = {
+      };
+    };
+
+    customPrograms = {
+      devTools = {
+        enable = true;
+        settings = {
           python.enable = true;
           markdown.enable = true;
           just.enable = true;
@@ -27,9 +33,7 @@
           json.enable = true;
         };
       };
-    };
 
-    customPrograms = {
       docker.enable = true;
 
       erdtree = {

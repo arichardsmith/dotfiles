@@ -5,7 +5,7 @@
 
   formatterDefs = lib.listToAttrs (lib.mapAttrsToList (_: f:
     lib.nameValuePair f.name (
-      {command = lib.getExe f.package;}
+      {command = if f.exeName != null then lib.getExe' f.package f.exeName else lib.getExe f.package;}
       // lib.optionalAttrs (f.args != null) {args = f.args;}
     )) cfg.formatters);
 
@@ -14,10 +14,7 @@
     formatters = formatterDefs;
   };
 in {
-  imports = [
-    ./treesitter.nix
-    ./toolchains
-  ];
+  imports = [./treesitter.nix];
 
   options.programs.neovim.formatters = lib.mkOption {
     type = with lib.types;
@@ -36,6 +33,12 @@ in {
           args = lib.mkOption {
             type = nullOr (listOf str);
             default = null;
+          };
+
+          exeName = lib.mkOption {
+            type = nullOr str;
+            default = null;
+            description = "Executable name within the package. Uses lib.getExe by default.";
           };
         };
       });
