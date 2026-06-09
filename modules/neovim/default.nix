@@ -14,8 +14,6 @@
     formatters = formatterDefs;
   };
 in {
-  imports = [./treesitter.nix];
-
   options.programs.neovim.formatters = lib.mkOption {
     type = with lib.types;
       attrsOf (submodule {
@@ -61,6 +59,7 @@ in {
         nvim-lspconfig
         gitsigns-nvim
         nvim-autopairs
+				nvim-treesitter.withAllGrammars
       ];
 
       extraPackages = with pkgs; [
