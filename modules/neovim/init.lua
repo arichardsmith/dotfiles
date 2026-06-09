@@ -12,7 +12,7 @@ vim.g.maplocalleader = " "
 
 local opt = vim.opt
 opt.number = true
-opt.relativenumber = true
+opt.relativenumber = false
 opt.signcolumn = "yes:1"  -- Always show; "yes:1" reserves exactly one column so the layout never shifts
 opt.laststatus = 3        -- Single global statusline (Neovim 0.7+); without this each split gets its own
 opt.wrap = true
@@ -76,6 +76,10 @@ end, {desc = "Format buffer"})
 
 map("n", "\\w", "<cmd>setlocal wrap!<cr>", {desc = "Toggle line wrap"})
 
+-- Don't close the selection after changing indentation in visual mode
+vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<", "<gv")
+
 -- ============================================================
 -- Colorscheme
 -- ============================================================
@@ -96,7 +100,9 @@ require("nvim-surround").setup({
 })
 
 -- which-key: shows a popup of available keybindings after a short delay
-require("which-key").setup({})
+require("which-key").setup({
+	preset = "helix"
+})
 
 -- nvim-autopairs: automatically inserts the closing bracket/quote/etc.
 require("nvim-autopairs").setup({})
@@ -105,7 +111,10 @@ require("nvim-autopairs").setup({})
 -- prefer_rust_with_warning uses the faster Rust fuzzy matcher when available,
 -- falling back to the Lua implementation with a one-time console warning.
 require("blink.cmp").setup({
-  keymap = {preset = "default"},
+  keymap = {
+		preset = "default",
+		["<Tab>"] = { "accept", "fallback" }
+	},
   sources = {default = {"lsp", "path", "snippets", "buffer"}},
   fuzzy = {implementation = "prefer_rust_with_warning"},
   signature = {enabled = true},
@@ -160,16 +169,16 @@ vim.api.nvim_create_autocmd({"BufReadPost", "BufWritePost"}, {
 -- ============================================================
 
 local mode_names = {
-  n = "NORMAL",
-  i = "INSERT",
-  v = "VISUAL",
-  V = "V-LINE",
-  ["\22"] = "V-BLOCK",  -- Ctrl-V visual block mode; \22 is the ASCII code for ^V
-  c = "COMMAND",
-  R = "REPLACE",
-  s = "SELECT",
-  S = "S-LINE",
-  t = "TERMINAL",
+  n = "NOR",
+  i = "INS",
+  v = "VIS",
+  V = "VLN",
+  ["\22"] = "VBLK",  -- Ctrl-V visual block mode; \22 is the ASCII code for ^V
+  c = "CMD",
+  R = "REP",
+  s = "SEL",
+  S = "SLN",
+  t = "TRM",
 }
 
 -- Returns a short indicator reflecting unsaved / stale state:
