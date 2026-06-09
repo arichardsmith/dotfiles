@@ -4,7 +4,7 @@
 
     home.sessionVariables = {
       DOTFILE_MACHINE = "laptop";
-      EDITOR = "hx";
+      EDITOR = "nvim";
       EDITOR_UI = "zed"; # Preferred IDE / UI based editor
     };
 
