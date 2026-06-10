@@ -1,6 +1,11 @@
-{config, lib, pkgs, ...}: let
-  cfg = config.customPrograms.devTools;
-  enabled = cfg.enable && cfg.settings.rust.enable;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.my.devtools;
+  enabled = cfg.rust.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
     {

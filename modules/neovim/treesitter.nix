@@ -1,4 +1,9 @@
-{lib, pkgs, config, ...}: {
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: {
   config = lib.mkIf config.programs.neovim.enable {
     programs.neovim.plugins = [
       {

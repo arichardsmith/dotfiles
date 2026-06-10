@@ -2,8 +2,8 @@
 # Create a home-manager module for a program with configurable settings.
 #
 # This helper creates modules with:
-# - An enable option at custom.programs.<name>.enable
-# - A settings submodule at custom.programs.<name>.settings
+# - An enable option at my.programs.<name>.enable
+# - A settings submodule at my.programs.<name>.settings
 # - Automatic setup when enabled
 #
 # Usage in a module file (modules/myapp/default.nix):
@@ -26,7 +26,7 @@
 #   }
 #
 # Then in your configuration:
-#   customPrograms.myapp = {
+#   my.programs.myapp = {
 #     enable = true;
 #     settings.port = 9000;
 #   };
@@ -37,11 +37,11 @@
   settings ? {},
   setup,
 }: let
-  # Reference to this module's config at custom.programs.<name>
-  cfg = config.customPrograms.${name};
+  # Reference to this module's config at my.programs.<name>
+  cfg = config.my.programs.${name};
 in {
   # Define the module's options
-  options.customPrograms.${name} = {
+  options.my.programs.${name} = {
     # Whether to enable this program
     enable = lib.mkEnableOption name;
 

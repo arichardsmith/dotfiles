@@ -13,26 +13,17 @@
     ./lua.nix
   ];
 
-  options.customPrograms.devTools = {
-    enable = lib.mkEnableOption "shared editor dev tools";
-
-    settings = lib.mkOption {
-      type = lib.types.submodule {
-        options = {
-          python.enable = lib.mkEnableOption "python dev tools";
-          markdown.enable = lib.mkEnableOption "markdown dev tools";
-          just.enable = lib.mkEnableOption "just dev tools";
-          toml.enable = lib.mkEnableOption "toml dev tools";
-          yaml.enable = lib.mkEnableOption "yaml dev tools";
-          json.enable = lib.mkEnableOption "json dev tools";
-          js.enable = lib.mkEnableOption "js/ts dev tools";
-          nix.enable = lib.mkEnableOption "nix dev tools";
-          rust.enable = lib.mkEnableOption "rust dev tools";
-          go.enable = lib.mkEnableOption "go dev tools";
-          lua.enable = lib.mkEnableOption "lua dev tools";
-        };
-      };
-      default = {};
-    };
+  options.my.devtools = {
+    python.enable = lib.mkEnableOption "python dev tools";
+    markdown.enable = lib.mkEnableOption "markdown dev tools";
+    just.enable = lib.mkEnableOption "just dev tools";
+    toml.enable = lib.mkEnableOption "toml dev tools";
+    yaml.enable = lib.mkEnableOption "yaml dev tools";
+    json.enable = lib.mkEnableOption "json dev tools";
+    js.enable = lib.mkEnableOption "js/ts dev tools";
+    nix.enable = lib.mkEnableOption "nix dev tools";
+    rust.enable = lib.mkEnableOption "rust dev tools";
+    go.enable = lib.mkEnableOption "go dev tools";
+    lua.enable = lib.mkEnableOption "lua dev tools";
   };
 }

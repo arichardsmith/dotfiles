@@ -4,8 +4,8 @@
   pkgs,
   ...
 }: let
-  cfg = config.customPrograms.devTools;
-  enabled = cfg.enable && cfg.settings.go.enable;
+  cfg = config.my.devtools;
+  enabled = cfg.go.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
     {

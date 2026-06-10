@@ -8,8 +8,7 @@
   file ? null,
   text ? null,
   runtimeInputs ? [],
-}:
-let
+}: let
   # Match script_to_package.nix: callers can supply either a file or inline text,
   # but not both. The helper reads the script body and fails early on invalid input.
   body =
@@ -30,12 +29,13 @@ in
   # tools are on PATH when uv executes the script.
   if runtimeInputs == []
   then script
-  else pkgs.symlinkJoin {
-    inherit name;
-    paths = [script];
-    nativeBuildInputs = [pkgs.makeWrapper];
-    postBuild = ''
-      wrapProgram $out/bin/${name} \
-        --prefix PATH : ${pkgs.lib.makeBinPath runtimeInputs}
-    '';
-  }
+  else
+    pkgs.symlinkJoin {
+      inherit name;
+      paths = [script];
+      nativeBuildInputs = [pkgs.makeWrapper];
+      postBuild = ''
+        wrapProgram $out/bin/${name} \
+          --prefix PATH : ${pkgs.lib.makeBinPath runtimeInputs}
+      '';
+    }

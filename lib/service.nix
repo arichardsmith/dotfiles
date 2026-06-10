@@ -1,12 +1,11 @@
-{lib}:
-{
+{lib}: {
   config,
   pkgs,
 }: name: {
   settings ? {},
   service,
 }: let
-  cfg = config.customServices.${name};
+  cfg = config.my.services.${name};
   serviceConfig =
     {
       description = name;
@@ -19,7 +18,7 @@
     }
     // service {inherit config pkgs cfg;};
 in {
-  options.customServices.${name} = {
+  options.my.services.${name} = {
     enable = lib.mkEnableOption name;
 
     settings = lib.mkOption {
@@ -36,7 +35,7 @@ in {
       assertions = [
         {
           assertion = serviceConfig.command != [];
-          message = "customServices.${name}: mkService requires a non-empty service.command.";
+          message = "my.services.${name}: mkService requires a non-empty service.command.";
         }
       ];
     }

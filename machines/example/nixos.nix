@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   config = {
     # Placeholder boot settings so the example evaluates as a complete NixOS host.
     # Replace these with the target machine's real disk layout and boot device.

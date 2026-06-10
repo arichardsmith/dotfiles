@@ -1,6 +1,11 @@
-{config, lib, pkgs, ...}: let
-  cfg = config.customPrograms.devTools;
-  enabled = cfg.enable && cfg.settings.toml.enable;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.my.devtools;
+  enabled = cfg.toml.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
     {

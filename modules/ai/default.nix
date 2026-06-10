@@ -1,13 +1,76 @@
 {
   config,
-  helpers,
   pkgs,
   lib,
   ...
-}:
-helpers.mkProgram {inherit config pkgs;} "ai-agent" {
-  settings = {
-    # Shared configuration
+}: let
+  cfg = config.my.ai;
+
+  defaultContext = [
+    ''
+      Primary languages: TypeScript, CSS, Rust, Python, Go. Default to these but can work with others. When explaining other languages, use examples from primary languages.
+      I prefer TOML for configuration. Svelte is my preferred UI framework. I prefer to use CSS rather than tailwind.
+    ''
+  ];
+
+  defaultSkills = {
+    go-conventions = ../../skills/go-conventions;
+    nix-conventions = ../../skills/nix-conventions;
+    process-feedback = ../../skills/process-feedback;
+    python-conventions = ../../skills/python-conventions;
+    rust-conventions = ../../skills/rust-conventions;
+    rust-error-handling = ../../skills/rust-error-handling;
+    svelte-conventions = ../../skills/svelte-conventions;
+    typescript-conventions = ../../skills/typescript-conventions;
+  };
+
+  allSkills = defaultSkills // cfg.skills;
+
+  memoryText = lib.concatStringsSep "\n" (defaultContext ++ cfg.context.chunks) + "\n";
+
+  opencodeMainConfigAttrs =
+    lib.filterAttrs (n: v: v != null) {
+      inherit (cfg.opencode) model small_model autoupdate share default_agent;
+    }
+    // lib.optionalAttrs (cfg.opencode.agents != {}) {
+      agent = cfg.opencode.agents;
+    };
+
+  opencodeMainConfigJson =
+    if opencodeMainConfigAttrs != {}
+    then builtins.toJSON opencodeMainConfigAttrs
+    else null;
+
+  opencodeTuiConfigAttrs = lib.filterAttrs (n: v: v != null) {
+    inherit (cfg.opencode) theme;
+  };
+
+  opencodeTuiConfigJson =
+    if opencodeTuiConfigAttrs != {}
+    then builtins.toJSON opencodeTuiConfigAttrs
+    else null;
+
+  installSharedSkills = cfg.opencode.enable;
+
+  sharedSkillConfigs = lib.mapAttrs' (name: path:
+    lib.nameValuePair ".agents/skills/${name}" {
+      source = path;
+      recursive = true;
+    })
+  allSkills;
+
+  codexSkillSyncCommands = lib.concatStringsSep "\n" (
+    lib.mapAttrsToList (name: _path: ''
+      $DRY_RUN_CMD rm -rf "$HOME/.codex/skills/${name}"
+      $DRY_RUN_CMD mkdir -p "$HOME/.codex/skills/${name}"
+      $DRY_RUN_CMD ${pkgs.rsync}/bin/rsync -aL --delete \
+        "$HOME/.agents/skills/${name}/" \
+        "$HOME/.codex/skills/${name}/"
+    '')
+    allSkills
+  );
+in {
+  options.my.ai = {
     context.chunks = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [];
@@ -26,10 +89,8 @@ helpers.mkProgram {inherit config pkgs;} "ai-agent" {
       '';
     };
 
-    # Claude Code configuration
     claude-code.enable = lib.mkEnableOption "Claude Code integration";
 
-    # OpenCode configuration
     opencode = {
       enable = lib.mkEnableOption "OpenCode integration";
 
@@ -93,118 +154,41 @@ helpers.mkProgram {inherit config pkgs;} "ai-agent" {
     };
   };
 
-  setup = {
-    pkgs,
-    cfg,
-    ...
-  }: let
-    defaultContext = [
-      ''
-        Primary languages: TypeScript, CSS, Rust, Python, Go. Default to these but can work with others. When explaining other languages, use examples from primary languages.
-        I prefer TOML for configuration. Svelte is my preferred UI framework. I prefer to use CSS rather than tailwind.
-      ''
-    ];
+  config = lib.mkMerge [
+    (lib.mkIf cfg.claude-code.enable {
+      programs.claude-code = {
+        context = memoryText;
+        skills = allSkills;
+      };
+    })
 
-    # Default skills that are always included
-    defaultSkills = {
-      go-conventions = ../../skills/go-conventions;
-      nix-conventions = ../../skills/nix-conventions;
-      process-feedback = ../../skills/process-feedback;
-      python-conventions = ../../skills/python-conventions;
-      rust-conventions = ../../skills/rust-conventions;
-      rust-error-handling = ../../skills/rust-error-handling;
-      svelte-conventions = ../../skills/svelte-conventions;
-      typescript-conventions = ../../skills/typescript-conventions;
-    };
+    (lib.mkIf cfg.opencode.enable {
+      # The package is currently broken (needs bun 1.3.10, gets 1.3.9)
+      # home.packages = [pkgs.opencode];
 
-    # Merge default skills with user-provided skills (user skills can override defaults)
-    allSkills = defaultSkills // cfg.settings.skills;
+      home.activation.installOpencode = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        echo "Installing OpenCode via Bun escape hatch..."
+        $DRY_RUN_CMD ${pkgs.bun}/bin/bun add -g opencode-ai
+      '';
 
-    memoryText = lib.concatStringsSep "\n" (defaultContext ++ cfg.settings.context.chunks) + "\n";
-
-    # OpenCode configuration
-    opencodeMainConfigAttrs =
-      lib.filterAttrs (n: v: v != null) {
-        inherit (cfg.settings.opencode) model small_model autoupdate share default_agent;
-      }
-      // lib.optionalAttrs (cfg.settings.opencode.agents != {}) {
-        agent = cfg.settings.opencode.agents;
+      xdg.configFile."opencode/opencode.json" = lib.mkIf (opencodeMainConfigJson != null) {
+        text = opencodeMainConfigJson;
       };
 
-    opencodeMainConfigJson =
-      if opencodeMainConfigAttrs != {}
-      then builtins.toJSON opencodeMainConfigAttrs
-      else null;
+      xdg.configFile."opencode/tui.json" = lib.mkIf (opencodeTuiConfigJson != null) {
+        text = opencodeTuiConfigJson;
+      };
+    })
 
-    opencodeTuiConfigAttrs = lib.filterAttrs (n: v: v != null) {
-      inherit (cfg.settings.opencode) theme;
-    };
+    (lib.mkIf installSharedSkills {
+      home.file = sharedSkillConfigs;
+    })
 
-    opencodeTuiConfigJson =
-      if opencodeTuiConfigAttrs != {}
-      then builtins.toJSON opencodeTuiConfigAttrs
-      else null;
-
-    installSharedSkills = cfg.settings.opencode.enable;
-
-    sharedSkillConfigs = lib.mapAttrs' (name: path:
-      lib.nameValuePair ".agents/skills/${name}" {
-        source = path;
-        recursive = true;
-      })
-    allSkills;
-
-    # Codex doesn't support symlinked skills, so we rsync dereferenced copies.
-    codexSkillSyncCommands = lib.concatStringsSep "\n" (
-      lib.mapAttrsToList (name: _path: ''
-        $DRY_RUN_CMD rm -rf "$HOME/.codex/skills/${name}"
-        $DRY_RUN_CMD mkdir -p "$HOME/.codex/skills/${name}"
-        $DRY_RUN_CMD ${pkgs.rsync}/bin/rsync -aL --delete \
-          "$HOME/.agents/skills/${name}/" \
-          "$HOME/.codex/skills/${name}/"
-      '')
-      allSkills
-    );
-  in
-    lib.mkMerge [
-      # Claude Code configuration
-      (lib.mkIf cfg.settings.claude-code.enable {
-        programs.claude-code = {
-          context = memoryText;
-          skills = allSkills;
-        };
-      })
-
-      # OpenCode configuration
-      (lib.mkIf cfg.settings.opencode.enable {
-        # The package is currently broken (needs bun 1.3.10, gets 1.3.9)
-        # home.packages = [pkgs.opencode];
-
-        home.activation.installOpencode = lib.hm.dag.entryAfter ["writeBoundary"] ''
-          echo "Installing OpenCode via Bun escape hatch..."
-          $DRY_RUN_CMD ${pkgs.bun}/bin/bun add -g opencode-ai
-        '';
-
-        xdg.configFile."opencode/opencode.json" = lib.mkIf (opencodeMainConfigJson != null) {
-          text = opencodeMainConfigJson;
-        };
-
-        xdg.configFile."opencode/tui.json" = lib.mkIf (opencodeTuiConfigJson != null) {
-          text = opencodeTuiConfigJson;
-        };
-      })
-
-      # Shared skills at ~/.agents/skills (symlinks, for OpenCode and other agents)
-      (lib.mkIf installSharedSkills {
-        home.file = sharedSkillConfigs;
-      })
-
-      # Codex gets dereferenced copies via rsync (it doesn't support symlinked skills)
-      (lib.mkIf config.programs.codex.enable {
-        home.activation.syncCodexSkills = lib.hm.dag.entryAfter ["writeBoundary"] ''
-          $DRY_RUN_CMD mkdir -p "$HOME/.codex/skills"
-          ${codexSkillSyncCommands}
-        '';
-      })
-    ];
+    (lib.mkIf config.programs.codex.enable {
+      home.activation.syncCodexSkills = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD mkdir -p "$HOME/.codex/skills"
+        ${codexSkillSyncCommands}
+      '';
+    })
+  ];
 }

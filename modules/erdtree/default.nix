@@ -60,7 +60,7 @@ helpers.mkProgram {inherit config pkgs;} "erdtree" {
       };
 
     # Add erdtree skill to ai-agent when erdtree is enabled
-    customPrograms.ai-agent.settings.skills = {
+    my.ai.skills = {
       erdtree = ./erdtree-skill;
     };
   };

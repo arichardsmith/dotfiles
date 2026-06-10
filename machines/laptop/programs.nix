@@ -41,23 +41,20 @@
       codex.enable = true;
     };
 
-    customPrograms = {
-      devTools = {
-        enable = true;
-        settings = {
-          python.enable = true;
-          markdown.enable = true;
-          just.enable = true;
-          toml.enable = true;
-          yaml.enable = true;
-          json.enable = true;
-          js.enable = true;
-          nix.enable = true;
-          rust.enable = true;
-          go.enable = true;
-        };
-      };
+    my.devtools = {
+      python.enable = true;
+      markdown.enable = true;
+      just.enable = true;
+      toml.enable = true;
+      yaml.enable = true;
+      json.enable = true;
+      js.enable = true;
+      nix.enable = true;
+      rust.enable = true;
+      go.enable = true;
+    };
 
+    my.programs = {
       erdtree = {
         enable = true;
         settings = {
@@ -78,30 +75,27 @@
 
       astGrep.enable = true;
       docker.enable = true;
+    };
 
-      ai-agent = {
+    my.ai = {
+      claude-code.enable = true;
+      opencode = {
         enable = true;
-        settings = {
-          claude-code.enable = true;
-          opencode = {
-            enable = true;
-            model = "openai/gpt-5.5";
-            autoupdate = "notify";
-            theme = "system";
+        model = "openai/gpt-5.5";
+        autoupdate = "notify";
+        theme = "system";
 
-            agents = {
-              plan.model = "openai/gpt-5.5";
-              build.model = "openrouter/deepseek/deepseek-v4-flash";
-            };
-          };
-
-          context.chunks = [
-            ''
-              You have access to `rg` for searching with `ripgrep` and `fd` as an alternative to `find`.
-            ''
-          ];
+        agents = {
+          plan.model = "openai/gpt-5.5";
+          build.model = "openrouter/deepseek/deepseek-v4-flash";
         };
       };
+
+      context.chunks = [
+        ''
+          You have access to `rg` for searching with `ripgrep` and `fd` as an alternative to `find`.
+        ''
+      ];
     };
 
     my.opsScripts = {
@@ -117,7 +111,7 @@
       };
     };
 
-    customServices = {
+    my.services = {
       caddy = {
         enable = true;
         settings.caddyfile = ./Caddyfile;

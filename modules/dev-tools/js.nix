@@ -1,6 +1,12 @@
-{config, helpers, lib, pkgs, ...}: let
-  cfg = config.customPrograms.devTools;
-  enabled = cfg.enable && cfg.settings.js.enable;
+{
+  config,
+  helpers,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.my.devtools;
+  enabled = cfg.js.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
     {

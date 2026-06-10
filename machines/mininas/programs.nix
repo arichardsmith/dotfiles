@@ -15,25 +15,22 @@
       fzf.enable = true;
       zoxide.enable = true;
       tmux.enable = true;
-			neovim.enable = true;
+      neovim.enable = true;
       helix = {
         enable = true;
       };
     };
 
-    customPrograms = {
-      devTools = {
-        enable = true;
-        settings = {
-          python.enable = true;
-          markdown.enable = true;
-          just.enable = true;
-          toml.enable = true;
-          yaml.enable = true;
-          json.enable = true;
-        };
-      };
+    my.devtools = {
+      python.enable = true;
+      markdown.enable = true;
+      just.enable = true;
+      toml.enable = true;
+      yaml.enable = true;
+      json.enable = true;
+    };
 
+    my.programs = {
       docker.enable = true;
 
       erdtree = {
@@ -43,18 +40,20 @@
         };
       };
 
-      ai-agent.settings.context.chunks = [
-        ''
-          You have access to `rg` for searching with `ripgrep` and `fd` as an alternative to `find`.
-        ''
-      ];
-
       ghosttyTermInfo.enable = true;
 
       sanoid = {
         enable = true;
         settings.configFilePath = ./sanoid.conf;
       };
+    };
+
+    my.ai = {
+      context.chunks = [
+        ''
+          You have access to `rg` for searching with `ripgrep` and `fd` as an alternative to `find`.
+        ''
+      ];
     };
 
     my.opsScripts = {

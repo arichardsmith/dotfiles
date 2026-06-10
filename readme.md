@@ -37,7 +37,7 @@ Machine configs are in `machines/<name>/`. Each machine sets:
 Programs can be configured with `settings`:
 
 ```nix
-customPrograms.colima.settings = {
+my.programs.colima.settings = {
   cpu = 4;
   memory = 3;
   disk = 60;

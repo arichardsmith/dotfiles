@@ -1,13 +1,24 @@
-{lib, pkgs, config, ...}: let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   cfg = config.programs.neovim;
 
   byFt = lib.mapAttrs (_: f: [f.name]) cfg.formatters;
 
   formatterDefs = lib.listToAttrs (lib.mapAttrsToList (_: f:
     lib.nameValuePair f.name (
-      {command = if f.exeName != null then lib.getExe' f.package f.exeName else lib.getExe f.package;}
+      {
+        command =
+          if f.exeName != null
+          then lib.getExe' f.package f.exeName
+          else lib.getExe f.package;
+      }
       // lib.optionalAttrs (f.args != null) {args = f.args;}
-    )) cfg.formatters);
+    ))
+  cfg.formatters);
 
   conformLua = lib.generators.toLua {} {
     formatters_by_ft = byFt;
@@ -59,7 +70,7 @@ in {
         nvim-lspconfig
         gitsigns-nvim
         nvim-autopairs
-				nvim-treesitter.withAllGrammars
+        nvim-treesitter.withAllGrammars
       ];
 
       extraPackages = with pkgs; [
