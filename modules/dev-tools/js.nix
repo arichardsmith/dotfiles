@@ -13,6 +13,7 @@ in {
       home.packages = with pkgs; [
         bun
         typescript-language-server
+        oxfmt
         (helpers.scriptToPackage {
           name = "ijs";
           file = ../../scripts/ijs.sh;
@@ -54,6 +55,25 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
+      programs.neovim.conform.formatters_by_ft = {
+        javascript = {
+          formatters = ["prettier" "oxfmt"];
+          stop_after_first = true;
+        };
+        javascriptreact = {
+          formatters = ["prettier" "oxfmt"];
+          stop_after_first = true;
+        };
+        typescript = {
+          formatters = ["prettier" "oxfmt"];
+          stop_after_first = true;
+        };
+        typescriptreact = {
+          formatters = ["prettier" "oxfmt"];
+          stop_after_first = true;
+        };
+      };
+
       programs.neovim.initLua = ''
         vim.lsp.config("ts_ls", {
           cmd = { "${lib.getExe pkgs.typescript-language-server}", "--stdio" },
