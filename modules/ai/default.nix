@@ -28,29 +28,7 @@
 
   memoryText = lib.concatStringsSep "\n" (defaultContext ++ cfg.context.chunks) + "\n";
 
-  opencodeMainConfigAttrs =
-    lib.filterAttrs (n: v: v != null) {
-      inherit (cfg.opencode) model small_model autoupdate share default_agent;
-    }
-    // lib.optionalAttrs (cfg.opencode.agents != {}) {
-      agent = cfg.opencode.agents;
-    };
-
-  opencodeMainConfigJson =
-    if opencodeMainConfigAttrs != {}
-    then builtins.toJSON opencodeMainConfigAttrs
-    else null;
-
-  opencodeTuiConfigAttrs = lib.filterAttrs (n: v: v != null) {
-    inherit (cfg.opencode) theme;
-  };
-
-  opencodeTuiConfigJson =
-    if opencodeTuiConfigAttrs != {}
-    then builtins.toJSON opencodeTuiConfigAttrs
-    else null;
-
-  installSharedSkills = cfg.opencode.enable;
+  installSharedSkills = config.my.programs.opencode.enable;
 
   sharedSkillConfigs = lib.mapAttrs' (name: path:
     lib.nameValuePair ".agents/skills/${name}" {
@@ -89,94 +67,13 @@ in {
       '';
     };
 
-    claude-code.enable = lib.mkEnableOption "Claude Code integration";
-
-    opencode = {
-      enable = lib.mkEnableOption "OpenCode integration";
-
-      model = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "Primary LLM model to use (e.g., 'anthropic/claude-sonnet-4-5')";
-      };
-
-      small_model = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "Lightweight model for tasks like title generation";
-      };
-
-      autoupdate = lib.mkOption {
-        type = lib.types.nullOr (lib.types.either lib.types.bool lib.types.str);
-        default = null;
-        description = "Enable updates, disable, or set to 'notify' for alerts only";
-      };
-
-      share = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "Sharing mode: 'manual', 'auto', or 'disabled'";
-      };
-
-      default_agent = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "Default agent when none specified";
-      };
-
-      theme = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "UI theme selection (e.g., 'system', 'tokyonight')";
-      };
-
-      agents = lib.mkOption {
-        type = lib.types.attrs;
-        default = {};
-        description = "Custom agent definitions for OpenCode";
-        example = lib.literalExpression ''
-          {
-            plan = {
-              permission = {
-                skill = {
-                  "internal-*" = "allow";
-                };
-              };
-            };
-            custom-agent = {
-              tools = {
-                skill = false;
-              };
-            };
-          }
-        '';
-      };
-    };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.claude-code.enable {
+    (lib.mkIf config.programs.claude-code.enable {
       programs.claude-code = {
         context = memoryText;
         skills = allSkills;
-      };
-    })
-
-    (lib.mkIf cfg.opencode.enable {
-      # The package is currently broken (needs bun 1.3.10, gets 1.3.9)
-      # home.packages = [pkgs.opencode];
-
-      home.activation.installOpencode = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        echo "Installing OpenCode via Bun escape hatch..."
-        $DRY_RUN_CMD ${pkgs.bun}/bin/bun add -g opencode-ai
-      '';
-
-      xdg.configFile."opencode/opencode.json" = lib.mkIf (opencodeMainConfigJson != null) {
-        text = opencodeMainConfigJson;
-      };
-
-      xdg.configFile."opencode/tui.json" = lib.mkIf (opencodeTuiConfigJson != null) {
-        text = opencodeTuiConfigJson;
       };
     })
 

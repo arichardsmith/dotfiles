@@ -18,11 +18,6 @@
       url = "github:karol-broda/snitch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    opencode = {
-      url = "github:anomalyco/opencode";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -30,11 +25,10 @@
     home-manager,
     starship-jj,
     snitch,
-    opencode,
     ...
   }: let
     configurations = import ./lib/configurations.nix {
-      inherit nixpkgs home-manager starship-jj snitch opencode;
+      inherit nixpkgs home-manager starship-jj snitch;
     };
   in {
     homeConfigurations = configurations.mkHomeConfigs {

@@ -1,6 +1,8 @@
 {...}: {
   imports = [
     ./ai
+    ./claudecode
+    ./opencode
     ./ast-grep
     ./bat
     ./bitwarden

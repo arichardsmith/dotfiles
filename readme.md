@@ -5,7 +5,7 @@ Nix flake for managing dotfiles and packages across machines using home-manager.
 ## Quick Start
 
 ```bash
-just install
+just rebuild
 ```
 
 This will switch to the latest version of the config if the machine is configured in the `DOTFILE_MACHINE` environment variable.
@@ -13,7 +13,7 @@ This will switch to the latest version of the config if the machine is configure
 To update the flake lock file before switching:
 
 ```bash
-nix flake update && just install
+nix flake update && just rebuild
 ```
 
 Otherwise, a machines home-manager config can be installed with:
@@ -63,6 +63,10 @@ programs.starship.settings.format = "...";
 ── modules/            # Individual program modules
 └── lib/                # Helper functions
 ```
+
+## Updating version-pinned tools
+
+See [docs/updating-js-tools.md](docs/updating-js-tools.md).
 
 ## Adding Machines
 

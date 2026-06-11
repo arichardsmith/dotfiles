@@ -3,22 +3,19 @@
   home-manager,
   starship-jj,
   snitch,
-  opencode,
 }: let
   lib = nixpkgs.lib;
 
   mkNix = system: let
     pkgs = import nixpkgs {
       inherit system;
-      config.allowUnfreePredicate = pkg:
-        builtins.elem (nixpkgs.lib.getName pkg) [
-          "claude-code"
-        ];
       overlays = [
         (final: prev: {
           starship-jj = starship-jj.packages.${system}.default;
           snitch = snitch.packages.${system}.default;
-          opencode = opencode.packages.${system}.default;
+          oxfmt = final.callPackage ../pkgs/oxfmt.nix {};
+          claude-code = final.callPackage ../pkgs/claude-code.nix {};
+          opencode = final.callPackage ../pkgs/opencode.nix {};
         })
       ];
     };
