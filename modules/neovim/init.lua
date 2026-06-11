@@ -253,3 +253,24 @@ end, {desc = "Re-source config"})
 vim.api.nvim_create_user_command("Fmt", function()
   require("conform").format({lsp_format = "fallback"})
 end, {desc = "Format buffer"})
+
+vim.api.nvim_create_user_command("Bc", function()
+  vim.cmd("bdelete")
+end, {desc = "Close current buffer"})
+
+vim.api.nvim_create_user_command("Bca", function()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      vim.api.nvim_buf_delete(buf, {force = false})
+    end
+  end
+end, {desc = "Close all buffers"})
+
+vim.api.nvim_create_user_command("Bco", function()
+  local current = vim.api.nvim_get_current_buf()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
+      vim.api.nvim_buf_delete(buf, {force = false})
+    end
+  end
+end, {desc = "Close all buffers except current"})
