@@ -55,6 +55,11 @@
          # Reload config.
          bind r source-file ~/.config/tmux/tmux.conf \; display-message "tmux config reloaded"
 
+         # Direct window switching.
+         bind -n M-1 select-window -t 1
+         bind -n M-2 select-window -t 2
+         bind -n M-3 select-window -t 3
+
          # Pane navigation.
          bind h select-pane -L
          bind j select-pane -D
