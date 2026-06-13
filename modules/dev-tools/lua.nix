@@ -26,9 +26,8 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
-      programs.neovim.formatters.lua = {
-        name = "stylua";
-        package = pkgs.stylua;
+      programs.neovim.conform = {
+        formatters_by_ft.lua = ["stylua"];
       };
 
       programs.neovim.initLua = ''

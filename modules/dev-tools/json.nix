@@ -32,10 +32,8 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
-      programs.neovim.formatters.json = {
-        name = "jq";
-        package = pkgs.jq;
-        args = ["."];
+      programs.neovim.conform = {
+        formatters_by_ft.json = ["jq"];
       };
 
       programs.neovim.initLua = ''

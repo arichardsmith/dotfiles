@@ -6,53 +6,55 @@
 }: let
   cfg = config.programs.neovim;
 
-  byFt = lib.mapAttrs (_: f: [f.name]) cfg.formatters;
+  renderFiletypeFormatter = value:
+    if builtins.isList value
+    then
+      lib.generators.mkLuaInline (
+        "{ "
+        + lib.concatStringsSep ", " (map (name: lib.generators.toLua {} name) value)
+        + " }"
+      )
+    else
+      let
+        formatterList =
+          "{ "
+          + lib.concatStringsSep ", " (map (name: lib.generators.toLua {} name) value.formatters)
+          + lib.optionalString value.stop_after_first ", stop_after_first = true"
+          + lib.optionalString (value.lsp_format != null) (
+            ", lsp_format = " + lib.generators.toLua {} value.lsp_format
+          )
+          + " }";
+      in lib.generators.mkLuaInline formatterList;
 
-  formatterDefs = lib.listToAttrs (lib.mapAttrsToList (_: f:
-    lib.nameValuePair f.name (
-      {
-        command =
-          if f.exeName != null
-          then lib.getExe' f.package f.exeName
-          else lib.getExe f.package;
-      }
-      // lib.optionalAttrs (f.args != null) {args = f.args;}
-    ))
-  cfg.formatters);
+  byFt = lib.mapAttrs (_: renderFiletypeFormatter) cfg.conform.formatters_by_ft;
 
   conformLua = lib.generators.toLua {} {
     formatters_by_ft = byFt;
-    formatters = formatterDefs;
   };
 in {
-  options.programs.neovim.formatters = lib.mkOption {
-    type = with lib.types;
-      attrsOf (submodule {
-        options = {
-          name = lib.mkOption {
-            type = str;
-            description = "conform formatter id, e.g. prettier";
-          };
+  options.programs.neovim.conform = {
+    formatters_by_ft = lib.mkOption {
+      type = with lib.types;
+        attrsOf (either (listOf str) (submodule {
+          options = {
+            formatters = lib.mkOption {
+              type = listOf str;
+            };
 
-          package = lib.mkOption {
-            type = package;
-            description = "package providing the formatter binary";
-          };
+            stop_after_first = lib.mkOption {
+              type = bool;
+              default = false;
+            };
 
-          args = lib.mkOption {
-            type = nullOr (listOf str);
-            default = null;
+            lsp_format = lib.mkOption {
+              type = nullOr (enum ["never" "fallback" "prefer" "first" "last"]);
+              default = null;
+            };
           };
-
-          exeName = lib.mkOption {
-            type = nullOr str;
-            default = null;
-            description = "Executable name within the package. Uses lib.getExe by default.";
-          };
-        };
-      });
-    default = {};
-    description = "Per-filetype external formatters.";
+        }));
+      default = {};
+      description = "Map of filetype to formatters.";
+    };
   };
 
   config = lib.mkIf cfg.enable {

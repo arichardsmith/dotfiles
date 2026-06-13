@@ -36,9 +36,8 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
-      programs.neovim.formatters.python = {
-        name = "ruff_format";
-        package = pkgs.ruff;
+      programs.neovim.conform = {
+        formatters_by_ft.python = ["ruff_format"];
       };
 
       programs.neovim.initLua = ''

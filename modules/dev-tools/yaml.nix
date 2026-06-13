@@ -26,9 +26,8 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
-      programs.neovim.formatters.yaml = {
-        name = "yamlfmt";
-        package = pkgs.yamlfmt;
+      programs.neovim.conform = {
+        formatters_by_ft.yaml = ["yamlfmt"];
       };
 
       programs.neovim.initLua = ''

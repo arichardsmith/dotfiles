@@ -29,10 +29,8 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
-      programs.neovim.formatters.toml = {
-        name = "tombi";
-        package = pkgs.tombi;
-        args = ["format"];
+      programs.neovim.conform = {
+        formatters_by_ft.toml = ["tombi"];
       };
 
       programs.neovim.initLua = ''

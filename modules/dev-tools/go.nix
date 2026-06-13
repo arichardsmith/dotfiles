@@ -33,10 +33,8 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
-      programs.neovim.formatters.go = {
-        name = "gofmt";
-        package = pkgs.go;
-        exeName = "gofmt";
+      programs.neovim.conform = {
+        formatters_by_ft.go = ["gofmt"];
       };
 
       programs.neovim.initLua = ''

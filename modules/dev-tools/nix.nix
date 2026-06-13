@@ -28,9 +28,8 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
-      programs.neovim.formatters.nix = {
-        name = "alejandra";
-        package = pkgs.alejandra;
+      programs.neovim.conform = {
+        formatters_by_ft.nix = ["alejandra"];
       };
 
       programs.neovim.initLua = ''
