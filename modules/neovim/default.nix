@@ -5,6 +5,72 @@
   ...
 }: let
   cfg = config.programs.neovim;
+  formatterOverrideType = with lib.types;
+    submodule {
+      freeformType = anything;
+
+      options = {
+        "inherit" = lib.mkOption {
+          type = nullOr (either bool str);
+          default = null;
+        };
+
+        command = lib.mkOption {
+          type = nullOr anything;
+          default = null;
+        };
+
+        cwd = lib.mkOption {
+          type = nullOr anything;
+          default = null;
+        };
+
+        args = lib.mkOption {
+          type = nullOr (either (listOf str) str);
+          default = null;
+        };
+
+        prepend_args = lib.mkOption {
+          type = nullOr (either (listOf str) str);
+          default = null;
+        };
+
+        append_args = lib.mkOption {
+          type = nullOr (either (listOf str) str);
+          default = null;
+        };
+
+        stdin = lib.mkOption {
+          type = nullOr bool;
+          default = null;
+        };
+
+        tmpfile_format = lib.mkOption {
+          type = nullOr str;
+          default = null;
+        };
+
+        condition = lib.mkOption {
+          type = nullOr anything;
+          default = null;
+        };
+
+        exit_codes = lib.mkOption {
+          type = nullOr (listOf int);
+          default = null;
+        };
+
+        env = lib.mkOption {
+          type = nullOr (attrsOf anything);
+          default = null;
+        };
+
+        options = lib.mkOption {
+          type = nullOr (attrsOf anything);
+          default = null;
+        };
+      };
+    };
 
   renderFiletypeFormatter = value:
     if builtins.isList value
@@ -29,10 +95,17 @@
   byFt = lib.mapAttrs (_: renderFiletypeFormatter) cfg.conform.formatters_by_ft;
 
   conformLua = lib.generators.toLua {} {
+    formatters = cfg.conform.formatters;
     formatters_by_ft = byFt;
   };
 in {
   options.programs.neovim.conform = {
+    formatters = lib.mkOption {
+      type = with lib.types; attrsOf formatterOverrideType;
+      default = {};
+      description = "Map of formatter overrides.";
+    };
+
     formatters_by_ft = lib.mkOption {
       type = with lib.types;
         attrsOf (either (listOf str) (submodule {

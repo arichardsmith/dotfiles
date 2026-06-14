@@ -55,6 +55,22 @@ in {
     })
 
     (lib.mkIf config.programs.neovim.enable {
+      # Conform prefers the project-local node_modules/.bin/oxfmt, but that bin
+      # still uses /usr/bin/env node; force the Nix-wrapped binary so Neovim
+      # does not need Node on PATH, while still resolving repo-local config.
+      programs.neovim.conform.formatters.oxfmt = {
+        "inherit" = true;
+        command = lib.getExe' pkgs.oxfmt "oxfmt";
+        cwd = lib.generators.mkLuaInline ''
+          require("conform.util").root_file({
+            ".oxfmtrc.json",
+            ".oxfmtrc.jsonc",
+            "oxfmt.config.ts",
+            "package.json",
+          })
+        '';
+      };
+
       programs.neovim.conform.formatters_by_ft = {
         javascript = {
           formatters = ["prettier" "oxfmt"];
