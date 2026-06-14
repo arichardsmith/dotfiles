@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }: let
@@ -36,17 +35,6 @@
       recursive = true;
     })
   allSkills;
-
-  codexSkillSyncCommands = lib.concatStringsSep "\n" (
-    lib.mapAttrsToList (name: _path: ''
-      $DRY_RUN_CMD rm -rf "$HOME/.codex/skills/${name}"
-      $DRY_RUN_CMD mkdir -p "$HOME/.codex/skills/${name}"
-      $DRY_RUN_CMD ${pkgs.rsync}/bin/rsync -aL --delete \
-        "$HOME/.agents/skills/${name}/" \
-        "$HOME/.codex/skills/${name}/"
-    '')
-    allSkills
-  );
 in {
   options.my.ai = {
     context.chunks = lib.mkOption {
@@ -79,13 +67,6 @@ in {
 
     (lib.mkIf installSharedSkills {
       home.file = sharedSkillConfigs;
-    })
-
-    (lib.mkIf config.programs.codex.enable {
-      home.activation.syncCodexSkills = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD mkdir -p "$HOME/.codex/skills"
-        ${codexSkillSyncCommands}
-      '';
     })
   ];
 }

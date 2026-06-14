@@ -37,7 +37,6 @@
 
       jujutsu.enable = true;
       gh.enable = true;
-      codex.enable = true;
     };
 
     my.devtools = {
