@@ -62,6 +62,7 @@ in {
       plugins = with pkgs.vimPlugins; [
         catppuccin-nvim
         telescope-nvim
+        telescope-file-browser-nvim
         plenary-nvim
         nvim-web-devicons
         nvim-surround

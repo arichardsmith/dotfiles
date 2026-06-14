@@ -38,13 +38,36 @@ opt.termguicolors = true
 
 local map = vim.keymap.set
 
+local telescope = require("telescope")
+telescope.setup({
+  extensions = {
+    file_browser = {
+      grouped = true,
+      hidden = true,
+      respect_gitignore = false,
+      select_buffer = true,
+    },
+  },
+})
+telescope.load_extension("file_browser")
+
 map("n", "<leader>f", "<cmd>Telescope find_files<cr>", {desc = "Find files"})
 map("n", "<leader>b", "<cmd>Telescope buffers<cr>", {desc = "Buffers"})
 map("n", "<leader>g", "<cmd>Telescope git_status<cr>", {desc = "Changed files"})
 
 map("n", "<leader>e", function()
-  require("telescope.builtin").find_files({cwd = vim.fn.expand("%:p:h")})
-end, {desc = "Find files in buffer dir"})
+  local dir = vim.fn.expand("%:p:h")
+  if dir == "" then
+    dir = vim.fn.getcwd()
+  end
+
+  telescope.extensions.file_browser.file_browser({
+    cwd = dir,
+    hidden = true,
+    path = dir,
+    respect_gitignore = false,
+  })
+end, {desc = "Browse buffer dir"})
 
 map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {desc = "Search project"})
 map({"n", "x"}, "<leader>y", '"+y', {desc = "Yank to system clipboard"})
