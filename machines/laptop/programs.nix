@@ -15,6 +15,7 @@
       zoxide.enable = true;
       direnv.enable = true;
       tmux.enable = true;
+      nushell.enable = true;
       rclone.enable = true;
       rbw.enable = true;
       broot.enable = true; # A nicer tree view
