@@ -2,19 +2,19 @@
 let
   pkgMeta = rec {
     name = "oxfmt";
-    version = "0.54.0";
+    version = "0.55.0";
     tarballs = {
       main = {
         url = "https://registry.npmjs.org/oxfmt/-/oxfmt-${version}.tgz";
-        hash = "sha256-yO42G6bNrQYGr8dG+FKgKGzla/d9xBQ9NDiHQfLziMI=";
+        hash = "sha256-bP7wu/EYFIudCdggZnNUfDdMkXF84FZtiOLThFUytmw=";
       };
       darwin = {
         url = "https://registry.npmjs.org/@oxfmt/binding-darwin-arm64/-/binding-darwin-arm64-${version}.tgz";
-        hash = "sha256-MXu3dpSLC/sWMmdIwxCuN6/FC9Ock/GjzjXo1bWrPvU=";
+        hash = "sha256-d+rj8eyRaV64lXTEGadkYh4D512/1pVWZIljbDAdrDc=";
       };
       linux = {
         url = "https://registry.npmjs.org/@oxfmt/binding-linux-x64-gnu/-/binding-linux-x64-gnu-${version}.tgz";
-        hash = "sha256-rn0Pr8ciPM3DlnWPsddzewizvOTSI4ZYSRdfFZz9Fy4=";
+        hash = "sha256-DRKrBD6s7E7Mbv2aDjoTBC+Ii7l0chKiNGN4hhNCxD4=";
       };
     };
     deps = {
