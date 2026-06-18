@@ -37,6 +37,7 @@
 
       jujutsu.enable = true;
       gh.enable = true;
+			lazydocker.enable = true;
     };
 
     my.devtools = {
