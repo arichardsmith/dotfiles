@@ -54,7 +54,7 @@ in {
 
     (lib.mkIf config.my.programs.opencode.enable {
       my.programs.opencode.lsp.pyright = lib.mkDefault {
-        command = [ (lib.getExe pkgs.basedpyright) "-" ];
+        command = [(lib.getExe pkgs.basedpyright) "-"];
       };
     })
   ]);

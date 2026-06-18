@@ -1,5 +1,10 @@
-{ stdenv, fetchurl, makeWrapper, bun, lib }:
-let
+{
+  stdenv,
+  fetchurl,
+  makeWrapper,
+  bun,
+  lib,
+}: let
   pkgMeta = rec {
     name = "oxfmt";
     version = "0.55.0";
@@ -45,23 +50,24 @@ let
     };
   };
   binding = bindings.${stdenv.hostPlatform.system};
-in stdenv.mkDerivation {
-  pname = pkgMeta.name;
-  inherit version;
-  nativeBuildInputs = [ makeWrapper ];
-  passthru = { inherit pkgMeta; };
-  buildCommand = ''
-    mkdir -p "$out/lib/node_modules/oxfmt"
-    tar xzf ${mainSrc} -C "$out/lib/node_modules/oxfmt" --strip-components=1
+in
+  stdenv.mkDerivation {
+    pname = pkgMeta.name;
+    inherit version;
+    nativeBuildInputs = [makeWrapper];
+    passthru = {inherit pkgMeta;};
+    buildCommand = ''
+      mkdir -p "$out/lib/node_modules/oxfmt"
+      tar xzf ${mainSrc} -C "$out/lib/node_modules/oxfmt" --strip-components=1
 
-    mkdir -p "$out/lib/node_modules/tinypool"
-    tar xzf ${tinypoolSrc} -C "$out/lib/node_modules/tinypool" --strip-components=1
+      mkdir -p "$out/lib/node_modules/tinypool"
+      tar xzf ${tinypoolSrc} -C "$out/lib/node_modules/tinypool" --strip-components=1
 
-    mkdir -p "$out/lib/node_modules/@oxfmt/binding-${binding.platform}"
-    tar xzf ${binding.src} -C "$out/lib/node_modules/@oxfmt/binding-${binding.platform}" --strip-components=1
+      mkdir -p "$out/lib/node_modules/@oxfmt/binding-${binding.platform}"
+      tar xzf ${binding.src} -C "$out/lib/node_modules/@oxfmt/binding-${binding.platform}" --strip-components=1
 
-    mkdir -p "$out/bin"
-    makeWrapper ${bun}/bin/bun "$out/bin/oxfmt" \
-      --add-flags "$out/lib/node_modules/oxfmt/bin/oxfmt"
-  '';
-}
+      mkdir -p "$out/bin"
+      makeWrapper ${bun}/bin/bun "$out/bin/oxfmt" \
+        --add-flags "$out/lib/node_modules/oxfmt/bin/oxfmt"
+    '';
+  }

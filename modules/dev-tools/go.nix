@@ -52,7 +52,7 @@ in {
 
     (lib.mkIf config.my.programs.opencode.enable {
       my.programs.opencode.lsp.gopls = lib.mkDefault {
-        command = [ (lib.getExe pkgs.gopls) ];
+        command = [(lib.getExe pkgs.gopls)];
       };
     })
   ]);

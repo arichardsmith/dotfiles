@@ -37,20 +37,7 @@
 
       jujutsu.enable = true;
       gh.enable = true;
-			lazydocker.enable = true;
-    };
-
-    my.devtools = {
-      python.enable = true;
-      markdown.enable = true;
-      just.enable = true;
-      toml.enable = true;
-      yaml.enable = true;
-      json.enable = true;
-      js.enable = true;
-      nix.enable = true;
-      rust.enable = true;
-      go.enable = true;
+      lazydocker.enable = true;
     };
 
     my.programs = {
@@ -74,20 +61,33 @@
 
       astGrep.enable = true;
       docker.enable = true;
+
+      claudeCode.enable = true;
+
+      opencode = {
+        enable = true;
+        model = "openai/gpt-5.5";
+        autoupdate = "notify";
+        theme = "system";
+
+        agents = {
+          plan.model = "openai/gpt-5.5";
+          build.model = "openrouter/deepseek/deepseek-v4-flash";
+        };
+      };
     };
 
-    my.programs.claudeCode.enable = true;
-
-    my.programs.opencode = {
-      enable = true;
-      model = "openai/gpt-5.5";
-      autoupdate = "notify";
-      theme = "system";
-
-      agents = {
-        plan.model = "openai/gpt-5.5";
-        build.model = "openrouter/deepseek/deepseek-v4-flash";
-      };
+    my.devtools = {
+      python.enable = true;
+      markdown.enable = true;
+      just.enable = true;
+      toml.enable = true;
+      yaml.enable = true;
+      json.enable = true;
+      js.enable = true;
+      nix.enable = true;
+      rust.enable = true;
+      go.enable = true;
     };
 
     my.ai = {
@@ -147,12 +147,6 @@
       curlie
       mise
 
-      # Custom scripts
-      (helpers.scriptToPackage {
-        name = "edit";
-        file = ../../scripts/edit.sh;
-      })
-
       cyme # List system USB buses and devices. A modern cross-platform lsusb
       ffmpeg
 
@@ -160,13 +154,20 @@
       maple-mono.truetype
       maple-mono.NF-unhinted
 
+      # Custom scripts
       (helpers.scriptToPackage {
         name = "unlock-drive";
         file = ./scripts/unlock-drive.sh;
       })
+
       (helpers.scriptToPackage {
         name = "unlock-ssh";
         file = ./scripts/unlock-ssh.sh;
+      })
+
+      (helpers.scriptToPackage {
+        name = "edit";
+        file = ../../scripts/edit.sh;
       })
     ];
   };

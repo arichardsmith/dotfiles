@@ -1,18 +1,24 @@
-{ config, lib, pkgs, helpers, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  ...
+}: let
   cfg = config.my.programs.opencode;
 
   ocw = helpers.scriptToPackage {
     name = "ocw";
     file = ./scripts/ocw.sh;
-    runtimeInputs = [ pkgs.openssl pkgs.opencode ];
+    runtimeInputs = [pkgs.openssl pkgs.opencode];
   };
 
   # Dev-tools modules contribute LSP entries with lib.mkDefault so user config
   # can override them. lib.types.attrs does not resolve sub-attr priority wrappers,
   # so mkDefault leaks into the JSON without this unwrapping step.
   stripModuleWrappers = value:
-    if lib.isAttrs value then
+    if lib.isAttrs value
+    then
       if value ? _type && value._type == "override"
       then stripModuleWrappers value.content
       else lib.mapAttrs (_: stripModuleWrappers) value
@@ -86,8 +92,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
-    { home.packages = [ pkgs.opencode ocw ];
-      home.sessionVariables.OPENCODE_DISABLE_LSP_DOWNLOAD = "true"; }
+    {
+      home.packages = [pkgs.opencode ocw];
+      home.sessionVariables.OPENCODE_DISABLE_LSP_DOWNLOAD = "true";
+    }
 
     (lib.mkIf (mainConfigAttrs != {}) {
       xdg.configFile."opencode/opencode.json".text = builtins.toJSON mainConfigAttrs;

@@ -1,11 +1,15 @@
 {
   description = "External js packages";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  outputs = { self, nixpkgs, ...}: let
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  }: let
     forAllSystems = nixpkgs.lib.genAttrs ["aarch64-darwin" "x86_64-linux"];
   in {
     packages = forAllSystems (system: let
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs {inherit system;};
     in {
       oxfmt = pkgs.callPackage ./oxfmt.nix {};
       claude-code = pkgs.callPackage ./claude-code.nix {};

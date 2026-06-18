@@ -40,7 +40,7 @@ in {
 
     (lib.mkIf config.my.programs.opencode.enable {
       my.programs.opencode.lsp.yaml-ls = lib.mkDefault {
-        command = [ (lib.getExe pkgs.yaml-language-server) "--stdio" ];
+        command = [(lib.getExe pkgs.yaml-language-server) "--stdio"];
       };
     })
   ]);

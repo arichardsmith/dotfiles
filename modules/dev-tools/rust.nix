@@ -43,7 +43,7 @@ in {
 
     (lib.mkIf config.my.programs.opencode.enable {
       my.programs.opencode.lsp.rust = lib.mkDefault {
-        command = [ (lib.getExe pkgs.rust-analyzer) ];
+        command = [(lib.getExe pkgs.rust-analyzer)];
       };
     })
   ]);

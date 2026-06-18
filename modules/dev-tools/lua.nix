@@ -51,7 +51,7 @@ in {
 
     (lib.mkIf config.my.programs.opencode.enable {
       my.programs.opencode.lsp.lua-ls = lib.mkDefault {
-        command = [ (lib.getExe pkgs.lua-language-server) ];
+        command = [(lib.getExe pkgs.lua-language-server)];
       };
     })
   ]);

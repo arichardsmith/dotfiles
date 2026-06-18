@@ -80,17 +80,17 @@
         + lib.concatStringsSep ", " (map (name: lib.generators.toLua {} name) value)
         + " }"
       )
-    else
-      let
-        formatterList =
-          "{ "
-          + lib.concatStringsSep ", " (map (name: lib.generators.toLua {} name) value.formatters)
-          + lib.optionalString value.stop_after_first ", stop_after_first = true"
-          + lib.optionalString (value.lsp_format != null) (
-            ", lsp_format = " + lib.generators.toLua {} value.lsp_format
-          )
-          + " }";
-      in lib.generators.mkLuaInline formatterList;
+    else let
+      formatterList =
+        "{ "
+        + lib.concatStringsSep ", " (map (name: lib.generators.toLua {} name) value.formatters)
+        + lib.optionalString value.stop_after_first ", stop_after_first = true"
+        + lib.optionalString (value.lsp_format != null) (
+          ", lsp_format = " + lib.generators.toLua {} value.lsp_format
+        )
+        + " }";
+    in
+      lib.generators.mkLuaInline formatterList;
 
   byFt = lib.mapAttrs (_: renderFiletypeFormatter) cfg.conform.formatters_by_ft;
 

@@ -1,5 +1,7 @@
-{ stdenv, fetchurl }:
-let
+{
+  stdenv,
+  fetchurl,
+}: let
   pkgMeta = rec {
     name = "opencode-ai";
     version = "1.17.8";
@@ -16,15 +18,16 @@ let
   };
 
   inherit (pkgMeta) version;
-in stdenv.mkDerivation {
-  pname = "opencode";
-  inherit version;
-  src = fetchurl pkgMeta.tarballs.${stdenv.hostPlatform.system};
-  passthru = { inherit pkgMeta; };
-  installPhase = ''
-    runHook preInstall
-    mkdir -p $out/bin
-    install -m755 bin/opencode $out/bin/opencode
-    runHook postInstall
-  '';
-}
+in
+  stdenv.mkDerivation {
+    pname = "opencode";
+    inherit version;
+    src = fetchurl pkgMeta.tarballs.${stdenv.hostPlatform.system};
+    passthru = {inherit pkgMeta;};
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out/bin
+      install -m755 bin/opencode $out/bin/opencode
+      runHook postInstall
+    '';
+  }

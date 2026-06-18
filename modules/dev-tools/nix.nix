@@ -42,7 +42,7 @@ in {
 
     (lib.mkIf config.my.programs.opencode.enable {
       my.programs.opencode.lsp.nixd = lib.mkDefault {
-        command = [ (lib.getExe pkgs.nixd) ];
+        command = [(lib.getExe pkgs.nixd)];
       };
     })
   ]);

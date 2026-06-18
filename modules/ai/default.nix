@@ -54,7 +54,6 @@ in {
         }
       '';
     };
-
   };
 
   config = lib.mkMerge [

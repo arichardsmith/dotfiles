@@ -59,3 +59,6 @@ link_ai:
       printf 'Linked %s -> %s\n' "$link_path" "$target"
     done
   done
+
+fmt:
+	alejandra .
