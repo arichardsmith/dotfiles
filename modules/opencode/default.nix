@@ -1,6 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, helpers, ... }:
 let
   cfg = config.my.programs.opencode;
+
+  ocw = helpers.scriptToPackage {
+    name = "ocw";
+    runtimeInputs = [ pkgs.openssl ];
+    text = ''
+      password="$(openssl rand -base64 32)"
+      export OPENCODE_SERVER_PASSWORD="$password"
+      printf 'OpenCode server password: %s\n' "$password"
+      exec ${lib.getExe' pkgs.opencode "opencode"} web "$@"
+    '';
+  };
 
   mainConfigAttrs =
     lib.filterAttrs (_: v: v != null) {
@@ -61,7 +72,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
-    { home.packages = [ pkgs.opencode ]; }
+    { home.packages = [ pkgs.opencode ocw ]; }
 
     (lib.mkIf (mainConfigAttrs != {}) {
       xdg.configFile."opencode/opencode.json".text = builtins.toJSON mainConfigAttrs;
