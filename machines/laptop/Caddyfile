@@ -2,6 +2,10 @@ syncthing.localhost {
 	reverse_proxy localhost:8384
 }
 
+opencode.localhost {
+	reverse_proxy localhost:4096
+}
+
 ah.localhost {
 	reverse_proxy localhost:2291 {
 		header_up Origin https://ah.localhost
