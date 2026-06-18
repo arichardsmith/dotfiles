@@ -72,7 +72,7 @@ end, {desc = "Browse buffer dir"})
 map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {desc = "Search project"})
 map({"n", "x"}, "<leader>y", '"+y', {desc = "Yank to system clipboard"})
 map("n", "<leader>k", vim.lsp.buf.hover, {desc = "Hover / symbol info"})
-map("n", "<leader>K", vim.diagnostic.open_float, {desc = "Hover / symbol info"})
+map("n", "<leader>K", "<cmd>Trouble diagnostics toggle<cr>", {desc = "Toggle diagnostics panel"})
 map("n", "<leader>r", vim.lsp.buf.rename, {desc = "LSP rename symbol"})
 map("n", "<leader>h", vim.lsp.buf.references, {desc = "Symbol references"})
 map("n", "<leader>n", "<C-i>", {desc = "Jump forward"})
@@ -132,6 +132,9 @@ require("which-key").setup({
 
 -- nvim-autopairs: automatically inserts the closing bracket/quote/etc.
 require("nvim-autopairs").setup({})
+
+-- trouble.nvim: pretty list for diagnostics, references, quickfix, etc.
+require("trouble").setup({})
 
 -- blink.cmp: completion engine
 -- prefer_rust_with_warning uses the faster Rust fuzzy matcher when available,

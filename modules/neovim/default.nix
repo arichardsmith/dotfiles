@@ -146,6 +146,7 @@ in {
         nvim-lspconfig
         gitsigns-nvim
         nvim-autopairs
+        trouble-nvim
         nvim-treesitter.withAllGrammars
       ];
 
