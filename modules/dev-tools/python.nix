@@ -16,7 +16,7 @@ in {
       programs.helix.languages = {
         language-server.basedpyright = {
           command = lib.getExe pkgs.basedpyright;
-          args = ["--stdio"];
+          args = ["-"];
         };
         language-server.ruff = {
           command = lib.getExe pkgs.ruff;
@@ -42,7 +42,7 @@ in {
 
       programs.neovim.initLua = ''
         vim.lsp.config("basedpyright", {
-          cmd = { "${lib.getExe pkgs.basedpyright}", "--stdio" },
+          cmd = { "${lib.getExe pkgs.basedpyright}", "-" },
         })
         vim.lsp.config("ruff", {
           cmd = { "${lib.getExe pkgs.ruff}", "server" },
@@ -54,7 +54,7 @@ in {
 
     (lib.mkIf config.my.programs.opencode.enable {
       my.programs.opencode.lsp.pyright = lib.mkDefault {
-        command = [ (lib.getExe pkgs.basedpyright) "--stdio" ];
+        command = [ (lib.getExe pkgs.basedpyright) "-" ];
       };
     })
   ]);
