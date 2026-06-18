@@ -8,12 +8,25 @@ let
     runtimeInputs = [ pkgs.openssl pkgs.opencode ];
   };
 
+  # Dev-tools modules contribute LSP entries with lib.mkDefault so user config
+  # can override them. lib.types.attrs does not resolve sub-attr priority wrappers,
+  # so mkDefault leaks into the JSON without this unwrapping step.
+  stripModuleWrappers = value:
+    if lib.isAttrs value then
+      if value ? _type && value._type == "override"
+      then stripModuleWrappers value.content
+      else lib.mapAttrs (_: stripModuleWrappers) value
+    else value;
+
   mainConfigAttrs =
     lib.filterAttrs (_: v: v != null) {
       inherit (cfg) model small_model autoupdate share default_agent;
     }
     // lib.optionalAttrs (cfg.agents != {}) {
       agent = cfg.agents;
+    }
+    // lib.optionalAttrs (cfg.lsp != {}) {
+      lsp = stripModuleWrappers cfg.lsp;
     };
 
   tuiConfigAttrs = lib.filterAttrs (_: v: v != null) {
@@ -64,10 +77,17 @@ in {
       default = {};
       description = "Custom agent definitions";
     };
+
+    lsp = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      description = "LSP server configuration";
+    };
   };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
-    { home.packages = [ pkgs.opencode ocw ]; }
+    { home.packages = [ pkgs.opencode ocw ];
+      home.sessionVariables.OPENCODE_DISABLE_LSP_DOWNLOAD = "true"; }
 
     (lib.mkIf (mainConfigAttrs != {}) {
       xdg.configFile."opencode/opencode.json".text = builtins.toJSON mainConfigAttrs;

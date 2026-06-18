@@ -37,5 +37,11 @@ in {
         vim.lsp.enable("yamlls")
       '';
     })
+
+    (lib.mkIf config.my.programs.opencode.enable {
+      my.programs.opencode.lsp.yaml-ls = lib.mkDefault {
+        command = [ (lib.getExe pkgs.yaml-language-server) "--stdio" ];
+      };
+    })
   ]);
 }

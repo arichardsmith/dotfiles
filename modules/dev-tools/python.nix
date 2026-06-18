@@ -51,5 +51,11 @@ in {
         vim.lsp.enable("ruff")
       '';
     })
+
+    (lib.mkIf config.my.programs.opencode.enable {
+      my.programs.opencode.lsp.pyright = lib.mkDefault {
+        command = [ (lib.getExe pkgs.basedpyright) "--stdio" ];
+      };
+    })
   ]);
 }

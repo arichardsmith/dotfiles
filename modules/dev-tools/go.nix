@@ -49,5 +49,11 @@ in {
         vim.lsp.enable("gopls")
       '';
     })
+
+    (lib.mkIf config.my.programs.opencode.enable {
+      my.programs.opencode.lsp.gopls = lib.mkDefault {
+        command = [ (lib.getExe pkgs.gopls) ];
+      };
+    })
   ]);
 }

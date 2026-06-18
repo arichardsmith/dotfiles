@@ -97,5 +97,11 @@ in {
         vim.lsp.enable("ts_ls")
       '';
     })
+
+    (lib.mkIf config.my.programs.opencode.enable {
+      my.programs.opencode.lsp.typescript = lib.mkDefault {
+        command = [ (lib.getExe pkgs.typescript-language-server) "--stdio" ];
+      };
+    })
   ]);
 }

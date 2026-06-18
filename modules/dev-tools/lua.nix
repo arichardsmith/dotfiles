@@ -48,5 +48,11 @@ in {
         vim.lsp.enable("lua_ls")
       '';
     })
+
+    (lib.mkIf config.my.programs.opencode.enable {
+      my.programs.opencode.lsp.lua-ls = lib.mkDefault {
+        command = [ (lib.getExe pkgs.lua-language-server) ];
+      };
+    })
   ]);
 }
