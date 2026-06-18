@@ -4,13 +4,8 @@ let
 
   ocw = helpers.scriptToPackage {
     name = "ocw";
-    runtimeInputs = [ pkgs.openssl ];
-    text = ''
-      password="$(openssl rand -base64 32)"
-      export OPENCODE_SERVER_PASSWORD="$password"
-      printf 'OpenCode server password: %s\n' "$password"
-      exec ${lib.getExe' pkgs.opencode "opencode"} web "$@"
-    '';
+    file = ./scripts/ocw.sh;
+    runtimeInputs = [ pkgs.openssl pkgs.opencode ];
   };
 
   mainConfigAttrs =
