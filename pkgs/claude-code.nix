@@ -1,22 +1,27 @@
 { stdenv, fetchurl, makeWrapper, ripgrep, lib }:
 let
-  version = "2.1.173";
-
-  sources = {
-    "aarch64-darwin" = {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code-darwin-arm64/-/claude-code-darwin-arm64-${version}.tgz";
-      hash = "sha256-+fvOWAc6ICljhyx4ppreXa5nn/Qxi3scC8zqi0LfGVM=";
-    };
-    "x86_64-linux" = {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-${version}.tgz";
-      hash = "sha256-NCfZyUj3prhAAzmRIUqrFf3BUSPVtnlXuVmUCFIUzic=";
+  pkgMeta = rec {
+    name = "@anthropic-ai/claude-code";
+    version = "2.1.173";
+    tarballs = {
+      "aarch64-darwin" = {
+        url = "https://registry.npmjs.org/@anthropic-ai/claude-code-darwin-arm64/-/claude-code-darwin-arm64-${version}.tgz";
+        hash = "sha256-+fvOWAc6ICljhyx4ppreXa5nn/Qxi3scC8zqi0LfGVM=";
+      };
+      "x86_64-linux" = {
+        url = "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-${version}.tgz";
+        hash = "sha256-NCfZyUj3prhAAzmRIUqrFf3BUSPVtnlXuVmUCFIUzic=";
+      };
     };
   };
+
+  inherit (pkgMeta) version;
 in stdenv.mkDerivation {
   pname = "claude-code";
   inherit version;
-  src = fetchurl sources.${stdenv.hostPlatform.system};
+  src = fetchurl pkgMeta.tarballs.${stdenv.hostPlatform.system};
   nativeBuildInputs = [ makeWrapper ];
+  passthru = { inherit pkgMeta; };
   installPhase = ''
     runHook preInstall
     mkdir -p $out/bin

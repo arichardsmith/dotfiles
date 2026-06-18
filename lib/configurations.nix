@@ -1,5 +1,6 @@
 {
   nixpkgs,
+  js-pkgs,
   home-manager,
   starship-jj,
   snitch,
@@ -11,11 +12,9 @@
       inherit system;
       overlays = [
         (final: prev: {
+          inherit (js-pkgs.packages.${system}) oxfmt claude-code opencode;
           starship-jj = starship-jj.packages.${system}.default;
           snitch = snitch.packages.${system}.default;
-          oxfmt = final.callPackage ../pkgs/oxfmt.nix {};
-          claude-code = final.callPackage ../pkgs/claude-code.nix {};
-          opencode = final.callPackage ../pkgs/opencode.nix {};
         })
       ];
     };

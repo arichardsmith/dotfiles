@@ -63,6 +63,22 @@
         "type": "github"
       }
     },
+    "js-pkgs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "./pkgs",
+        "type": "path"
+      },
+      "original": {
+        "path": "./pkgs",
+        "type": "path"
+      },
+      "parent": []
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1778580735,
@@ -82,6 +98,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "js-pkgs": "js-pkgs",
         "nixpkgs": "nixpkgs",
         "snitch": "snitch",
         "starship-jj": "starship-jj"

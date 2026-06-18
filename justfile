@@ -1,3 +1,7 @@
+# Check for and apply version updates to pinned npm tools (oxfmt, claude-code, opencode).
+update_js:
+  uv run scripts/update-js-tools.py
+
 push_it:
   jj git push --remote origin
   jj git push --remote nas

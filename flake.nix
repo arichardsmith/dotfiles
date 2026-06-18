@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    js-pkgs = {
+      url = "path:./pkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,13 +27,14 @@
 
   outputs = {
     nixpkgs,
+    js-pkgs,
     home-manager,
     starship-jj,
     snitch,
     ...
   }: let
     configurations = import ./lib/configurations.nix {
-      inherit nixpkgs home-manager starship-jj snitch;
+      inherit nixpkgs js-pkgs home-manager starship-jj snitch;
     };
   in {
     homeConfigurations = configurations.mkHomeConfigs {
