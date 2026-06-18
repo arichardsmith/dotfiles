@@ -18,9 +18,5 @@
       ''
     ];
 
-    programs.starship.settings.format =
-      "[╭─ ](overlay0)$username$hostname $env_var$line_break"
-      + "[├╌ ](overlay0)$directory$\{custom.jj\}$line_break"
-      + "[$character ](overlay0)";
   };
 }

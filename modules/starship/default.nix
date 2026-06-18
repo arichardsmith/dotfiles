@@ -7,8 +7,8 @@
   cfg = config.programs.starship;
 
   defaultFormat =
-    "[╭─](overlay0) $username$hostname[/](overlay0)$directory$line_break"
-    + "[$character ](overlay0)";
+    "[▲ ](overlay0)$hostname$directory$env_var$\{custom.jj\}$line_break"
+    + "$shell$character";
 in {
   config = {
     programs.starship = {
@@ -56,9 +56,17 @@ in {
           truncate_to_repo = false;
         };
 
+        shell = {
+					disabled = false;
+          format = "[$indicator]($style)";
+          style = "subtext0";
+          nu_indicator = "n";
+          zsh_indicator = "z";
+        };
+
         character = {
-          success_symbol = "[\\$](bold green)";
-          error_symbol = "[✗](bold red)";
+          success_symbol = "[|>](green)";
+          error_symbol = "[!>](bold red)";
         };
 
         username = {
@@ -67,7 +75,7 @@ in {
         };
 
         hostname = {
-          format = "[$hostname]($style)";
+          format = "[$hostname ]($style)";
           style = "subtext0";
           ssh_only = false;
           aliases = {
