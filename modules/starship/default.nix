@@ -57,7 +57,7 @@ in {
         };
 
         shell = {
-					disabled = false;
+          disabled = false;
           format = "[$indicator]($style)";
           style = "subtext0";
           nu_indicator = "n";
