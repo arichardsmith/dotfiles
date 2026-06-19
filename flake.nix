@@ -38,7 +38,7 @@
     };
   in {
     homeConfigurations = configurations.mkHomeConfigs {
-      laptop = ./machines/laptop;
+      mba = ./machines/mba;
       mininas = ./machines/mininas;
     };
 

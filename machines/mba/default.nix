@@ -8,7 +8,7 @@
   };
 
   host = {
-    name = "laptop";
+    name = "mba";
   };
 
   homeModules = [
