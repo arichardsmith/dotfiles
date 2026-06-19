@@ -34,6 +34,13 @@
             insteadOf = "nas://";
           };
         };
+        ignores = [
+          ".DS_Store"
+          ".env"
+          ".env.*"
+          "!.env.example"
+          "!.env.sample"
+        ];
       };
 
       jujutsu.enable = true;
