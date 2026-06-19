@@ -3,7 +3,7 @@ rebuild machine:
 
 push_it:
   jj git push --remote origin
-  jj git push --remote nas
+  jj git push --remote gh
 
 # Check for and apply version updates to pinned npm tools (oxfmt, claude-code, opencode).
 update_js:
