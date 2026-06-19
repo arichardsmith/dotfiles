@@ -21,6 +21,7 @@
     ./helix
     ./jujutsu
     ./neovim
+    ./nushull
     ./ops_scripts
     ./sanoid
     ./shell
