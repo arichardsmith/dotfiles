@@ -7,8 +7,8 @@
   cfg = config.programs.starship;
 
   defaultFormat =
-    "[▲ ](overlay0)$hostname$directory$env_var$\{custom.jj\}$line_break"
-    + "$shell$character";
+    "$character$hostname$directory$env_var$\{custom.jj\}$line_break"
+    + "$shell[\\$](subtext0) ";
 in {
   config = {
     programs.starship = {
@@ -65,8 +65,8 @@ in {
         };
 
         character = {
-          success_symbol = "[|>](green)";
-          error_symbol = "[!>](bold red)";
+          success_symbol = "[▲](green)";
+          error_symbol = "[▲](bold red)";
         };
 
         username = {
