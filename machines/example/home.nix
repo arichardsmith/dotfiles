@@ -3,7 +3,6 @@
     # This file is the Home Manager portion of the integrated NixOS config.
     # It is applied by `nixos-rebuild`, not by a separate `home-manager switch`.
     home.sessionVariables = {
-      DOTFILE_MACHINE = "example";
       EDITOR = "hx";
     };
 

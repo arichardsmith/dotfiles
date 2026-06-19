@@ -3,7 +3,6 @@
     home.sessionPath = [];
 
     home.sessionVariables = {
-      DOTFILE_MACHINE = "mininas";
       EDITOR = "nvim";
     };
 

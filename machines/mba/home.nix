@@ -3,7 +3,6 @@
     home.sessionPath = ["$HOME/.local/bin"];
 
     home.sessionVariables = {
-      DOTFILE_MACHINE = "mba";
       EDITOR = "nvim";
       EDITOR_UI = "zed"; # Preferred IDE / UI based editor
     };
