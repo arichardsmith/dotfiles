@@ -10,7 +10,7 @@ window-padding-y = 6
 font-size = 14
 font-family = Maple Mono NF
 
-background = 24273a
+# background = 24273a
 foreground = cad3f5
 theme = catppuccin-mocha
 

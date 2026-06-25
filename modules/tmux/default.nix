@@ -107,6 +107,7 @@
           set -g status-left-style "fg=#{E:@thm_bg},bg=#{E:@thm_lavender}"
           set -g status-right-style "fg=#{E:@thm_bg},bg=#{E:@thm_lavender}"
           set -g status-left "#{?client_prefix,#[fg=#{E:@thm_bg}#,bg=#{E:@thm_mauve}],#[fg=#{E:@thm_mauve}#,bg=#{E:@thm_bg}]} #S "
+      set -g @catppuccin_flavor "mocha"
     '';
   };
 }

@@ -110,8 +110,8 @@ vim.keymap.set("v", "<", "<gv")
 -- Colorscheme
 -- ============================================================
 
-require("catppuccin").setup({flavour = "macchiato"})
-vim.cmd.colorscheme("catppuccin-macchiato")
+require("catppuccin").setup({flavour = "mocha"})
+vim.cmd.colorscheme("catppuccin-mocha")
 -- Link the statusline highlight groups to Normal so the bar blends into the
 -- background rather than rendering with a distinct bar color.
 vim.api.nvim_set_hl(0, "StatusLine", {link = "Normal"})
