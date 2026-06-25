@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   programs.tmux = {
     baseIndex = 1;
     clock24 = true;
@@ -9,7 +13,10 @@
     secureSocket = false;
 
     terminal = "tmux-256color";
-    shell = "${pkgs.zsh}/bin/zsh"; # Without this, it uses the wrong zsh
+    shell =
+      if config.programs.nushell.enable
+      then "${pkgs.nushell}/bin/nu"
+      else "${pkgs.zsh}/bin/zsh"; # Without this, it uses the wrong zsh
 
     plugins = with pkgs.tmuxPlugins; [
       sensible
