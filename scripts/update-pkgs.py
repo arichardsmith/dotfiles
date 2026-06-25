@@ -8,10 +8,23 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-TOOL_FILES = {
-    "oxfmt": "pkgs/oxfmt.nix",
-    "claude-code": "pkgs/claude-code.nix",
-    "opencode": "pkgs/opencode.nix",
+TOOLS = {
+    "oxfmt": {
+        "source": "npm:oxfmt",
+        "pkg": "pkgs/oxfmt.nix",
+    },
+    "claude-code": {
+        "source": "npm:@anthropic-ai/claude-code",
+        "pkg": "pkgs/claude-code.nix",
+    },
+    "opencode": {
+        "source": "npm:opencode-ai",
+        "pkg": "pkgs/opencode.nix",
+    },
+    "nub": {
+        "source": "github:nubjs/nub",
+        "pkg": "pkgs/nub.nix",
+    },
 }
 
 
@@ -37,6 +50,17 @@ def get_npm_latest(name):
         return None
 
 
+def get_github_latest(repo):
+    try:
+        resp = urllib.request.urlopen(
+            f"https://api.github.com/repos/{repo}/releases/latest", timeout=30
+        )
+        tag = json.loads(resp.read()).get("tag_name", "")
+        return tag.removeprefix("v") if tag else None
+    except (urllib.error.URLError, json.JSONDecodeError):
+        return None
+
+
 def prefetch_hash(url):
     result = run(
         [
@@ -57,6 +81,18 @@ def prefetch_hash(url):
         return json.loads(result.stdout).get("hash")
     except json.JSONDecodeError:
         return None
+
+
+def get_latest(source):
+    prefix, _, value = source.partition(":")
+    match prefix:
+        case "npm":
+            return get_npm_latest(value)
+        case "github":
+            return get_github_latest(value)
+        case _:
+            print(f"  Unknown source type: {prefix}", file=sys.stderr)
+            sys.exit(1)
 
 
 def update_nix_file(filepath, main_updates, dep_updates):
@@ -95,12 +131,12 @@ def update_nix_file(filepath, main_updates, dep_updates):
     return changed
 
 
-def yesno(prompt):
+def yeahnah(prompt):
     while True:
         response = input(f"{prompt} [y/N] ").strip().lower()
-        if response in ("y", "yes"):
+        if response in ("y", "yeah"):
             return True
-        if response in ("n", "no", ""):
+        if response in ("n", "nah", ""):
             return False
         print("Please answer y or n.")
 
@@ -110,25 +146,27 @@ def main():
     updates_by_file = {}
 
     for tool_key, tool_data in meta.items():
-        filepath = TOOL_FILES.get(tool_key)
-        if not filepath:
+        tool_config = TOOLS.get(tool_key)
+        if not tool_config:
             print(f"  Unknown tool key: {tool_key}, skipping")
             continue
 
+        filepath = tool_config["pkg"]
+        source = tool_config["source"]
         name = tool_data["name"]
         version = tool_data["version"]
         tarballs = tool_data.get("tarballs", {})
         deps = tool_data.get("deps", {})
 
         print(f"\n\033[1m{name}\033[0m ({tool_key})")
-        latest = get_npm_latest(name)
+        latest = get_latest(source)
         if latest is None:
-            print("  \u2716 Could not check npm")
+            print(f"  \u2716 Could not check {source}")
             continue
 
         if version != latest:
             print(f"  {version} \u2192 {latest}")
-            if yesno(f"  Update to {latest}?"):
+            if yeahnah(f"  Update to {latest}?"):
                 hash_pairs = []
                 for tarball_key, tarball in tarballs.items():
                     old_url = tarball["url"]
@@ -161,7 +199,7 @@ def main():
 
             if dep_version != dep_latest:
                 print(f"    {dep_version} \u2192 {dep_latest}")
-                if not yesno(f"    Update to {dep_latest}?"):
+                if not yeahnah(f"    Update to {dep_latest}?"):
                     continue
 
                 hash_pairs = []
@@ -211,3 +249,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

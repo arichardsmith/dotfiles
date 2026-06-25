@@ -5,9 +5,9 @@ push_it:
   jj git push --remote origin
   jj git push --remote gh
 
-# Check for and apply version updates to pinned npm tools (oxfmt, claude-code, opencode).
-update_js:
-  uv run scripts/update-js-tools.py
+# Check for and apply version updates to pinned pkgs (npm and GitHub).
+update_pkgs:
+  uv run scripts/update-pkgs.py
 
 # Symlink shared AI config files and skills into Claude and agent paths.
 link_ai:
