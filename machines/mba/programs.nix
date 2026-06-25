@@ -162,6 +162,9 @@
       maple-mono.truetype
       maple-mono.NF-unhinted
 
+      # Tools to test before incorporating into my.devtools.js
+      nub
+
       # Custom scripts
       (helpers.scriptToPackage {
         name = "unlock-drive";
