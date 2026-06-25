@@ -14,6 +14,7 @@ in {
         bun
         typescript-language-server
         oxfmt
+        viteplus
         (helpers.scriptToPackage {
           name = "ijs";
           file = ../../scripts/ijs.sh;

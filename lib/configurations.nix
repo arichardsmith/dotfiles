@@ -12,7 +12,7 @@
       inherit system;
       overlays = [
         (final: prev: {
-          inherit (js-pkgs.packages.${system}) oxfmt claude-code opencode nub;
+          inherit (js-pkgs.packages.${system}) oxfmt claude-code opencode nub viteplus;
           starship-jj = starship-jj.packages.${system}.default;
           snitch = snitch.packages.${system}.default;
         })
