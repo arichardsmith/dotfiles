@@ -11,7 +11,6 @@ in {
   config = lib.mkIf enabled (lib.mkMerge [
     {
       home.packages = with pkgs; [
-        bun
         typescript-language-server
         oxfmt
         viteplus
@@ -24,8 +23,6 @@ in {
           file = ../../scripts/pkq.sh;
         })
       ];
-
-      home.sessionPath = ["$HOME/.bun/bin"];
     }
 
     (lib.mkIf config.programs.helix.enable {

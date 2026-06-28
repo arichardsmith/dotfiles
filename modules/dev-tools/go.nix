@@ -9,7 +9,7 @@
 in {
   config = lib.mkIf enabled (lib.mkMerge [
     {
-      home.packages = with pkgs; [go gopls golangci-lint air];
+      home.packages = with pkgs; [gopls golangci-lint air];
     }
 
     (lib.mkIf config.programs.helix.enable {

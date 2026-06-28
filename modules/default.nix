@@ -20,6 +20,7 @@
     ./dev-tools
     ./helix
     ./jujutsu
+    ./mise
     ./neovim
     ./nushull
     ./ops_scripts

@@ -9,14 +9,7 @@
 in {
   config = lib.mkIf enabled (lib.mkMerge [
     {
-      home.packages = with pkgs; [rustup bacon];
-
-      home.sessionVariables = {
-        RUSTUP_HOME = "$HOME/.rustup";
-        CARGO_HOME = "$HOME/.cargo";
-      };
-
-      home.sessionPath = ["$HOME/.cargo/bin"];
+      home.packages = with pkgs; [bacon];
     }
 
     (lib.mkIf config.programs.helix.enable {

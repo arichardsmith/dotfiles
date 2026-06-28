@@ -9,7 +9,7 @@
 in {
   config = lib.mkIf enabled (lib.mkMerge [
     {
-      home.packages = with pkgs; [uv ruff basedpyright];
+      home.packages = with pkgs; [ruff basedpyright];
     }
 
     (lib.mkIf config.programs.helix.enable {

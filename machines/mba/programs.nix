@@ -83,6 +83,16 @@
           build.model = "openrouter/deepseek/deepseek-v4-flash";
         };
       };
+
+      mise = {
+        enable = true;
+        settings.tools = {
+          node = "26";
+          uv = "latest";
+          go = "latest";
+          rust = "latest";
+        };
+      };
     };
 
     my.devtools = {
@@ -153,7 +163,6 @@
       ncdu # Disk usage analyzer
 
       curlie
-      mise
 
       cyme # List system USB buses and devices. A modern cross-platform lsusb
       ffmpeg
