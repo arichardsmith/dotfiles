@@ -5,57 +5,13 @@
   pkgs,
   ...
 }: let
-  cfg = config.my.devtools;
+  cfg = config.my.languages;
   enabled = cfg.js.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
-    {
-      home.packages = with pkgs; [
-        typescript-language-server
-        oxfmt
-        viteplus
-        (helpers.scriptToPackage {
-          name = "ijs";
-          file = ../../scripts/ijs.sh;
-        })
-        (helpers.scriptToPackage {
-          name = "pkq";
-          file = ../../scripts/pkq.sh;
-        })
-      ];
-    }
-
-    (lib.mkIf config.programs.helix.enable {
-      programs.helix.languages = {
-        language-server.typescript-language-server = {
-          command = lib.getExe pkgs.typescript-language-server;
-          args = ["--stdio"];
-        };
-        language = [
-          {
-            name = "javascript";
-            language-servers = ["typescript-language-server"];
-          }
-          {
-            name = "typescript";
-            language-servers = ["typescript-language-server"];
-          }
-          {
-            name = "jsx";
-            language-servers = ["typescript-language-server"];
-          }
-          {
-            name = "tsx";
-            language-servers = ["typescript-language-server"];
-          }
-        ];
-      };
-    })
-
     (lib.mkIf config.programs.neovim.enable {
-      # Conform prefers the project-local node_modules/.bin/oxfmt, but that bin
-      # still uses /usr/bin/env node; force the Nix-wrapped binary so Neovim
-      # does not need Node on PATH, while still resolving repo-local config.
+      programs.neovim.extraPackages = with pkgs; [typescript-language-server oxfmt];
+
       programs.neovim.conform.formatters.oxfmt = {
         "inherit" = true;
         command = lib.getExe' pkgs.oxfmt "oxfmt";

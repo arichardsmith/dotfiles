@@ -4,27 +4,13 @@
   pkgs,
   ...
 }: let
-  cfg = config.my.devtools;
+  cfg = config.my.languages;
   enabled = cfg.rust.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
-    {
-      home.packages = with pkgs; [bacon];
-    }
-
-    (lib.mkIf config.programs.helix.enable {
-      programs.helix.languages = {
-        language-server.rust-analyzer.command = lib.getExe pkgs.rust-analyzer;
-        language = [
-          {
-            name = "rust";
-            language-servers = ["rust-analyzer"];
-          }
-        ];
-      };
-    })
-
     (lib.mkIf config.programs.neovim.enable {
+      programs.neovim.extraPackages = with pkgs; [rust-analyzer];
+
       programs.neovim.initLua = ''
         vim.lsp.config("rust_analyzer", {
           cmd = { "${lib.getExe pkgs.rust-analyzer}" },

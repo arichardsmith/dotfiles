@@ -4,28 +4,13 @@
   pkgs,
   ...
 }: let
-  cfg = config.my.devtools;
+  cfg = config.my.languages;
   enabled = cfg.lua.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
-    {
-      home.packages = with pkgs; [lua-language-server stylua];
-    }
-
-    (lib.mkIf config.programs.helix.enable {
-      programs.helix.languages = {
-        language-server.lua-language-server.command = lib.getExe pkgs.lua-language-server;
-        language = [
-          {
-            name = "lua";
-            formatter.command = lib.getExe pkgs.stylua;
-            language-servers = ["lua-language-server"];
-          }
-        ];
-      };
-    })
-
     (lib.mkIf config.programs.neovim.enable {
+      programs.neovim.extraPackages = with pkgs; [lua-language-server stylua];
+
       programs.neovim.conform = {
         formatters_by_ft.lua = ["stylua"];
       };

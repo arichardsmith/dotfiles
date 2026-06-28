@@ -17,9 +17,9 @@
     ./ghostty
     ./ghostty/terminfo.nix
     ./git
-    ./dev-tools
     ./helix
     ./jujutsu
+    ./languages
     ./mise
     ./neovim
     ./nushull

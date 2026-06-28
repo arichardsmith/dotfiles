@@ -21,7 +21,7 @@
       };
     };
 
-    my.devtools = {
+    my.languages = {
       python.enable = true;
       markdown.enable = true;
       just.enable = true;

@@ -4,28 +4,13 @@
   pkgs,
   ...
 }: let
-  cfg = config.my.devtools;
+  cfg = config.my.languages;
   enabled = cfg.yaml.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
-    {
-      home.packages = with pkgs; [yaml-language-server yamlfmt];
-    }
-
-    (lib.mkIf config.programs.helix.enable {
-      programs.helix.languages = {
-        language-server.yaml-language-server.command = lib.getExe pkgs.yaml-language-server;
-        language = [
-          {
-            name = "yaml";
-            language-servers = ["yaml-language-server"];
-            formatter.command = lib.getExe pkgs.yamlfmt;
-          }
-        ];
-      };
-    })
-
     (lib.mkIf config.programs.neovim.enable {
+      programs.neovim.extraPackages = with pkgs; [yaml-language-server yamlfmt];
+
       programs.neovim.conform = {
         formatters_by_ft.yaml = ["yamlfmt"];
       };

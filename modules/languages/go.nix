@@ -4,35 +4,13 @@
   pkgs,
   ...
 }: let
-  cfg = config.my.devtools;
+  cfg = config.my.languages;
   enabled = cfg.go.enable;
 in {
   config = lib.mkIf enabled (lib.mkMerge [
-    {
-      home.packages = with pkgs; [gopls golangci-lint air];
-    }
-
-    (lib.mkIf config.programs.helix.enable {
-      programs.helix.languages = {
-        language-server.gopls = {
-          command = lib.getExe pkgs.gopls;
-          config = {
-            "ui.diagnostic.staticcheck" = true;
-          };
-        };
-        language = [
-          {
-            name = "go";
-            formatter = {
-              command = lib.getExe' pkgs.go "gofmt";
-            };
-            language-servers = ["gopls"];
-          }
-        ];
-      };
-    })
-
     (lib.mkIf config.programs.neovim.enable {
+      programs.neovim.extraPackages = with pkgs; [gopls];
+
       programs.neovim.conform = {
         formatters_by_ft.go = ["gofmt"];
       };

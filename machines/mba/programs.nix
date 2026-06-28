@@ -95,7 +95,7 @@
       };
     };
 
-    my.devtools = {
+    my.languages = {
       python.enable = true;
       markdown.enable = true;
       just.enable = true;
@@ -171,7 +171,7 @@
       maple-mono.truetype
       maple-mono.NF-unhinted
 
-      # Tools to test before incorporating into my.devtools.js
+      # Tools to test before incorporating into my.languages.js
       nub
 
       # Custom scripts
@@ -183,6 +183,11 @@
       (helpers.scriptToPackage {
         name = "unlock-ssh";
         file = ./scripts/unlock-ssh.sh;
+      })
+
+      (helpers.scriptToPackage {
+        name = "pkq";
+        file = ../../scripts/pkq.sh;
       })
 
       (helpers.scriptToPackage {
