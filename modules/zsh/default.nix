@@ -6,6 +6,7 @@
   # Combine all functions from shell-agnostic and zsh-specific sources
   additionalFunctions = lib.concatStringsSep "\n\n" (config.shell.functions ++ config.zsh.functions);
   initContent = lib.concatStringsSep "\n\n" (config.shell.initContent ++ config.zsh.initContent);
+  cfg = config.programs.zsh;
 in {
   options.zsh = {
     functions = lib.mkOption {
@@ -21,7 +22,7 @@ in {
   };
 
   config = {
-    programs.zsh = {
+    programs.zsh = lib.mkIf cfg.enable {
       # Core configuration for all systems
       enableCompletion = true;
       autosuggestion.enable = true;
@@ -39,5 +40,7 @@ in {
         ${additionalFunctions}
       '';
     };
+
+    programs.carapace.enableZshIntegration = true;
   };
 }

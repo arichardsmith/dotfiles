@@ -19,6 +19,7 @@
       rclone.enable = true;
       rbw.enable = true;
       broot.enable = true; # A nicer tree view
+      carapace.enable = true; # Completions
 
       neovim.enable = true;
 
