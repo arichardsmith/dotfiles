@@ -108,6 +108,7 @@
       rust.enable = true;
       go.enable = true;
       css.enable = true;
+      svelte.enable = true;
     };
 
     my.ai = {

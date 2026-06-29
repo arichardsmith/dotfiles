@@ -12,6 +12,7 @@
     ./go.nix
     ./lua.nix
     ./css.nix
+    ./svelte.nix
   ];
 
   options.my.languages = {
@@ -27,5 +28,6 @@
     go.enable = lib.mkEnableOption "go language tooling";
     lua.enable = lib.mkEnableOption "lua language tooling";
     css.enable = lib.mkEnableOption "css language tooling";
+    svelte.enable = lib.mkEnableOption "svelte language tooling";
   };
 }
