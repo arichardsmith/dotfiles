@@ -131,6 +131,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    home.packages = [
+      (pkgs.writeShellScriptBin "nvim-init" (builtins.readFile ./scripts/nvim-init.sh))
+    ];
+
     programs.neovim = {
       plugins = with pkgs.vimPlugins; [
         catppuccin-nvim
