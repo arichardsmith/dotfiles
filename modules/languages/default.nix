@@ -11,6 +11,7 @@
     ./rust.nix
     ./go.nix
     ./lua.nix
+    ./css.nix
   ];
 
   options.my.languages = {
@@ -25,5 +26,6 @@
     rust.enable = lib.mkEnableOption "rust language tooling";
     go.enable = lib.mkEnableOption "go language tooling";
     lua.enable = lib.mkEnableOption "lua language tooling";
+    css.enable = lib.mkEnableOption "css language tooling";
   };
 }

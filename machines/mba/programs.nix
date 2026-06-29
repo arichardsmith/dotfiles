@@ -107,6 +107,7 @@
       nix.enable = true;
       rust.enable = true;
       go.enable = true;
+      css.enable = true;
     };
 
     my.ai = {
