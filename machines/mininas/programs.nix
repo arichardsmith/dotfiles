@@ -77,6 +77,7 @@
       mtr # Trace route
 
       # Utility Apps
+      uv # Python package/script runner
       fd # Better find
       sd # Better sed
       just # Better make
