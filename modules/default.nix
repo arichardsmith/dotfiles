@@ -21,7 +21,7 @@
     ./languages
     ./mise
     ./neovim
-    ./nushull
+    ./nushell
     ./ops_scripts
     ./sanoid
     ./shell
