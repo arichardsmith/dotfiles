@@ -19,5 +19,9 @@ helpers.mkProgram {inherit config pkgs;} "docker" {
     ...
   }: {
     home.packages = [pkgs.docker] ++ lib.optional cfg.settings.compose pkgs.docker-compose;
+
+    my.shell.aliases = lib.mkIf cfg.settings.compose {
+      "dc" = "docker compose";
+    };
   };
 }
