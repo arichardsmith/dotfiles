@@ -58,5 +58,15 @@ link_ai:
     done
   done
 
+# Check that derivations evaluate for both machines.
+[parallel]
+check: check_mba check_mininas
+
+check_mba:
+	nix eval 'path:.#homeConfigurations.mba.activationPackage.drvPath'
+
+check_mininas:
+	nix eval 'path:.#homeConfigurations.mininas.activationPackage.drvPath'
+
 fmt:
 	alejandra .
