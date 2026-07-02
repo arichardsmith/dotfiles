@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  helpers,
   ...
 }: let
   cfg = config.programs.neovim;
@@ -132,7 +133,11 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = [
-      (pkgs.writeShellScriptBin "nvim-init" (builtins.readFile ./scripts/nvim-init.sh))
+      (helpers.uvScriptToPackage {
+        name = "nvim-init";
+        file = ./scripts/nvim-init.py;
+        runtimeInputs = [pkgs.git];
+      })
     ];
 
     programs.neovim = {

@@ -258,16 +258,6 @@ vim.api.nvim_create_autocmd("ModeChanged", {command = "redrawstatus"})
 -- gets richer information (e.g. snippet support, resolve capabilities).
 vim.lsp.config("*", {capabilities = require("blink.cmp").get_lsp_capabilities()})
 
--- Format on save when the global flag is enabled. Off by default; toggle with
--- `:lua vim.g.format_on_save = true` or a project-local .nvim.lua.
-vim.api.nvim_create_autocmd("BufWritePre", {
-  callback = function(args)
-    if vim.g.format_on_save then
-      require("conform").format({bufnr = args.buf, lsp_format = "fallback"})
-    end
-  end,
-})
-
 -- ============================================================
 -- User commands
 -- ============================================================
