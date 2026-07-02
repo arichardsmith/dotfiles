@@ -13,7 +13,7 @@
   };
 
   allowedSshKeys = [
-    ../laptop/ssh_key.pub
+    ../mba/ssh_key.pub
     ../ipad/ssh_key.pub
   ];
 

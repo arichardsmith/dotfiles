@@ -30,7 +30,7 @@ Use `jj`, not Git, for version-control mutations. Do not run `git add`, `git com
 Use `path:.` when evaluating flakes from the working tree, especially after adding new files:
 
 ```bash
-nix eval 'path:.#homeConfigurations.laptop.activationPackage.drvPath'
+nix eval 'path:.#homeConfigurations.mba.activationPackage.drvPath'
 nix eval 'path:.#homeConfigurations.mininas.activationPackage.drvPath'
 nix eval 'path:.#nixosConfigurations.example.config.system.build.toplevel.drvPath'
 ```

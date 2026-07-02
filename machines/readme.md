@@ -70,7 +70,7 @@ Machines are registered in `flake.nix` by path:
 
 ```nix
 homeConfigurations = configurations.mkHomeConfigs {
-  laptop = ./machines/laptop;
+  mba = ./machines/mba;
   mininas = ./machines/mininas;
 };
 

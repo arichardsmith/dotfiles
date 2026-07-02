@@ -57,7 +57,7 @@ programs.starship.settings.format = "...";
 ├── flake.nix           # Flake definition
 ├── home.nix            # Core user/host options
 ├── machines/           # Machine-specific configs
-│   └── laptop/
+│   └── mba/
 │       ├── default.nix    # User info & base settings
 │       └── programs.nix   # Enabled packs & programs
 ── modules/            # Individual program modules
