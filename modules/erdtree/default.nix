@@ -47,21 +47,5 @@ helpers.mkProgram {inherit config pkgs;} "erdtree" {
     home.file = {
       ".config/erdtree/.erdtree.toml".source = tomlFormat.generate "erdtree.toml" cfg.settings.config;
     };
-
-    # Add shell aliases and functions
-    shell.aliases =
-      lib.optionalAttrs cfg.settings.overrideLs
-      {
-        lsa = "erd --config ls --hidden --no-ignore";
-        lt = "erd --config ls --level 2";
-        lta = "erd --config ls --level 2 --hidden --no-ignore";
-        ls = "erd --config ls";
-        ols = "/bin/ls"; # Add an alias for normal ls incase we need it
-      };
-
-    # Add erdtree skill to ai-agent when erdtree is enabled
-    my.ai.skills = {
-      erdtree = ./erdtree-skill;
-    };
   };
 }

@@ -70,52 +70,84 @@ in {
       pkgs.jjui
     ];
 
-    # Add shell aliases and functions
-    shell.aliases = {
+    # Add shell aliases and commands
+    my.shell.aliases = {
       jjs = "jj split";
       jja = "jj squash"; # Append current revision into previous
       jjl = "jj log -r 'main@origin:: | bookmarks() ~ ::trunk()' --no-pager";
       jjc = "jj commit";
     };
 
-    shell.functions = [
-      ''
-        # A "smart" jj new that only creates a new revision if the current one isn't empty or already described.
-        jjn() {
-          # Check if there are file changes. An empty output means no changes.
-          local has_changes
-          has_changes=$(jj diff --summary)
+    my.shell.commands = {
+      jjn = {
+        zsh = ''
+          # A "smart" jj new that only creates a new revision if the current one isn't empty or already described.
+          jjn() {
+            # Check if there are file changes. An empty output means no changes.
+            local has_changes
+            has_changes=$(jj diff --summary)
 
-          # Check if the current commit has a description, making sure to disable graph output.
-          local has_description
-          has_description=$(jj log -r @ -T description --no-graph)
+            # Check if the current commit has a description, making sure to disable graph output.
+            local has_description
+            has_description=$(jj log -r @ -T description --no-graph)
 
-          # If there are no file changes AND no description, reuse the current revision.
-          # Otherwise, create a new one.
-          if [[ -z "$has_changes" && -z "$has_description" ]]; then
-            # Show status if we are reusing current revision
-            jj status --no-pager
-          else
-            # Pass all arguments (like -m "message") to the real `jj new` command.
-            jj new "$@"
-          fi
-        }
-      ''
-      ''
-        # Allow passing a message to jj describe without using the `-m` flag because I'm lazy...
-        jjd() {
-            if [[ $# -eq 0 ]]; then
-                jj describe
-            elif [[ $1 == -* ]]; then
-                # First arg is a flag → just forward everything
-                jj describe "$@"
+            # If there are no file changes AND no description, reuse the current revision.
+            # Otherwise, create a new one.
+            if [[ -z "$has_changes" && -z "$has_description" ]]; then
+              # Show status if we are reusing current revision
+              jj status --no-pager
             else
-                # First arg is not a flag → treat as message
-                jj describe -m "$1" "''${@:2}"
+              # Pass all arguments (like -m "message") to the real `jj new` command.
+              jj new "$@"
             fi
-        }
-      ''
-    ];
+          }
+        '';
+
+        nushell = ''
+          # A "smart" jj new that only creates a new revision if the current one isn't empty or already described.
+          def jjn [...args] {
+            let has_changes = (jj diff --summary | is-empty)
+            let has_description = (jj log -r @ -T description --no-graph | str trim | is-empty)
+
+            if ($has_changes and $has_description) {
+              jj status --no-pager
+            } else {
+              jj new ...$args
+            }
+          }
+        '';
+      };
+
+      jjd = {
+        zsh = ''
+          # Allow passing a message to jj describe without using the `-m` flag because I'm lazy...
+          jjd() {
+              if [[ $# -eq 0 ]]; then
+                  jj describe
+              elif [[ $1 == -* ]]; then
+                  # First arg is a flag → just forward everything
+                  jj describe "$@"
+              else
+                  # First arg is not a flag → treat as message
+                  jj describe -m "$1" "''${@:2}"
+              fi
+          }
+        '';
+
+        nushell = ''
+          # Allow passing a message to jj describe without using the `-m` flag because I'm lazy...
+          def jjd [...args] {
+            if ($args | is-empty) {
+              jj describe
+            } else if ($args.0 | str starts-with "-") {
+              jj describe ...$args
+            } else {
+              jj describe -m $args.0 ...($args | skip 1)
+            }
+          }
+        '';
+      };
+    };
 
     # Add jujutsu skill to ai-agent when jujutsu is enabled
     my.ai.skills = {

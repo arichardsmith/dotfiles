@@ -1,100 +1,93 @@
 {
-  helpers,
   lib,
   config,
   ...
 }: let
-  cfg = config.shell;
+  cfg = config.my.shell;
 
-  # Core aliases that should be available on all systems
-  coreAliases = {
-    ".." = "cd ..";
-    "..." = "cd ../..";
-    "...." = "cd ../../..";
+  commandType = lib.types.submodule {
+    options = {
+      zsh = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "Zsh implementation of the command (full function definition).";
+      };
+
+      nushell = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "Nushell implementation of the command (full `def` declaration).";
+      };
+    };
   };
-
-  # Core shell functions
-  coreFunctions = [
-    ''
-      mkcd () {
-      	\mkdir -p "$1"
-       	cd "$1"
-      }
-    ''
-    ''
-      tmpdir () {
-      	cd "$(mktemp -d)"
-      	chmod 0700 .
-      	if [[ $# -eq 1 ]]; then
-      		\mkdir -p "$1"
-      		cd "$1"
-      	fi
-      }
-    ''
-  ];
-
-  # Core scripts as packages
-  coreScripts = [
-    (helpers.scriptToPackage {
-      name = "copy";
-      file = ./scripts/copy.sh;
-    })
-    (helpers.scriptToPackage {
-      name = "now";
-      file = ./scripts/now.sh;
-    })
-    (helpers.scriptToPackage {
-      name = "pasta";
-      file = ./scripts/pasta.sh;
-    })
-    (helpers.scriptToPackage {
-      name = "plist";
-      file = ./scripts/plist.sh;
-    })
-    (helpers.scriptToPackage {
-      name = "today";
-      file = ./scripts/today.sh;
-    })
-  ];
 in {
-  imports = [
-    ./apps.nix
-  ];
-
-  options.shell = {
+  options.my.shell = {
     setupHelpers = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Setup core aliases, functions, and scripts";
+      description = "Setup core aliases and commands.";
     };
 
     aliases = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       default = {};
-      description = "Shell aliases (shell-agnostic)";
+      description = "Shell aliases (shell-agnostic).";
     };
 
-    functions = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [];
-      description = "Shell functions (shell-agnostic)";
-    };
-
-    initContent = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [];
-      description = "Shell initialization content (shell-agnostic)";
+    commands = lib.mkOption {
+      type = lib.types.attrsOf commandType;
+      default = {};
+      description = "Custom commands with per-shell implementations.";
     };
   };
 
   config = lib.mkIf cfg.setupHelpers {
-    # Add core aliases
-    shell.aliases = coreAliases;
+    my.shell.aliases = {
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+    };
 
-    # Add core functions
-    shell.functions = coreFunctions;
+    my.shell.commands = {
+      mkcd = {
+        zsh = ''
+          mkcd () {
+            \mkdir -p "$1"
+            cd "$1"
+          }
+        '';
 
-    # Add core scripts to PATH
-    home.packages = coreScripts;
+        nushell = ''
+          def --env mkcd [dir: path] {
+            mkdir $dir
+            cd $dir
+          }
+        '';
+      };
+
+      tmpdir = {
+        zsh = ''
+          tmpdir () {
+            cd "$(mktemp -d)"
+            chmod 0700 .
+            if [[ $# -eq 1 ]]; then
+              \mkdir -p "$1"
+              cd "$1"
+            fi
+          }
+        '';
+
+        nushell = ''
+          def --env tmpdir [...sub] {
+            cd (mktemp -d)
+            chmod 0700 .
+            if ($sub | is-not-empty) {
+              mkdir $sub.0
+              cd $sub.0
+            }
+          }
+        '';
+      };
+    };
   };
 }

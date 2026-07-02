@@ -9,12 +9,10 @@
 
     # Updating macos can clobber the nix additions to /etc/zshrc, so make sure they are added
     # to the user .zshrc
-    zsh.initContent = [
-      ''
-        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-            . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-        fi
-      ''
-    ];
+    programs.zsh.initContent = ''
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      fi
+    '';
   };
 }

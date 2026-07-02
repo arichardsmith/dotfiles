@@ -26,9 +26,9 @@ in {
     home.file.".config/mise/config.toml".source =
       tomlFormat.generate "mise-config" cfg.settings;
 
-    zsh.initContent = lib.mkIf config.programs.zsh.enable [
-      ''eval "$(${miseBin} activate zsh)"''
-    ];
+    programs.zsh.initContent = lib.mkIf config.programs.zsh.enable ''
+      eval "$(${miseBin} activate zsh)"
+    '';
 
     programs.nushell.extraConfig = lib.mkIf config.programs.nushell.enable
       (let activateScript = pkgs.runCommand "mise-activate.nu" {} ''

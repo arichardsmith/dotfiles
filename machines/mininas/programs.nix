@@ -99,6 +99,26 @@
         name = "edit";
         file = ../../scripts/edit.sh;
       })
+      (helpers.scriptToPackage {
+        name = "copy";
+        file = ../../scripts/copy.sh;
+      })
+      (helpers.scriptToPackage {
+        name = "pasta";
+        file = ../../scripts/pasta.sh;
+      })
+      (helpers.scriptToPackage {
+        name = "now";
+        file = ../../scripts/now.sh;
+      })
+      (helpers.scriptToPackage {
+        name = "today";
+        file = ../../scripts/today.sh;
+      })
+      (helpers.scriptToPackage {
+        name = "plist";
+        file = ../../scripts/plist.sh;
+      })
     ];
   };
 }

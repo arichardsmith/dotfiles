@@ -3,41 +3,31 @@
   config,
   ...
 }: let
-  # Combine all functions from shell-agnostic and zsh-specific sources
-  additionalFunctions = lib.concatStringsSep "\n\n" (config.shell.functions ++ config.zsh.functions);
-  initContent = lib.concatStringsSep "\n\n" (config.shell.initContent ++ config.zsh.initContent);
   cfg = config.programs.zsh;
-in {
-  options.zsh = {
-    functions = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [];
-      description = "ZSH-specific functions (prefer shell.functions for portability)";
-    };
-    initContent = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [];
-      description = "ZSH-specific initialization content";
-    };
-  };
 
+  shellCfg = config.my.shell;
+
+  commandBodies = lib.pipe shellCfg.commands [
+    (lib.filterAttrs (_name: cmd: cmd.zsh != null))
+    (lib.mapAttrsToList (_name: cmd: cmd.zsh))
+  ];
+
+  commandInit =
+    if commandBodies == []
+    then ""
+    else "\n\n" + (lib.concatStringsSep "\n\n" commandBodies);
+in {
   config = {
     programs.zsh = lib.mkIf cfg.enable {
-      # Core configuration for all systems
       enableCompletion = true;
       autosuggestion.enable = true;
 
-      # Include shell-agnostic aliases
-      shellAliases = config.shell.aliases;
+      shellAliases = shellCfg.aliases;
 
-      # Base initialization plus additional functions
       initContent = ''
         # Enable vim keybindings
         bindkey -v
-
-        ${initContent}
-
-        ${additionalFunctions}
+        ${commandInit}
       '';
     };
 
