@@ -85,6 +85,9 @@
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send -X copy-selection-and-cancel
 
+      # Popup
+      bind-key P display-popup -d "#{pane_current_path}" -w 80% -h 80%
+
       # Status bar
       set -g status-position top
       set -g status-left " #S "
