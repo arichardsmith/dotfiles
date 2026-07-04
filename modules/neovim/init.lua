@@ -134,7 +134,8 @@ require("which-key").setup({
 })
 
 -- nvim-autopairs: automatically inserts the closing bracket/quote/etc.
-require("nvim-autopairs").setup({})
+require("nvim-autopairs").setup({
+})
 
 -- trouble.nvim: pretty list for diagnostics, references, quickfix, etc.
 require("trouble").setup({})
@@ -144,15 +145,24 @@ require("trouble").setup({})
 -- falling back to the Lua implementation with a one-time console warning.
 require("blink.cmp").setup({
   keymap = {
-		preset = "default",
-		["<Tab>"] = { "accept", "fallback" }
-	},
+    preset = "default",
+    ["<CR>"] = { "accept", "fallback" },
+    ["<Tab>"] = { "accept", "fallback" },
+    ["<C-j>"] = { "select_next", "fallback" },
+    ["<C-k>"] = { "select_prev", "fallback" },
+    ["<S-Tab>"] = { "select_prev", "fallback" },
+  },
   sources = {
     default = {"lsp", "path", "snippets", "buffer"},
   },
   fuzzy = {implementation = "prefer_rust_with_warning"},
   signature = {enabled = true},
   cmdline = {
+    enabled = true,
+    keymap = {
+      preset = "inherit",
+      ["<CR>"] = { "fallback" },
+    },
     completion = {menu = {auto_show = true}},
   },
 })
