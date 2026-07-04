@@ -79,6 +79,9 @@ map("n", "<leader>n", "<C-i>", {desc = "Jump forward"})
 map("n", "<leader>N", "<C-o>", {desc = "Jump backward"})
 map("n", "<leader>m", "<C-o>", {desc = "Jump backward"})
 
+-- Go to
+map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+
 map("n", "\\d", function()
   local file = vim.api.nvim_buf_get_name(0)
   if file ~= "" then
