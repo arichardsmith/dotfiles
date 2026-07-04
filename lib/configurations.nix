@@ -4,6 +4,7 @@
   home-manager,
   starship-jj,
   snitch,
+  mise,
 }: let
   lib = nixpkgs.lib;
 
@@ -15,6 +16,7 @@
           inherit (js-pkgs.packages.${system}) oxfmt claude-code opencode nub viteplus;
           starship-jj = starship-jj.packages.${system}.default;
           snitch = snitch.packages.${system}.default;
+          mise = mise.packages.${system}.default;
         })
       ];
     };

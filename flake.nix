@@ -23,6 +23,11 @@
       url = "github:karol-broda/snitch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    mise = {
+      url = "github:jdx/mise";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -31,10 +36,11 @@
     home-manager,
     starship-jj,
     snitch,
+    mise,
     ...
   }: let
     configurations = import ./lib/configurations.nix {
-      inherit nixpkgs js-pkgs home-manager starship-jj snitch;
+      inherit nixpkgs js-pkgs home-manager starship-jj snitch mise;
     };
   in {
     homeConfigurations = configurations.mkHomeConfigs {
