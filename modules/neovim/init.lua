@@ -137,6 +137,9 @@ require("which-key").setup({
 require("nvim-autopairs").setup({
 })
 
+-- nvim-ts-autotag: auto-close & auto-rename paired HTML/Svelte/JSX tags via Treesitter
+require("nvim-ts-autotag").setup({})
+
 -- trouble.nvim: pretty list for diagnostics, references, quickfix, etc.
 require("trouble").setup({})
 

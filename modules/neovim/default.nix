@@ -157,6 +157,7 @@ in {
         nvim-autopairs
         trouble-nvim
         nvim-treesitter.withAllGrammars
+        nvim-ts-autotag
       ];
 
       extraPackages = with pkgs; [
