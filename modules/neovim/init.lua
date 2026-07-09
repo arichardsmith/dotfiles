@@ -274,6 +274,19 @@ vim.api.nvim_create_autocmd("ModeChanged", {command = "redrawstatus"})
 -- gets richer information (e.g. snippet support, resolve capabilities).
 vim.lsp.config("*", {capabilities = require("blink.cmp").get_lsp_capabilities()})
 
+-- Enable an LSP server only when its command is available on $PATH.
+-- This mirrors Helix's behaviour: the editor discovers servers from $PATH
+-- rather than being coupled to their installation. When a project installs a
+-- language server via mise it becomes available automatically without any
+-- per-project Neovim configuration.
+function _G.lsp_enable(name, cmd)
+  cmd = cmd or { name }
+  if vim.fn.executable(cmd[1]) == 1 then
+    vim.lsp.config(name, { cmd = cmd })
+    vim.lsp.enable(name)
+  end
+end
+
 -- ============================================================
 -- User commands
 -- ============================================================

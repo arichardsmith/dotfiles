@@ -20,10 +20,7 @@ in {
       };
 
       programs.neovim.initLua = ''
-        vim.lsp.config("jsonls", {
-          cmd = { "${lib.getExe' pkgs.vscode-langservers-extracted "vscode-json-language-server"}", "--stdio" },
-        })
-        vim.lsp.enable("jsonls")
+        lsp_enable("jsonls", { "vscode-json-language-server", "--stdio" })
       '';
     })
   ]);

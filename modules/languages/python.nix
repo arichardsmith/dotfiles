@@ -16,14 +16,8 @@ in {
       };
 
       programs.neovim.initLua = ''
-        vim.lsp.config("basedpyright", {
-          cmd = { "${lib.getExe pkgs.basedpyright}", "-" },
-        })
-        vim.lsp.config("ruff", {
-          cmd = { "${lib.getExe pkgs.ruff}", "server" },
-        })
-        vim.lsp.enable("basedpyright")
-        vim.lsp.enable("ruff")
+        lsp_enable("basedpyright", { "basedpyright", "-" })
+        lsp_enable("ruff", { "ruff", "server" })
       '';
     })
 

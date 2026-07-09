@@ -13,10 +13,9 @@ in {
 
       programs.neovim.initLua = ''
         vim.lsp.config("rust_analyzer", {
-          cmd = { "${lib.getExe pkgs.rust-analyzer}" },
           settings = { ["rust-analyzer"] = { check = { command = "clippy" } } },
         })
-        vim.lsp.enable("rust_analyzer")
+        lsp_enable("rust_analyzer", { "rust-analyzer" })
       '';
     })
 

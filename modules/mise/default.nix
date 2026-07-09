@@ -30,10 +30,13 @@ in {
       eval "$(${miseBin} activate zsh)"
     '';
 
-    programs.nushell.extraConfig = lib.mkIf config.programs.nushell.enable
-      (let activateScript = pkgs.runCommand "mise-activate.nu" {} ''
-        ${miseBin} activate nu > $out
-      ''; in ''
+    programs.nushell.extraConfig =
+      lib.mkIf config.programs.nushell.enable
+      (let
+        activateScript = pkgs.runCommand "mise-activate.nu" {} ''
+          ${miseBin} activate nu > $out
+        '';
+      in ''
         source ${activateScript}
       '');
   };

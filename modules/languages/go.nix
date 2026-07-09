@@ -17,14 +17,13 @@ in {
 
       programs.neovim.initLua = ''
         vim.lsp.config("gopls", {
-          cmd = { "${lib.getExe pkgs.gopls}" },
           settings = {
             gopls = {
               staticcheck = true;
             },
           },
         })
-        vim.lsp.enable("gopls")
+        lsp_enable("gopls", { "gopls" })
       '';
     })
 

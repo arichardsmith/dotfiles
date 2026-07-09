@@ -165,9 +165,13 @@ in {
         fd
       ];
 
-      initLua =
+      # mkBefore ensures this lua comes first in the file.
+      # The correct order is important as ./init.lua defines functions
+      # that language definitions rely on.
+      initLua = lib.mkBefore (
         builtins.readFile ./init.lua
-        + "\nrequire('conform').setup(${conformLua})\n";
+        + "\nrequire('conform').setup(${conformLua})\n"
+      );
     };
   };
 }

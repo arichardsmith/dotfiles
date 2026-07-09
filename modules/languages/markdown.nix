@@ -12,14 +12,8 @@ in {
       programs.neovim.extraPackages = with pkgs; [marksman markdown-oxide];
 
       programs.neovim.initLua = ''
-        vim.lsp.config("marksman", {
-          cmd = { "${lib.getExe pkgs.marksman}" },
-        })
-        vim.lsp.config("markdown_oxide", {
-          cmd = { "${lib.getExe pkgs.markdown-oxide}" },
-        })
-        vim.lsp.enable("marksman")
-        vim.lsp.enable("markdown_oxide")
+        lsp_enable("marksman", { "marksman" })
+        lsp_enable("markdown_oxide", { "markdown-oxide" })
       '';
     })
   ]);

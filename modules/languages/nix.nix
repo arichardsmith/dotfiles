@@ -16,10 +16,7 @@ in {
       };
 
       programs.neovim.initLua = ''
-        vim.lsp.config("nixd", {
-          cmd = { "${lib.getExe pkgs.nixd}" },
-        })
-        vim.lsp.enable("nixd")
+        lsp_enable("nixd", { "nixd" })
       '';
     })
 

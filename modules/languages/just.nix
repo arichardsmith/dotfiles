@@ -12,10 +12,7 @@ in {
       programs.neovim.extraPackages = with pkgs; [just-lsp];
 
       programs.neovim.initLua = ''
-        vim.lsp.config("just", {
-          cmd = { "${lib.getExe pkgs.just-lsp}" },
-        })
-        vim.lsp.enable("just")
+        lsp_enable("just", { "just-lsp" })
       '';
     })
   ]);

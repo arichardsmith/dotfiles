@@ -45,10 +45,7 @@ in {
       };
 
       programs.neovim.initLua = ''
-        vim.lsp.config("ts_ls", {
-          cmd = { "${lib.getExe pkgs.typescript-language-server}", "--stdio" },
-        })
-        vim.lsp.enable("ts_ls")
+        lsp_enable("ts_ls", { "typescript-language-server", "--stdio" })
       '';
     })
 

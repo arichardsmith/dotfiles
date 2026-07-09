@@ -16,10 +16,7 @@ in {
       };
 
       programs.neovim.initLua = ''
-        vim.lsp.config("tombi", {
-          cmd = { "${lib.getExe pkgs.tombi}" },
-        })
-        vim.lsp.enable("tombi")
+        lsp_enable("tombi", { "tombi" })
       '';
     })
   ]);

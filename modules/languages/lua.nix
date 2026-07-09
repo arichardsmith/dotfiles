@@ -17,7 +17,6 @@ in {
 
       programs.neovim.initLua = ''
         vim.lsp.config("lua_ls", {
-          cmd = { "${lib.getExe pkgs.lua-language-server}" },
           settings = {
             Lua = {
               runtime = { version = "LuaJIT" },
@@ -30,7 +29,7 @@ in {
             },
           },
         })
-        vim.lsp.enable("lua_ls")
+        lsp_enable("lua_ls", { "lua-language-server" })
       '';
     })
 

@@ -16,10 +16,7 @@ in {
       };
 
       programs.neovim.initLua = ''
-        vim.lsp.config("yamlls", {
-          cmd = { "${lib.getExe pkgs.yaml-language-server}", "--stdio" },
-        })
-        vim.lsp.enable("yamlls")
+        lsp_enable("yamlls", { "yaml-language-server", "--stdio" })
       '';
     })
 

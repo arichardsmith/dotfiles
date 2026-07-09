@@ -12,10 +12,7 @@ in {
       programs.neovim.extraPackages = with pkgs; [vscode-langservers-extracted];
 
       programs.neovim.initLua = ''
-        vim.lsp.config("cssls", {
-          cmd = { "${lib.getExe' pkgs.vscode-langservers-extracted "vscode-css-language-server"}", "--stdio" },
-        })
-        vim.lsp.enable("cssls")
+        lsp_enable("cssls", { "vscode-css-language-server", "--stdio" })
       '';
     })
   ]);
