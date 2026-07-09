@@ -7,19 +7,19 @@
 }: let
   pkgMeta = rec {
     name = "oxfmt";
-    version = "0.55.0";
+    version = "0.58.0";
     tarballs = {
       main = {
         url = "https://registry.npmjs.org/oxfmt/-/oxfmt-${version}.tgz";
-        hash = "sha256-bP7wu/EYFIudCdggZnNUfDdMkXF84FZtiOLThFUytmw=";
+        hash = "sha256-FewiJDyMDiXT0XqiUWI5Azmr0OP519c++3X+Hffv9ns=";
       };
       darwin = {
         url = "https://registry.npmjs.org/@oxfmt/binding-darwin-arm64/-/binding-darwin-arm64-${version}.tgz";
-        hash = "sha256-d+rj8eyRaV64lXTEGadkYh4D512/1pVWZIljbDAdrDc=";
+        hash = "sha256-b/ic4d6uQe0vIAkaARD7q0Fxu//cuPNppBVKkjGEL38=";
       };
       linux = {
         url = "https://registry.npmjs.org/@oxfmt/binding-linux-x64-gnu/-/binding-linux-x64-gnu-${version}.tgz";
-        hash = "sha256-DRKrBD6s7E7Mbv2aDjoTBC+Ii7l0chKiNGN4hhNCxD4=";
+        hash = "sha256-/IePf/vbLa72LCrnIoEM7zpeXIkmI5OkEJ+qynRN+LI=";
       };
     };
     deps = {

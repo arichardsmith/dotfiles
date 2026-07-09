@@ -7,15 +7,15 @@
 }: let
   pkgMeta = rec {
     name = "@anthropic-ai/claude-code";
-    version = "2.1.181";
+    version = "2.1.205";
     tarballs = {
       "aarch64-darwin" = {
         url = "https://registry.npmjs.org/@anthropic-ai/claude-code-darwin-arm64/-/claude-code-darwin-arm64-${version}.tgz";
-        hash = "sha256-E3kVzdFVy0k+pnsjwGZAmk7Trulnv70kmVYjLN7Zplg=";
+        hash = "sha256-JJFGXedplTA3u4/TFar+y+NgcyWx+wfvuuTKe9VUCyg=";
       };
       "x86_64-linux" = {
         url = "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-${version}.tgz";
-        hash = "sha256-Te7M0dwVeJSGgk13kKLM1+cJAyzjTa8JnDb31BfWyOk=";
+        hash = "sha256-09rfqc3ilKyCx1XrbYiSkSKISRgLrF1netGkAnrKG8Q=";
       };
     };
   };
