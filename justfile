@@ -1,5 +1,21 @@
 rebuild machine:
-  home-manager switch --flake .#{{machine}}
+  #!/usr/bin/env bash
+  set -euo pipefail
+  case "{{machine}}" in
+    mba)
+      sudo darwin-rebuild switch --flake .#{{machine}}
+      ;;
+    mininas)
+      home-manager switch --flake .#{{machine}}
+      ;;
+    example)
+      sudo nixos-rebuild switch --flake .#{{machine}}
+      ;;
+    *)
+      printf 'Unknown machine: %s\n' "{{machine}}" >&2
+      exit 1
+      ;;
+  esac
 
 push_it:
   jj git push --remote origin
@@ -63,7 +79,7 @@ link_ai:
 check: check_mba check_mininas check_example
 
 check_mba:
-	nix eval 'path:.#homeConfigurations.mba.activationPackage.drvPath'
+	nix eval 'path:.#darwinConfigurations.mba.system'
 
 check_mininas:
 	nix eval 'path:.#homeConfigurations.mininas.activationPackage.drvPath'

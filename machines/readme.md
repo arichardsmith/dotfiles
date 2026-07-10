@@ -10,7 +10,7 @@ machines/<name>/
   nixos.nix     # Machine-specific NixOS config, when applicable
 ```
 
-`default.nix` is the flake entrypoint for that machine. It defines machine facts and returns a `homeManagerConfiguration` or `nixosSystem`.
+`default.nix` is the flake entrypoint for that machine. It defines machine facts and returns a `darwinSystem`, `homeManagerConfiguration`, or `nixosSystem`.
 
 ## Metadata
 
@@ -60,7 +60,7 @@ A NixOS machine returns a `nixosSystem` and lists its modules directly:
 Machines are registered in `flake.nix` by path:
 
 ```nix
-homeConfigurations.mba = import ./machines/mba { inherit inputs common; };
+darwinConfigurations.mba = import ./machines/mba { inherit inputs common; };
 homeConfigurations.mininas = import ./machines/mininas { inherit inputs common; };
 nixosConfigurations.example = import ./machines/example { inherit inputs common; };
 ```
@@ -70,9 +70,10 @@ The same selector style is used for both output types:
 ```sh
 home-manager switch --flake .#mininas
 nixos-rebuild switch --flake .#example
+darwin-rebuild switch --flake .#mba
 ```
 
-`home-manager` reads `homeConfigurations.<name>` and `nixos-rebuild` reads `nixosConfigurations.<name>`.
+`home-manager` reads `homeConfigurations.<name>`, `darwin-rebuild` reads `darwinConfigurations.<name>`, and `nixos-rebuild` reads `nixosConfigurations.<name>`.
 
 ## Module Arguments
 

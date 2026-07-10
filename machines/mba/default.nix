@@ -18,18 +18,48 @@
 
   nix = common.mkNix machine.system;
 in
-  inputs.home-manager.lib.homeManagerConfiguration {
-    inherit (nix) pkgs lib;
+  inputs.nix-darwin.lib.darwinSystem {
+    pkgs = nix.pkgs;
 
-    extraSpecialArgs = {
+    specialArgs = {
       inherit machine;
       helpers = nix.helpers;
     };
 
     modules = [
-      (common.mkHomeManager machine)
-      ./home.nix
-      ./programs.nix
-      ./backup.nix
+      ({...}: {
+        nixpkgs.hostPlatform = machine.system;
+        networking.hostName = machine.host.name;
+
+        users.users.${machine.user.username}.home = "/Users/${machine.user.username}";
+
+        nix.settings = {
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+          trusted-users = [
+            "root"
+            machine.user.username
+          ];
+        };
+
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {
+            inherit machine;
+            helpers = nix.helpers;
+          };
+          users.${machine.user.username}.imports = [
+            (common.mkHomeManager machine)
+            ./home.nix
+            ./programs.nix
+            ./backup.nix
+          ];
+        };
+      })
+      inputs.home-manager.darwinModules.home-manager
+      ./darwin.nix
     ];
   }

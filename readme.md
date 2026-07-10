@@ -1,15 +1,16 @@
-# Home Manager Configuration
+# Home Manager and nix-darwin Configuration
 
-Nix flake for managing dotfiles and packages across machines using Home Manager and NixOS.
+Nix flake for managing dotfiles and packages across machines using Home Manager, nix-darwin, and NixOS.
 
 ## Quick Start
 
 ```bash
 just rebuild mba
 just rebuild mininas
+just rebuild_darwin mba
 ```
 
-Use `home-manager switch --flake .#<machine>` for standalone Home Manager machines.
+Use `home-manager switch --flake .#mininas` for the standalone Home Manager machine and `sudo darwin-rebuild switch --flake .#mba` for MBA.
 
 ## Configuration
 
@@ -19,7 +20,7 @@ Machine configs are in `machines/<name>/`. Each machine file returns a concrete 
 
 1. **User details** - username, email, full name
 2. **Host details** - hostname and related machine facts
-3. **Output type** - `homeManagerConfiguration` or `nixosSystem`
+3. **Output type** - `darwinSystem`, `homeManagerConfiguration`, or `nixosSystem`
 
 ### Program Options
 

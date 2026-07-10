@@ -48,7 +48,7 @@
       inherit nixpkgs js-pkgs home-manager starship-jj snitch mise;
     };
   in {
-    homeConfigurations.mba = import ./machines/mba {
+    darwinConfigurations.mba = import ./machines/mba {
       inherit inputs common;
     };
 

@@ -31,7 +31,7 @@ nix store prefetch-file --hash-type sha256 \
 3. Verify the flake evaluates:
 
 ```bash
-nix eval 'path:.#homeConfigurations.mba.activationPackage.drvPath'
+nix eval 'path:.#darwinConfigurations.mba.system'
 ```
 
 4. Switch as normal. Only the edited tool's derivation is rebuilt.
