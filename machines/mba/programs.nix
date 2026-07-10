@@ -160,8 +160,9 @@
       # System monitoring
       ncdu # Disk usage analyzer
 
+      # Misc tools
       curlie
-
+      scrcpy # Screensharing from Android
       cyme # List system USB buses and devices. A modern cross-platform lsusb
       ffmpeg
 
