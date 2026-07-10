@@ -1,50 +1,39 @@
 # Home Manager Configuration
 
-Nix flake for managing dotfiles and packages across machines using home-manager.
+Nix flake for managing dotfiles and packages across machines using Home Manager and NixOS.
 
 ## Quick Start
 
 ```bash
-just rebuild
+just rebuild mba
+just rebuild mininas
 ```
 
-This will switch to the latest version of the config if the machine is configured in the `DOTFILE_MACHINE` environment variable.
-
-To update the flake lock file before switching:
-
-```bash
-nix flake update && just rebuild
-```
-
-Otherwise, a machines home-manager config can be installed with:
-
-```bash
-home-manager switch --flake .#<machine>
-```
+Use `home-manager switch --flake .#<machine>` for standalone Home Manager machines.
 
 ## Configuration
 
 ### Machine Configuration
 
-Machine configs are in `machines/<name>/`. Each machine sets:
+Machine configs are in `machines/<name>/`. Each machine file returns a concrete flake output and defines facts in `machine`:
 
 1. **User details** - username, email, full name
-2. **Individual programs** - specific program settings
-3. **Machine-specific packages** - additional packages for this machine
+2. **Host details** - hostname and related machine facts
+3. **Output type** - `homeManagerConfiguration` or `nixosSystem`
 
 ### Program Options
 
 Programs can be configured with `settings`:
 
 ```nix
-my.programs.colima.settings = {
+programs.colima.settings = {
   cpu = 4;
   memory = 3;
   disk = 60;
 };
 ```
 
-Built-in home-manager programs use their standard options:
+Built-in Home Manager programs use their standard options:
 
 ```nix
 programs.git.userName = "Your Name";
@@ -55,12 +44,8 @@ programs.starship.settings.format = "...";
 
 ```
 ├── flake.nix           # Flake definition
-├── home.nix            # Core user/host options
-├── machines/           # Machine-specific configs
-│   └── mba/
-│       ├── default.nix    # User info & base settings
-│       └── programs.nix   # Enabled packs & programs
-── modules/            # Individual program modules
+├── machines/           # Machine entrypoints and per-machine modules
+├── modules/            # Shared Home Manager modules
 └── lib/                # Helper functions
 ```
 
@@ -70,24 +55,43 @@ See [docs/updating-js-tools.md](docs/updating-js-tools.md).
 
 ## Adding Machines
 
-Create `machines/<name>/default.nix`:
+Create `machines/<name>/default.nix` with the appropriate output type and machine facts:
 
 ```nix
-{...}: {
-  imports = [ ./programs.nix ];
+{inputs, common}: let
+  machine = {
+    system = "aarch64-darwin";
 
-  config = {
-    user.username = "your-username";
-    user.email = "you@example.com";
-    user.fullName = "Your Name";
+    user = {
+      username = "your-username";
+      email = "you@example.com";
+      fullName = "Your Name";
+    };
+
+    host.name = "your-machine";
   };
+
+  nix = common.mkNix machine.system;
+in
+inputs.home-manager.lib.homeManagerConfiguration {
+  inherit (nix) pkgs lib;
+
+  extraSpecialArgs = {
+    inherit machine;
+    helpers = nix.helpers;
+  };
+
+  modules = [
+    (common.mkHomeManager machine)
+    ./home.nix
+  ];
 }
 ```
 
-Add to `flake.nix`:
+Add the machine directly in `flake.nix`:
 
 ```nix
-homeConfigurations = {
-  your-machine = mkHomeConfig "aarch64-darwin" ./machines/your-machine;
+homeConfigurations.your-machine = import ./machines/your-machine {
+  inherit inputs common;
 };
 ```

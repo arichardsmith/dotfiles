@@ -1,17 +1,16 @@
 # Machines
 
-Each directory in `machines/` describes one machine. The top-level flake decides whether a machine path is exposed as a standalone Home Manager configuration or as a NixOS configuration with integrated Home Manager.
+Each directory in `machines/` describes one machine. The top-level flake imports the machine file directly and uses the concrete flake output it returns.
 
 ## Layout
 
 ```text
 machines/<name>/
-  default.nix   # Machine metadata and module lists
-  home.nix      # Machine-specific Home Manager config
+  default.nix   # Machine facts and direct output
   nixos.nix     # Machine-specific NixOS config, when applicable
 ```
 
-`default.nix` is data, not a module. It is imported by `lib/configurations.nix`.
+`default.nix` is the flake entrypoint for that machine. It defines machine facts and returns a `homeManagerConfiguration` or `nixosSystem`.
 
 ## Metadata
 
@@ -32,13 +31,11 @@ A standalone Home Manager machine looks like this:
     tailscale.ipv4 = "100.111.24.65";
   };
 
-  homeModules = [
-    ./home.nix
-  ];
+  # returns homeManagerConfiguration
 }
 ```
 
-A NixOS machine adds `nixosModules`:
+A NixOS machine returns a `nixosSystem` and lists its modules directly:
 
 ```nix
 {
@@ -54,13 +51,7 @@ A NixOS machine adds `nixosModules`:
     name = "example";
   };
 
-  homeModules = [
-    ./home.nix
-  ];
-
-  nixosModules = [
-    ./nixos.nix
-  ];
+  # returns nixosSystem
 }
 ```
 
@@ -69,14 +60,9 @@ A NixOS machine adds `nixosModules`:
 Machines are registered in `flake.nix` by path:
 
 ```nix
-homeConfigurations = configurations.mkHomeConfigs {
-  mba = ./machines/mba;
-  mininas = ./machines/mininas;
-};
-
-nixosConfigurations = configurations.mkNixosConfigs {
-  example = ./machines/example;
-};
+homeConfigurations.mba = import ./machines/mba { inherit inputs common; };
+homeConfigurations.mininas = import ./machines/mininas { inherit inputs common; };
+nixosConfigurations.example = import ./machines/example { inherit inputs common; };
 ```
 
 The same selector style is used for both output types:
@@ -86,7 +72,7 @@ home-manager switch --flake .#mininas
 nixos-rebuild switch --flake .#example
 ```
 
-`home-manager` reads `homeConfigurations.<name>`. `nixos-rebuild` reads `nixosConfigurations.<name>`.
+`home-manager` reads `homeConfigurations.<name>` and `nixos-rebuild` reads `nixosConfigurations.<name>`.
 
 ## Module Arguments
 
@@ -143,16 +129,14 @@ home-manager switch \
 
 For a standalone Home Manager machine:
 
-1. Create `machines/<name>/default.nix` with `system`, `user`, `host`, and `homeModules`.
-2. Create `machines/<name>/home.nix` for machine-specific Home Manager config.
-3. Add the path to `homeConfigurations = configurations.mkHomeConfigs { ... };`.
+1. Create `machines/<name>/default.nix` with `system`, `user`, `host`, and a direct `homeManagerConfiguration` return.
+3. Add the path to `homeConfigurations.<name> = import ./machines/<name> { inherit inputs common; };`.
 
 For a NixOS machine:
 
-1. Create `machines/<name>/default.nix` with `system`, `user`, `host`, `homeModules`, and `nixosModules`.
-2. Create `machines/<name>/home.nix` for integrated Home Manager config.
+1. Create `machines/<name>/default.nix` with `system`, `user`, `host`, and a direct `nixosSystem` return.
 3. Create `machines/<name>/nixos.nix` for system config.
-4. Add the path to `nixosConfigurations = configurations.mkNixosConfigs { ... };`.
+4. Add the path to `nixosConfigurations.<name> = import ./machines/<name> { inherit inputs common; };`.
 
 ## Verification
 

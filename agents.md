@@ -9,18 +9,19 @@ For machine metadata, machine layout, and remote deployment details, read [`mach
 ## Structure
 
 ```text
-├── flake.nix              # Registers machine paths as flake outputs
+├── flake.nix              # Imports machine outputs directly
 ├── machines/              # Machine metadata and per-machine config
 ├── modules/               # Shared Home Manager modules
 ├── justfile               # Common project tasks
-└── lib/                   # Config builders and helper functions
+└── lib/                   # Shared helper functions
 ```
 
-`flake.nix` delegates output construction to `lib/configurations.nix`:
+`flake.nix` imports each machine file directly and uses the output it returns:
 
 ```nix
-homeConfigurations = configurations.mkHomeConfigs { ... };
-nixosConfigurations = configurations.mkNixosConfigs { ... };
+darwinConfigurations.mba = import ./machines/mba { inherit inputs common; };
+homeConfigurations.mininas = import ./machines/mininas { inherit inputs common; };
+nixosConfigurations.example = import ./machines/example { inherit inputs common; };
 ```
 
 ## Working In This Repo
@@ -32,7 +33,7 @@ Forgejo is the canonical upstream and issue tracker for this repository. The `or
 Use `path:.` when evaluating flakes from the working tree, especially after adding new files:
 
 ```bash
-nix eval 'path:.#homeConfigurations.mba.activationPackage.drvPath'
+nix eval 'path:.#darwinConfigurations.mba.system'
 nix eval 'path:.#homeConfigurations.mininas.activationPackage.drvPath'
 nix eval 'path:.#nixosConfigurations.example.config.system.build.toplevel.drvPath'
 ```

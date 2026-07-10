@@ -13,7 +13,7 @@
     };
 
     users.users = {
-      # Primary login user. Home Manager for this user is wired in by lib/configurations.nix.
+      # Primary login user. Home Manager for this user is wired in by machines/example/default.nix.
       richard = {
         isNormalUser = true;
         extraGroups = ["wheel"];

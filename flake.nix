@@ -28,9 +28,14 @@
       url = "github:jdx/mise";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = {
+  outputs = inputs @ {
     nixpkgs,
     js-pkgs,
     home-manager,
@@ -39,17 +44,21 @@
     mise,
     ...
   }: let
-    configurations = import ./lib/configurations.nix {
+    common = import ./lib/machine.nix {
       inherit nixpkgs js-pkgs home-manager starship-jj snitch mise;
     };
   in {
-    homeConfigurations = configurations.mkHomeConfigs {
-      mba = ./machines/mba;
-      mininas = ./machines/mininas;
+    homeConfigurations.mba = import ./machines/mba {
+      inherit inputs common;
     };
 
-    nixosConfigurations = configurations.mkNixosConfigs {
-      example = ./machines/example;
+    homeConfigurations.mininas = import ./machines/mininas {
+      inherit inputs common;
     };
+
+    nixosConfigurations.example = import ./machines/example {
+      inherit inputs common;
+    };
+
   };
 }

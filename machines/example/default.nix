@@ -1,25 +1,55 @@
 {
-  # Nix system used for both the NixOS system and integrated Home Manager config.
-  system = "x86_64-linux";
+  inputs,
+  common,
+}: let
+  machine = {
+    system = "x86_64-linux";
 
-  # Machine metadata is passed to modules as the `machine` argument.
-  user = {
-    username = "richard";
-    email = "richardmcsmith@gmail.com";
-    fullName = "Richard Smith";
+    user = {
+      username = "richard";
+      email = "richardmcsmith@gmail.com";
+      fullName = "Richard Smith";
+    };
+
+    host = {
+      name = "example";
+    };
   };
 
-  host = {
-    name = "example";
-  };
+  nix = common.mkNix machine.system;
+in
+  inputs.nixpkgs.lib.nixosSystem {
+    system = machine.system;
 
-  # Home Manager modules imported for this machine's primary user.
-  homeModules = [
-    ./home.nix
-  ];
+    specialArgs = {
+      inherit machine;
+      helpers = nix.helpers;
+    };
 
-  # NixOS modules imported for the system configuration.
-  nixosModules = [
-    ./nixos.nix
-  ];
-}
+    modules = [
+      ({...}: {
+        nixpkgs.pkgs = nix.pkgs;
+        networking.hostName = machine.host.name;
+
+        nix.settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {
+            inherit machine;
+            helpers = nix.helpers;
+          };
+          users.${machine.user.username}.imports = [
+            (common.mkHomeManager machine)
+            ./home.nix
+          ];
+        };
+      })
+      inputs.home-manager.nixosModules.home-manager
+      ./nixos.nix
+    ];
+  }

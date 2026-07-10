@@ -1,14 +1,7 @@
 {pkgs, ...}: {
   config = {
-    home.sessionPath = [];
-
-    home.sessionVariables = {
-      EDITOR = "nvim";
-    };
-
     # We have the nas periodically fetch this repo and build it,
     # so when we do come to updating, it's not as long a process.
-
     systemd.user.services.hm-prebuild = {
       Unit.Description = "Pre-build Home Manager generation";
       Service = {

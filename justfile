@@ -58,15 +58,18 @@ link_ai:
     done
   done
 
-# Check that derivations evaluate for both machines.
+# Check that derivations evaluate for all machines.
 [parallel]
-check: check_mba check_mininas
+check: check_mba check_mininas check_example
 
 check_mba:
 	nix eval 'path:.#homeConfigurations.mba.activationPackage.drvPath'
 
 check_mininas:
 	nix eval 'path:.#homeConfigurations.mininas.activationPackage.drvPath'
+
+check_example:
+	nix eval 'path:.#nixosConfigurations.example.config.system.build.toplevel.drvPath'
 
 fmt:
 	alejandra .
