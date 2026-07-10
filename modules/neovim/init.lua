@@ -149,7 +149,6 @@ require("trouble").setup({})
 require("blink.cmp").setup({
   keymap = {
     preset = "default",
-    ["<CR>"] = { "accept", "fallback" },
     ["<Tab>"] = { "accept", "fallback" },
     ["<C-j>"] = { "select_next", "fallback" },
     ["<C-k>"] = { "select_prev", "fallback" },
