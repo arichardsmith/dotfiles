@@ -1,6 +1,5 @@
 {
   config,
-  helpers,
   lib,
   pkgs,
   ...
@@ -20,7 +19,6 @@ in {
             ".oxfmtrc.json",
             ".oxfmtrc.jsonc",
             "oxfmt.config.ts",
-            "package.json",
           })
         '';
       };
