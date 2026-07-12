@@ -75,8 +75,8 @@
         theme = "system";
 
         agents = {
-          plan.model = "openai/gpt-5.5";
-          build.model = "openrouter/deepseek/deepseek-v4-flash";
+          plan.model = "openai/gpt-5.6-terra";
+          build.model = "openai/gpt-5.6-luna";
         };
       };
 
