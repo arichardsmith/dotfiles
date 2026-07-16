@@ -12,6 +12,7 @@
     ./direnv
     ./docker
     ./erdtree
+    ./forgejo-cli
     ./fzf
     ./ghostty
     ./ghostty/terminfo.nix

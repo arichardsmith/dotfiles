@@ -64,6 +64,7 @@
       };
 
       astGrep.enable = true;
+      forgejoCli.enable = true;
       docker.enable = true;
 
       claudeCode.enable = true;
