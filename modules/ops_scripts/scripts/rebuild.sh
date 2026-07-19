@@ -1,4 +1,4 @@
-FLAKE="github:arichardsmith/dotfiles"
+FLAKE="git+https://git.mininas.sanroku.dev/richard/env.git"
 MACHINE="${DOTFILE_MACHINE:-}"
 
 show_help() {

@@ -8,6 +8,7 @@
         Type = "oneshot";
         ExecStart = toString (pkgs.writeShellScript "hm-prebuild" ''
           cd /home/richard/env
+          ${pkgs.git}/bin/git remote set-url origin https://git.mininas.sanroku.dev/richard/env.git
           ${pkgs.git}/bin/git pull --ff-only
           ${pkgs.nix}/bin/nix build .#homeConfigurations.mininas.activationPackage --no-link
         '');
