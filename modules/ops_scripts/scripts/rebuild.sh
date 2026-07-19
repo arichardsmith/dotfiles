@@ -9,7 +9,7 @@ Switch a machine configuration with nix-darwin on macOS or Home Manager elsewher
 
 Options:
   --flake <url>     Flake URL (default: $FLAKE)
-  --machine <name>  Machine name (default: $DOTFILE_MACHINE)
+  --machine <name>  Machine name (default: ${DOTFILE_MACHINE:-})
   --help            Show this help text and exit
 EOF
 }
