@@ -27,6 +27,8 @@ nixosConfigurations = configurations.mkNixosConfigs { ... };
 
 Use `jj`, not Git, for version-control mutations. Do not run `git add`, `git commit`, `git checkout`, or other mutating Git commands.
 
+Forgejo is the canonical upstream and issue tracker for this repository. The `origin` remote points to Forgejo, while `gh` points to a GitHub mirror. Use the `fj` CLI with `-R origin` for issue management instead of GitHub tooling. Read [`.agents/skills/fj-issues/SKILL.md`](./.agents/skills/fj-issues/SKILL.md) for the issue workflow.
+
 Use `path:.` when evaluating flakes from the working tree, especially after adding new files:
 
 ```bash
