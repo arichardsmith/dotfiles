@@ -70,24 +70,45 @@ map("n", "<leader>e", function()
 end, {desc = "Browse buffer dir"})
 
 map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", {desc = "Search project"})
-map({"n", "x"}, "<leader>y", '"+y', {desc = "Yank to system clipboard"})
-map("n", "<leader>k", vim.lsp.buf.hover, {desc = "Hover / symbol info"})
+map("n", "<leader>sw", "<cmd>Telescope grep_string<cr>", {desc = "Search word under cursor"})
+map("n", "<leader>sr", "<cmd>Telescope resume<cr>", {desc = "Resume search"})
+map("n", "<leader>q", "<cmd>Trouble qflist toggle<cr>", {desc = "Toggle quickfix list"})
+
+local function toggle_list(location)
+  for _, window in ipairs(vim.fn.getwininfo()) do
+    if window.quickfix == 1 and window.loclist == (location and 1 or 0) then
+      vim.api.nvim_win_close(window.winid, true)
+      return
+    end
+  end
+
+  vim.cmd(location and "lopen" or "copen")
+end
+
+map("n", "<leader>l", function() toggle_list(true) end, {desc = "Toggle location list"})
+map("n", "<leader>L", function() toggle_list(false) end, {desc = "Toggle quickfix list"})
+map("n", "<leader>]", vim.diagnostic.goto_next, {desc = "Next diagnostic"})
+map("n", "<leader>[", vim.diagnostic.goto_prev, {desc = "Previous diagnostic"})
 map("n", "<leader>K", "<cmd>Trouble diagnostics toggle<cr>", {desc = "Toggle diagnostics panel"})
-map("n", "<leader>r", vim.lsp.buf.rename, {desc = "LSP rename symbol"})
-map("n", "<leader>h", vim.lsp.buf.references, {desc = "Symbol references"})
-map("n", "<leader>n", "<C-i>", {desc = "Jump forward"})
-map("n", "<leader>N", "<C-o>", {desc = "Jump backward"})
-map("n", "<leader>m", "<C-o>", {desc = "Jump backward"})
+map("n", "<leader>i", "<C-i>", {desc = "Jump forward"})
+map("n", "<leader>o", "<C-o>", {desc = "Jump backward"})
+
+-- LSP
+map("n", ",.", vim.lsp.buf.hover, {desc = "Hover / symbol info"})
+map("n", ",r", vim.lsp.buf.rename, {desc = "LSP rename symbol"})
+map("n", ",h", vim.lsp.buf.references, {desc = "Symbol references"})
+map("n", ",a", vim.lsp.buf.code_action, {desc = "Code action"})
+map("n", ",d", vim.diagnostic.open_float, {desc = "Show diagnostic"})
+map("n", ",i", vim.lsp.buf.implementation, {desc = "Go to implementation"})
+map("n", ",t", vim.lsp.buf.type_definition, {desc = "Go to type definition"})
+map("n", ",s", vim.lsp.buf.signature_help, {desc = "Signature help"})
+map("n", ",o", vim.lsp.buf.document_symbol, {desc = "Document symbols"})
+map("n", ",w", vim.lsp.buf.workspace_symbol, {desc = "Workspace symbols"})
 
 -- Go to
 map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
-map("n", "\\d", function()
-  local file = vim.api.nvim_buf_get_name(0)
-  if file ~= "" then
-    vim.fn.delete(file)
-  end
-end, {desc = "Delete current file"})
+-- Buffer
 
 map("n", "\\D", function()
   local file = vim.api.nvim_buf_get_name(0)
@@ -101,7 +122,16 @@ map("n", "\\f", function()
   require("conform").format({lsp_format = "fallback"})
 end, {desc = "Format buffer"})
 
-map("n", "\\y", 'gg"+yG', {desc = "Yank whole file to clipboard"})
+map("n", "\\c", "<cmd>bdelete<cr>", {desc = "Close current buffer"})
+map("n", "\\n", "<cmd>enew<cr>", {desc = "New empty buffer"})
+map("n", "\\]", "<cmd>bnext<cr>", {desc = "Next buffer"})
+map("n", "\\[", "<cmd>bprevious<cr>", {desc = "Previous buffer"})
+map("n", "\\C", "<cmd>Bca<cr>", {desc = "Close all buffers"})
+map("n", "\\o", "<cmd>Bco<cr>", {desc = "Close all buffers except current"})
+map("n", "\\s", "<cmd>write<cr>", {desc = "Save buffer"})
+map("n", "\\R", "<cmd>edit<cr>", {desc = "Reload buffer"})
+map({"n", "x"}, "\\y", '"+y', {desc = "Yank to system clipboard"})
+map("n", "\\Y", 'gg"+yG', {desc = "Yank whole file to clipboard"})
 
 map("n", "\\w", "<cmd>setlocal wrap!<cr>", {desc = "Toggle line wrap"})
 
