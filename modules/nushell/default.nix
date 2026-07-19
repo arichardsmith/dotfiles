@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  machine,
   ...
 }: let
   cfg = config.programs.nushell;
@@ -18,15 +19,26 @@
 
   extraConfig = lib.concatStringsSep "\n\n" (aliasLines ++ commandBodies);
 in {
-  config = lib.mkIf cfg.enable {
-    programs.nushell = {
-      settings = {
-        show_banner = false;
+  config = lib.mkIf cfg.enable (lib.mkMerge [
+    {
+      programs.nushell = {
+        settings = {
+          show_banner = false;
+        };
+
+        extraConfig = extraConfig;
       };
 
-      extraConfig = extraConfig;
-    };
-
-    programs.carapace.enableNushellIntegration = true;
-  };
+      programs.carapace.enableNushellIntegration = true;
+    }
+    (lib.mkIf (machine.nixDarwin or false) {
+      # nix-darwin installs Home Manager packages into its per-user profile.
+      programs.nushell.extraEnv = ''
+        $env.PATH = (
+          $env.PATH
+          | prepend '/etc/profiles/per-user/${config.home.username}/bin'
+        )
+      '';
+    })
+  ]);
 }

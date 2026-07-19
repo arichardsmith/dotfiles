@@ -4,6 +4,7 @@
 }: let
   machine = {
     system = "aarch64-darwin";
+    nixDarwin = true;
 
     user = {
       username = "richardsmith";
