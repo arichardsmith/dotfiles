@@ -7,10 +7,11 @@ Nix flake for managing dotfiles and packages across machines using Home Manager,
 ```bash
 just rebuild mba
 just rebuild mininas
-just rebuild_darwin mba
 ```
 
-Use `home-manager switch --flake .#mininas` for the standalone Home Manager machine and `sudo darwin-rebuild switch --flake .#mba` for MBA.
+The installed `~/ops/rebuild` script defaults to the machine named by `DOTFILE_MACHINE`, which is set from each machine's configuration. Pass `--machine <name>` to override it.
+
+Use `home-manager switch --flake .#mininas` for the standalone Home Manager machine and `sudo darwin-rebuild switch --flake .#mba` for MBA. On macOS, `~/ops/rebuild` and `~/ops/rollback` use nix-darwin; on other platforms they use Home Manager.
 
 ## Configuration
 

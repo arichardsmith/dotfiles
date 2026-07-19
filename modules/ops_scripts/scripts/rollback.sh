@@ -2,7 +2,7 @@ show_help() {
   cat << EOF
 Usage: rollback.sh [options] [subcommand]
 
-Rollback to the previous Home Manager generation, or list available generations.
+Rollback to the previous nix-darwin or Home Manager generation, or list available generations.
 
 Subcommands:
   list              List available generations without switching
@@ -101,6 +101,11 @@ done
 
 case "$COMMAND" in
   ""|rollback)
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+      printf 'Rolling back to the previous nix-darwin generation...\n'
+      exec sudo darwin-rebuild --rollback switch
+    fi
+
     if command -v home-manager >/dev/null 2>&1; then
       printf 'home-manager found on PATH; rolling back to the previous generation...\n'
       exec home-manager switch --rollback
@@ -110,6 +115,10 @@ case "$COMMAND" in
     list_generations "$MAX_GENERATIONS"
     ;;
   list)
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+      exec sudo darwin-rebuild --list-generations
+    fi
+
     list_generations "$MAX_GENERATIONS"
     ;;
   *)

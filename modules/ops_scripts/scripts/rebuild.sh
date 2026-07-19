@@ -5,7 +5,7 @@ show_help() {
   cat << EOF
 Usage: rebuild.sh [options]
 
-Run home-manager switch for a given flake and machine.
+Switch a machine configuration with nix-darwin on macOS or Home Manager elsewhere.
 
 Options:
   --flake <url>     Flake URL (default: $FLAKE)
@@ -42,4 +42,8 @@ case "$FLAKE" in
     ;;
 esac
 
-home-manager switch "${ARGS[@]}" --flake "$FLAKE#$MACHINE"
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  exec sudo darwin-rebuild switch "${ARGS[@]}" --flake "$FLAKE#$MACHINE"
+fi
+
+exec home-manager switch "${ARGS[@]}" --flake "$FLAKE#$MACHINE"
