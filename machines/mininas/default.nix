@@ -59,6 +59,5 @@ in
         })
       homeManager
       ./programs.nix
-      ./systemd.nix
     ];
   }
